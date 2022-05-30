@@ -40,29 +40,26 @@ class Page:
 
     def clean_content(self, content) -> BeautifulSoup:
         """Removes irrelevant content still left in the webpage"""
-        #helper method
+        #helper method for easy removal
         def remove(content, *args, **kwargs):
             tag = content.find(*args, **kwargs)
             if tag != None:
                 tag.decompose()
         
         #remove irrelevant information
-        remove(content, "div", {"id": "content_disclaimer"})
-        remove(content, "div", {"id": "comments"})
-        remove(content, "h2", text = "Comments")
-        remove(content, "div", {"id": "subscribe"})
-        remove(content, "div", {"class": "simple_section_nav"})
-        #remove side contents bar
-        remove(content, "div", {"class": "table_of_contents"})
-        #remove see also
-        remove(content, "h2", {"id": "see-also"})
-        #remove list items
-        #remove mariadb version notices
-        remove(content, "div", {"class": "mariadb"})
+        remove(content, "div", {"id": "content_disclaimer"}) #removes a disclaimer
+        remove(content, "div", {"id": "comments"}) #remove the comments
+        remove(content, "h2", text = "Comments") #remove the comments' header
+        remove(content, "div", {"id": "subscribe"}) #removes the subscribe thingy (I don't know what this removes)
+        remove(content, "div", {"class": "simple_section_nav"}) #removes extra links
 
-        remove(content, "ul")
-        #remove main header
-        remove(content, "h1")
+        remove(content, "div", {"class": "table_of_contents"}) #remove side contents bar
+        remove(content, "h2", {"id": "see-also"}) #remove see also header
+        remove(content, "ul") #remove list items (potentially temporary- to remove elements under see-also)
+        remove(content, "div", {"class": "mariadb"}) #remove mariadb version notices
+
+        remove(content, "h1") #remove main header
+        
         return content
 
     def space_headers(self, content) -> str:
