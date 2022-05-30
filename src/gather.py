@@ -7,7 +7,7 @@ from os.path import join as osjoin
 #local imports
 from page import Page
 
-
+#functions
 def fetch_page(url) -> Page:
     """Returns a Page object containing the relevant info and text"""
     name = get_name(url)               

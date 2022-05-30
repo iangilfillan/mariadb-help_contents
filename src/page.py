@@ -1,7 +1,8 @@
+#imports
 import re
 
 from bs4 import BeautifulSoup
-
+#classes
 class Page:
     line_limit = 59
     def __init__(self, name, content) -> None:
@@ -96,10 +97,11 @@ class Page:
             lines.append(line2)
         
         new_text = "\n".join(lines)
-        
+
         return new_text
 
     def seperate_line(self, line, line_limit) -> list:
+        """returns the given string capped to the line_limit and returns the remaining string"""
         start = 0
         matches = list(re.finditer(" ", line))
         for i, m in enumerate(matches):

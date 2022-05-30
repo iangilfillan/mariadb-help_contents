@@ -1,5 +1,6 @@
+#imports
 from gather import fetch_page
-
+#functions
 def main() -> None:
     page = fetch_page("https://mariadb.com/kb/en/insert/")
     #temporary write for testing features
@@ -7,6 +8,6 @@ def main() -> None:
         outfile.write(page.text)
 
     return None
-
+#main call
 if __name__ == "__main__":
     main()
