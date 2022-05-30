@@ -18,12 +18,13 @@ class Page:
         content = self.find_content(soup)
         content = self.clean_content(content)
 
-        content = self.change_headers(content)
+        content = self.space_headers(content)
+        content = self.space_code_blocks(content)
         #retrieve text
         text = content.get_text()
         #clean text
         text = self.set_line_limit(text)
-        text = self.add_para_gaps(text)
+        text = self.space_paragraphs(text)
         #strip and set text
         self.text = text.strip()
         
@@ -63,7 +64,7 @@ class Page:
         remove(content, "h1")
         return content
 
-    def change_headers(self, content) -> str:
+    def space_headers(self, content) -> str:
         """Modifies headers to have extra space and decoration"""
         for header in content.find_all("h2"):
             length = len(header.string)
@@ -73,6 +74,15 @@ class Page:
             header.string = "\n" + header.string + "\n"
 
         return content
+
+    def space_code_blocks(self, contents) -> str:
+        """Spaces code blocks to improve readability"""
+
+        code_blocks = contents.find_all("pre", {"class": "fixed"})
+        for cb in code_blocks:
+            cb.string = cb.text + "\n"
+
+        return contents
 
     def set_line_limit(self, text) -> str:
         """Assures lines do not extend past a certain length"""
@@ -86,6 +96,7 @@ class Page:
             lines.append(line2)
         
         new_text = "\n".join(lines)
+        
         return new_text
 
     def seperate_line(self, line, line_limit) -> list:
@@ -102,7 +113,7 @@ class Page:
         
         return line1, line2
 
-    def add_para_gaps(self, text) -> str:
+    def space_paragraphs(self, text) -> str:
         """Adds extra space for paragraphs to improve readability"""
         text = re.sub(r'([^.])\. *\n *([^\n])', r'\1.\n\n\2',text)
 

@@ -7,6 +7,7 @@ INSERT [LOW_PRIORITY | DELAYED | HIGH_PRIORITY] [IGNORE]
    col=expr
      [, col=expr] ... ] [RETURNING select_expr 
       [, select_expr ...]]
+
 Or:
 INSERT [LOW_PRIORITY | DELAYED | HIGH_PRIORITY] [IGNORE]
     [INTO] tbl_name [PARTITION (partition_list)]
@@ -15,6 +16,7 @@ INSERT [LOW_PRIORITY | DELAYED | HIGH_PRIORITY] [IGNORE]
       col=expr
         [, col=expr] ... ] [RETURNING select_expr 
       [, select_expr ...]]
+
 Or:
 INSERT [LOW_PRIORITY | HIGH_PRIORITY] [IGNORE]
     [INTO] tbl_name [PARTITION
@@ -24,6 +26,7 @@ INSERT [LOW_PRIORITY | HIGH_PRIORITY] [IGNORE]
       col=expr
         [, col=expr] ... ] [RETURNING select_expr 
       [, select_expr ...]]
+
 
 The INSERT statement is used to insert new rows into an
 existing table. The INSERT ... VALUES
@@ -98,14 +101,18 @@ Examples
 Specifying the column names:
 INSERT INTO person (first_name, last_name) VALUES
 ('John', 'Doe');
+
 Inserting more than 1 row at a time:
 INSERT INTO tbl_name VALUES (1, "row 1"), (2, "row 2");
+
 Using the SET clause:
 INSERT INTO person SET first_name = 'John', last_name
 = 'Doe';
+
 SELECTing from another table:
 INSERT INTO contractor SELECT * FROM person WHERE status
 = 'c';
+
 See INSERT ON DUPLICATE KEY UPDATE and INSERT IGNORE for
 further examples.
 
@@ -140,6 +147,7 @@ RETURNING id2,id2+id2,id2&id2,id2||id2;
 |   3 |       6 |       3 |        1 |
 |   4 |       8 |       4 |        1 |
 +-----+---------+---------+----------+
+
 Using stored functions in RETURNING
 DELIMITER |
 CREATE FUNCTION f(arg INT) RETURNS INT
@@ -158,6 +166,7 @@ EXECUTE stmt;
 +---------+----------------+
 |       2 | BEAR           |
 +---------+----------------+
+
 Subqueries in the RETURNING clause that return more than
 one row or column cannot be used.
 
