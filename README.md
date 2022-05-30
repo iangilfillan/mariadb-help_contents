@@ -8,6 +8,5 @@ The purpose of this project is to gather raw text from numerous pages in the mar
 ## Next Goals
 This will list the current short-term objectives for each version of the program 
 
-- More spacing around code blocks
 - Testing with different pages
 - Code to do many pages at once
