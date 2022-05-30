@@ -11,6 +11,7 @@ class Page:
         return None
 
     def format_text(self) -> None:
+        """transforms the full html into stripped raw text for use in documentation"""
         #setup soup
         soup = BeautifulSoup(self.content, features="html5lib")
         #clean soup
@@ -23,19 +24,20 @@ class Page:
         #clean text
         text = self.set_line_limit(text)
         text = self.add_para_gaps(text)
-        text = self.remove_spacing(text)
-        #set text
-        self.text = text
+        #strip and set text
+        self.text = text.strip()
         
         return None
 
     def find_content(self, soup) -> BeautifulSoup:
+        """Finds the relevant content in the webpage"""
         #find main content
         content = soup.find("section", {"id": "content"})
 
         return content
 
     def clean_content(self, content) -> BeautifulSoup:
+        """Removes irrelevant content still left in the webpage"""
         #helper method
         def remove(content, *args, **kwargs):
             tag = content.find(*args, **kwargs)
@@ -62,7 +64,7 @@ class Page:
         return content
 
     def change_headers(self, content) -> str:
-        
+        """Modifies headers to have extra space and decoration"""
         for header in content.find_all("h2"):
             length = len(header.string)
             header.string = "\n" + header.string + "\n" + "-" * length
@@ -73,7 +75,7 @@ class Page:
         return content
 
     def set_line_limit(self, text) -> str:
-        
+        """Assures lines do not extend past a certain length"""
         lines = []
         for line in text.split("\n"):
             line2 = line
@@ -101,14 +103,7 @@ class Page:
         return line1, line2
 
     def add_para_gaps(self, text) -> str:
-        
+        """Adds extra space for paragraphs to improve readability"""
         text = re.sub(r'([^.])\. *\n *([^\n])', r'\1.\n\n\2',text)
 
         return text
-    
-    def remove_spacing(self, content) -> str:
-        iterations = 0
-        for _ in range(iterations):
-            content = re.sub(r"\n *\n *\n", "\n\n", content)
-
-        return content.strip()

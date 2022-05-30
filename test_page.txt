@@ -7,7 +7,6 @@ INSERT [LOW_PRIORITY | DELAYED | HIGH_PRIORITY] [IGNORE]
    col=expr
      [, col=expr] ... ] [RETURNING select_expr 
       [, select_expr ...]]
-
 Or:
 INSERT [LOW_PRIORITY | DELAYED | HIGH_PRIORITY] [IGNORE]
     [INTO] tbl_name [PARTITION (partition_list)]
@@ -16,7 +15,6 @@ INSERT [LOW_PRIORITY | DELAYED | HIGH_PRIORITY] [IGNORE]
       col=expr
         [, col=expr] ... ] [RETURNING select_expr 
       [, select_expr ...]]
-      
 Or:
 INSERT [LOW_PRIORITY | HIGH_PRIORITY] [IGNORE]
     [INTO] tbl_name [PARTITION
