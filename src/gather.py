@@ -6,6 +6,9 @@ import requests
 from os.path import join as osjoin
 #local imports
 from page import Page
+from waiter import Waiter
+#waiter for request delays
+waiter = Waiter(True)
 
 #functions
 def fetch_page(url) -> Page:
@@ -18,13 +21,13 @@ def fetch_page(url) -> Page:
 
     return page
 
-def get_page_info(name, url) -> str:
+def get_page_info(name, url, overwrite=False) -> str:
     """Manages access to the html from the given url, returns the html"""
     existing_pages = os.listdir("fetched_pages")
     filename = name + ".html"
     filepath = osjoin("fetched_pages", filename)
 
-    if filename in existing_pages:
+    if not overwrite and filename in existing_pages:
         infile = open(filepath, "r", encoding="utf-8")
         content = infile.read()
         infile.close()
@@ -37,7 +40,7 @@ def get_page_info(name, url) -> str:
     return content
 
 def request_page(url) -> str:
-
+    waiter.wait()
     content = requests.get(url).text
     
     return content
@@ -54,3 +57,16 @@ def get_name(url) -> str:
     for char in eman.strip("/"): name = char + name
     
     return name
+
+def main() -> None:
+    """goes through all files in the csv and requests them"""
+    list_of_urls = ["https://mariadb.com/kb/en/insert/", "https://mariadb.com/kb/en/select/"]
+    overwrite = True
+    for url in list_of_urls:
+        name = get_name(url)
+        page_info = get_page_info(name, url, overwrite)
+
+    return None
+
+if __name__ == "__main__":
+    main()

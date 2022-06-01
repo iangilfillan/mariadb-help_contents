@@ -27,7 +27,6 @@ INSERT [LOW_PRIORITY | HIGH_PRIORITY] [IGNORE]
         [, col=expr] ... ] [RETURNING select_expr 
       [, select_expr ...]]
 
-
 The INSERT statement is used to insert new rows into an
 existing table. The INSERT ... VALUES
 and INSERT ... SET forms of the statement insert rows based

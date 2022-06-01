@@ -1,6 +1,8 @@
 #imports
 import re
+import os
 
+from os.path import join as osjoin
 from bs4 import BeautifulSoup
 #classes
 class Page:
@@ -26,8 +28,9 @@ class Page:
         #clean text
         text = self.set_line_limit(text)
         text = self.space_paragraphs(text)
-        #strip and set text
-        self.text = text.strip()
+        text = self.remove_extra_space(text)
+        #set text
+        self.text = text
         
         return None
 
@@ -42,10 +45,9 @@ class Page:
         """Removes irrelevant content still left in the webpage"""
         #helper method for easy removal
         def remove(content, *args, **kwargs):
-            tag = content.find(*args, **kwargs)
-            if tag != None:
-                tag.decompose()
-        
+            _ = [tag.decompose() for tag in content.find_all(*args, **kwargs) if tag != None]
+
+
         #remove irrelevant information
         remove(content, "div", {"id": "content_disclaimer"}) #removes a disclaimer
         remove(content, "div", {"id": "comments"}) #remove the comments
@@ -69,7 +71,7 @@ class Page:
             header.string = "\n" + header.string + "\n" + "-" * length
 
         for header in content.find_all("h3") + content.find_all("h5"):
-            header.string = "\n" + header.string + "\n"
+            header.string = "\n" + header.text + "\n"
 
         return content
 
@@ -117,3 +119,30 @@ class Page:
         text = re.sub(r'([^.])\. *\n *([^\n])', r'\1.\n\n\2',text)
 
         return text
+
+    def remove_extra_space(self, text) -> str:
+        """Removes extra new lines in text"""
+        text = re.sub(" *\n *\n[ \n]*", "\n\n", text)
+
+        return text.strip()
+
+def main():
+    """goes through each .html file in fetched_pages and writes the text version"""
+    files = [html_file.replace(".html", "") for html_file in os.listdir("fetched_pages") if html_file.endswith(".html")]
+
+    for name in files:
+        filepath = osjoin("fetched_pages", name)
+        #open html
+        infile = open(filepath+".html", "r", encoding="utf-8")
+        html = infile.read()
+        infile.close()
+        #get text
+        page = Page(name, html)
+        page.format_text()
+        #write text
+        outfile = open(filepath+".txt", "w", encoding="utf-8")
+        outfile.write(page.text)
+        outfile.close()
+
+if __name__ == "__main__":
+    main()
