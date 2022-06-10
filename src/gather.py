@@ -13,7 +13,7 @@ waiter = Waiter(True)
 #functions
 def fetch_page(url) -> Page:
     """Returns a Page object containing the relevant info and text"""
-    name = get_name(url)               
+    name = get_name(url)    
 
     page_info = get_page_info(name, url)
     page = Page(name, page_info)
@@ -60,7 +60,7 @@ def get_name(url) -> str:
 
 def main() -> None:
     """goes through all files in the csv and requests them"""
-    list_of_urls = ["https://mariadb.com/kb/en/insert/", "https://mariadb.com/kb/en/select/"]
+    list_of_urls = []
     overwrite = True
     for url in list_of_urls:
         name = get_name(url)

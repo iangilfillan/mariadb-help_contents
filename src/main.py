@@ -4,7 +4,7 @@ from gather import fetch_page
 
 #functions
 def main() -> None:
-    list_of_urls = ["https://mariadb.com/kb/en/insert/", "https://mariadb.com/kb/en/select/"]
+    list_of_urls = []
     for url in list_of_urls:
         #get page information
         page = fetch_page(url)

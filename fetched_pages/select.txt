@@ -1,109 +1,90 @@
 Syntax
 ------
 SELECT
-    [ALL | DISTINCT | DISTINCTROW]
-    [HIGH_PRIORITY]
-    [STRAIGHT_JOIN]
-    [SQL_SMALL_RESULT] [SQL_BIG_RESULT] [SQL_BUFFER_RESULT]
-    [SQL_CACHE | SQL_NO_CACHE] [SQL_CALC_FOUND_ROWS]
-    select_expr [, select_expr ...]
-    [ FROM table_references
-      [WHERE where_condition]
-      [GROUP BY {col_name | expr | position} [ASC | DESC],
-... [WITH ROLLUP]]
-      [HAVING where_condition]
-      [ORDER BY {col_name | expr | position} [ASC |
-DESC], ...]
-      [LIMIT {[offset,] row_count | row_count OFFSET offset
- [ROWS EXAMINED rows_limit] } |
-        [OFFSET start { ROW | ROWS }]
-        [FETCH { FIRST | NEXT } [ count ] { ROW | ROWS } {
-ONLY | WITH TIES }] ]
-      procedure|[PROCEDURE procedure_name(argument_list)]
-      [INTO OUTFILE 'file_name' [CHARACTER SET
-charset_name] [export_options] |
-        INTO DUMPFILE 'file_name' | INTO var_name [,
-var_name] ]
-      [FOR UPDATE lock_option | LOCK IN SHARE
-MODE lock_option]
+  [ALL | DISTINCT | DISTINCTROW]
+  [HIGH_PRIORITY]
+  [STRAIGHT_JOIN]
+  [SQL_SMALL_RESULT] [SQL_BIG_RESULT] [SQL_BUFFER_RESULT]
+  [SQL_CACHE | SQL_NO_CACHE] [SQL_CALC_FOUND_ROWS]
+  select_expr [, select_expr ...]
+  [ FROM table_references
+   [WHERE where_condition]
+   [GROUP BY {col_name | expr | position} [ASC | DESC], ... [WITH ROLLUP]]
+   [HAVING where_condition]
+   [ORDER BY {col_name | expr | position} [ASC | DESC], ...]
+   [LIMIT {[offset,] row_count | row_count OFFSET offset  [ROWS EXAMINED
+rows_limit] } |
+    [OFFSET start { ROW | ROWS }]
+    [FETCH { FIRST | NEXT } [ count ] { ROW | ROWS } { ONLY | WITH TIES }] ]
+   procedure|[PROCEDURE procedure_name(argument_list)]
+   [INTO OUTFILE 'file_name' [CHARACTER SET charset_name] [export_options] |
+    INTO DUMPFILE 'file_name' | INTO var_name [, var_name] ]
+   [FOR UPDATE lock_option | LOCK IN SHARE MODE lock_option]
 export_options:
-    [{FIELDS | COLUMNS}
-        [TERMINATED BY 'string']
-        [[OPTIONALLY] ENCLOSED BY 'char']
-        [ESCAPED BY 'char']
-    ]
-    [LINES
-        [STARTING BY 'string']
-        [TERMINATED BY 'string']
-    ]
+  [{FIELDS | COLUMNS}
+    [TERMINATED BY 'string']
+    [[OPTIONALLY] ENCLOSED BY 'char']
+    [ESCAPED BY 'char']
+  ]
+  [LINES
+    [STARTING BY 'string']
+    [TERMINATED BY 'string']
+  ]
 lock_option:
-    [WAIT n | NOWAIT | SKIP LOCKED]
+  [WAIT n | NOWAIT | SKIP LOCKED]
 
 Description
 -----------
 SELECT is used to retrieve rows selected from one or more
 tables, and can include UNION statements and subqueries.
 
-SELECT can also be used to retrieve rows computed without
-reference to
+SELECT can also be used to retrieve rows computed without reference to
 any table.
 
 Select Expressions
 
-A SELECT statement must contain one or more select
-expressions, separated
-by commas. Each select expression can be one of
-the following:
+A SELECT statement must contain one or more select expressions, separated
+by commas. Each select expression can be one of the following:
 
-When specifying a column, you can either use just the
-column name or qualify the column
-name with  the name of the table using tbl_name.col_name.
+When specifying a column, you can either use just the column name or qualify
+the column
+name with  the name of the table using tbl_name.col_name. The qualified form is
+useful if you are joining multiple tables in the FROM clause. If you do not
+qualify the
+column names when selecting from multiple tables, MariaDB will try to find the
+column in
+each table. It is an error if that column name exists in multiple tables.
 
-The qualified form is
-useful if you are joining multiple tables in the FROM
-clause. If you do not qualify the
-column names when selecting from multiple tables, MariaDB
-will try to find the column in
-each table. It is an error if that column name exists in
-multiple tables.
-
-You can quote column names using backticks. If you are
-qualifying column names
-with table names, quote each part separately
-as `tbl_name`.`col_name`.
+You can quote column names using backticks. If you are qualifying column names
+with table names, quote each part separately as `tbl_name`.`col_name`.
 
 If you use any grouping functions
-in any of the select expressions, all rows in your results
-will be implicitly grouped, as if
+in any of the select expressions, all rows in your results will be implicitly
+grouped, as if
 you had used GROUP BY NULL.
 
 DISTINCT
 
-A query may produce some identical rows. By default, all
-rows are retrieved, even when their values are the same. To
-explicitly specify that you want to retrieve identical
-rows, use the ALL option. If you want duplicates to be
-removed from the resultset, use the DISTINCT option.
-
-DISTINCTROW is a synonym for DISTINCT. See also COUNT
-DISTINCT and SELECT UNIQUE in Oracle mode.
+A query may produce some identical rows. By default, all rows are retrieved, even
+when their values are the same. To explicitly specify that you want to retrieve
+identical rows, use the ALL option. If you want duplicates to be removed from the
+resultset, use the DISTINCT option. DISTINCTROW is a synonym for DISTINCT. See also
+COUNT DISTINCT and SELECT UNIQUE in Oracle mode.
 
 INTO
 
-The INTO clause is used to specify that the query results
-should be written to a file or variable.
+The INTO clause is used to specify that the query results should be written to a file
+or variable.
 
 The reverse of SELECT INTO OUTFILE is LOAD DATA.
 
 LIMIT
 
-Restricts the number of returned rows. See LIMIT and LIMIT
-ROWS EXAMINED for details.
+Restricts the number of returned rows. See LIMIT and LIMIT ROWS EXAMINED for details.
 
 LOCK IN SHARE MODE/FOR UPDATE
 
-See LOCK IN SHARE MODE and FOR UPDATE for details on the
-respective locking clauses.
+See LOCK IN SHARE MODE and FOR UPDATE for details on the respective locking clauses.
 
 OFFSET ... FETCH
 
@@ -113,34 +94,28 @@ Order a resultset. See ORDER BY for details.
 
 PARTITION
 
-Specifies to the optimizer which partitions are relevant
-for the query. Other partitions will not be read.  See
-Partition Pruning and Selection for details.
+Specifies to the optimizer which partitions are relevant for the query. Other
+partitions will not be read.  See Partition Pruning and Selection for details.
 
 PROCEDURE
 
-Passes the whole result set to a C Procedure. See PROCEDURE
-and PROCEDURE ANALYSE (the only built-in procedure not
-requiring the server to be recompiled).
+Passes the whole result set to a C Procedure. See PROCEDURE and PROCEDURE ANALYSE
+(the only built-in procedure not requiring the server to be recompiled).
 
 SKIP LOCKED
 
 SQL_CALC_FOUND_ROWS
 
-When SQL_CALC_FOUND_ROWS is used, then MariaDB will
-calculate how many rows would
-have been in the result, if there would be no LIMIT clause.
-
-The result can be found by calling the function
-FOUND_ROWS() in your next sql statement.
+When SQL_CALC_FOUND_ROWS is used, then MariaDB will calculate how many rows would
+have been in the result, if there would be no LIMIT clause. The result can be found
+by calling the function FOUND_ROWS() in your next sql statement.
 
 max_statement_time clause
 
-By using max_statement_time in conjunction with SET
-STATEMENT, it is possible to limit the execution time of
-individual queries. For example:
+By using max_statement_time in conjunction with SET STATEMENT, it is possible to
+limit the execution time of individual queries. For example:
 SET STATEMENT max_statement_time=100 FOR 
-  SELECT field1 FROM table_name ORDER BY field1;
+ SELECT field1 FROM table_name ORDER BY field1;
 
 WAIT/NOWAIT
 
@@ -150,5 +125,5 @@ Examples
 --------
 SELECT f1,f2 FROM t1 WHERE (f3<=10) AND (f4='y');
 
-See Getting Data from MariaDB (Beginner tutorial), or the
-various sub-articles, for more examples.
+See Getting Data from MariaDB (Beginner tutorial), or the various sub-articles, for
+more examples.

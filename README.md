@@ -7,6 +7,3 @@ The purpose of this project is to gather raw text from numerous pages in the mar
 
 ## Next Goals
 This will list the current short-term objectives for each version of the program 
-
-- Testing with different pages
-- Testing of inserting into fill_html_tables.sql
