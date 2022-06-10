@@ -79,6 +79,8 @@ def update_table_information(table_information) -> None:
         page = fetch_page(help_topic.url)
         help_topic.new_description = page.text
 
+        forced_line_splits += page.forced_line_splits
+
     time_taken = time.perf_counter() - start_time
 
     print("\n")

@@ -2,6 +2,7 @@
 import re
 import os
 import time
+import sys
 
 from os.path import join as osjoin
 from bs4 import BeautifulSoup
@@ -211,14 +212,17 @@ class Page:
 def main():
     """goes through each .html file in fetched_pages and writes the text version"""
     files = [html_file.replace(".html", "") for html_file in os.listdir("fetched_pages") if html_file.endswith(".html")]
-    #files = ["about-sphinxse"]
+    num_files = len(files)
     calc_time = True
     forced_line_splits = 0
     time_taken = 0
 
-    for name in files:
+    print_line_splits = False
 
-        if calc_time: start_time = time.perf_counter()
+    if calc_time: start_time = time.perf_counter()
+
+    for index, name in enumerate(files):
+        
         filepath = osjoin("fetched_pages", name)
         #open html
         infile = open(filepath+".html", "r", encoding="utf-8")
@@ -226,21 +230,25 @@ def main():
         infile.close()
         #get text
         page = Page(name, html)
+        page.format_text()
         #add forced_line_splits
         forced_line_splits += page.forced_line_splits
         #print forced line splits
-        if page.forced_line_splits > 0: print(f"{page.forced_line_splits} - forced line splits - {page.name}")
+        if page.forced_line_splits > 0 and print_line_splits: print(f"{page.forced_line_splits} - forced line splits - {page.name}")
         #write text
         outfile = open(filepath+".txt", "w", encoding="utf-8")
         outfile.write(page.text)
         outfile.close()
-        #debug bug
-        if calc_time: time_taken += time.perf_counter() - start_time
+        #debug
+        sys.stdout.write(f"\rRan Through {index+1}/{num_files} files")
+        sys.stdout.flush()
+    
+    if calc_time: time_taken = time.perf_counter() - start_time
 
     print()
     print(f"{forced_line_splits} - TOTAL FORCED LINE SPLITS - {forced_line_splits}")
-    print(f"Took {round(time_taken, 2)}s to run {len(files)} files")
-    print(f"Avg of {round(time_taken / len(files), 3)}s per file")
+    print(f"Took {round(time_taken, 2)}s to run {num_files} files")
+    print(f"Avg of {round(time_taken / num_files, 3)}s per file")
 
 if __name__ == "__main__":
     main()
