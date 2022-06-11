@@ -29,6 +29,7 @@ class Page:
 
         self.space_headers(content)
         self.space_code_blocks(content)
+        self.remove_extra_newlines(content)
         #retrieve text
         text = content.get_text()
         #clean text
@@ -142,14 +143,22 @@ class Page:
 
         return None
 
-    def space_code_blocks(self, contents) -> None:
+    def space_code_blocks(self, content) -> None:
         """Spaces code blocks to improve readability"""
 
-        code_blocks = contents.find_all("pre", {"class": "fixed"})
+        code_blocks = content.find_all("pre", {"class": "fixed"})
         for cb in code_blocks:
             cb.string = cb.text + "\n"
 
         return None
+
+    #transfer BeautifulSoup to text
+    def remove_extra_newlines(self, content) -> None:
+        """Removes new lines found in paragraphs where newlines are normally ignored"""
+        for tag in content.find_all("p"):
+            if not tag.parent.has_attr("fixed"):
+                tag.string = tag.text.replace("\n", " ")
+    #modify text
 
     def set_line_limit(self, text) -> str:
         """Assures lines do not extend past a certain length"""
