@@ -17,18 +17,18 @@ rows_limit] } |
     [OFFSET start { ROW | ROWS }]
     [FETCH { FIRST | NEXT } [ count ] { ROW | ROWS } { ONLY | WITH TIES }] ]
    procedure|[PROCEDURE procedure_name(argument_list)]
-   [INTO OUTFILE 'file_name' [CHARACTER SET charset_name] [export_options] |
-    INTO DUMPFILE 'file_name' | INTO var_name [, var_name] ]
+   [INTO OUTFILE \'file_name\' [CHARACTER SET charset_name] [export_options] |
+    INTO DUMPFILE \'file_name\' | INTO var_name [, var_name] ]
    [FOR UPDATE lock_option | LOCK IN SHARE MODE lock_option]
 export_options:
   [{FIELDS | COLUMNS}
-    [TERMINATED BY 'string']
-    [[OPTIONALLY] ENCLOSED BY 'char']
-    [ESCAPED BY 'char']
+    [TERMINATED BY \'string\']
+    [[OPTIONALLY] ENCLOSED BY \'char\']
+    [ESCAPED BY \'char\']
   ]
   [LINES
-    [STARTING BY 'string']
-    [TERMINATED BY 'string']
+    [STARTING BY \'string\']
+    [TERMINATED BY \'string\']
   ]
 lock_option:
   [WAIT n | NOWAIT | SKIP LOCKED]
@@ -88,6 +88,9 @@ See LOCK IN SHARE MODE and FOR UPDATE for details on the respective locking clau
 
 OFFSET ... FETCH
 
+MariaDB starting with 10.6
+See SELECT ... OFFSET ... FETCH.
+
 ORDER BY
 
 Order a resultset. See ORDER BY for details.
@@ -103,6 +106,13 @@ Passes the whole result set to a C Procedure. See PROCEDURE and PROCEDURE ANALYS
 (the only built-in procedure not requiring the server to be recompiled).
 
 SKIP LOCKED
+
+MariaDB starting with 10.6
+The SKIP LOCKED clause was introduced in MariaDB 10.6.0.
+
+This causes those rows that couldn\'t be locked (LOCK IN SHARE MODE or FOR UPDATE) to
+be excluded from the result set. An explicit NOWAIT is implied here. This is only
+implemented on InnoDB tables and ignored otherwise.
 
 SQL_CALC_FOUND_ROWS
 
@@ -123,7 +133,7 @@ Set the lock wait timeout. See WAIT and NOWAIT.
 
 Examples
 --------
-SELECT f1,f2 FROM t1 WHERE (f3<=10) AND (f4='y');
+SELECT f1,f2 FROM t1 WHERE (f3<=10) AND (f4=\'y\');
 
 See Getting Data from MariaDB (Beginner tutorial), or the various sub-articles, for
 more examples.

@@ -39,6 +39,9 @@ to use INSERT ... SELECT to copy rows between different databases.
 The PARTITION clause can be used in both the INSERT and the SELECT part. See
 Partition Pruning and Selection for details.
 
+MariaDB starting with 10.5
+The RETURNING clause was introduced in MariaDB 10.5.
+
 The columns list is optional. It specifies which values are explicitly inserted, and
 in which order. If this clause is not specified, all values must be explicitly
 specified, in the same order they are listed in the table definition.
@@ -49,7 +52,7 @@ values must be listed in the same order as the columns list. It is possible to
 specify more than one list to insert more than one rows with a single statement. If
 many rows are inserted, this is a speed optimization.
 
-For one-row statements, the SET clause may be more simple, because you don't need to
+For one-row statements, the SET clause may be more simple, because you don\'t need to
 remember the columns order. All values are specified in the form col = expr.
 
 Values can also be specified in the form of a SQL expression or subquery. However,
@@ -85,16 +88,16 @@ See INSERT ON DUPLICATE KEY UPDATE.
 Examples
 --------
 Specifying the column names:
-INSERT INTO person (first_name, last_name) VALUES ('John', 'Doe');
+INSERT INTO person (first_name, last_name) VALUES (\'John\', \'Doe\');
 
 Inserting more than 1 row at a time:
 INSERT INTO tbl_name VALUES (1, "row 1"), (2, "row 2");
 
 Using the SET clause:
-INSERT INTO person SET first_name = 'John', last_name = 'Doe';
+INSERT INTO person SET first_name = \'John\', last_name = \'Doe\';
 
 SELECTing from another table:
-INSERT INTO contractor SELECT * FROM person WHERE status = 'c';
+INSERT INTO contractor SELECT * FROM person WHERE status = \'c\';
 
 See INSERT ON DUPLICATE KEY UPDATE and INSERT IGNORE for further examples.
 
@@ -113,7 +116,7 @@ statements which have subqueries and prepared statements can also be used.
 Examples
 
 Simple INSERT statement
-INSERT INTO t2 VALUES (1,'Dog'),(2,'Lion'),(3,'Tiger'),(4,'Leopard') 
+INSERT INTO t2 VALUES (1,\'Dog\'),(2,\'Lion\'),(3,\'Tiger\'),(4,\'Leopard\') 
 RETURNING id2,id2+id2,id2&id2,id2||id2;
 +-----+---------+---------+----------+
 | id2 | id2+id2 | id2&id2 | id2||id2 |
@@ -133,7 +136,7 @@ CREATE FUNCTION f(arg INT) RETURNS INT
 
 DELIMITER ;
 
-PREPARE stmt FROM "INSERT INTO t1 SET id1=1, animal1='Bear' RETURNING
+PREPARE stmt FROM "INSERT INTO t1 SET id1=1, animal1=\'Bear\' RETURNING
 f(id1), UPPER(animal1)";
 
 EXECUTE stmt;

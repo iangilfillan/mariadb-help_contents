@@ -66,7 +66,7 @@ def read_table_information(read_from, write_text_files=True) -> list:
     
     return table_information
 
-def update_table_information(table_information) -> None:
+def update_table_information(table_information, regenerate_text) -> None:
     forced_line_splits = 0
     start_time = time.perf_counter()
 
@@ -76,15 +76,21 @@ def update_table_information(table_information) -> None:
         sys.stdout.write(f"\rRan Through {index+1}/{num_files} files")
         sys.stdout.flush()
         #set new information
-        page = fetch_page(help_topic.url)
-        help_topic.new_description = page.text
-
-        forced_line_splits += page.forced_line_splits
+        if regenerate_text:
+            page = fetch_page(help_topic.url)
+            help_topic.new_description = page.text
+            forced_line_splits += page.forced_line_splits
+        else:
+            filename = get_name(help_topic.url) + ".txt"
+            infile =  open(osjoin("fetched_pages", filename), encoding="utf-8")
+            new_desc = infile.read()
+            infile.close()
+            help_topic.new_description = new_desc.replace("\n", "\\n")
 
     time_taken = time.perf_counter() - start_time
 
     print("\n")
-    print(f"{forced_line_splits} - TOTAL FORCED LINE SPLITS - {forced_line_splits}")
+    if forced_line_splits > 0: print(f"{forced_line_splits} - TOTAL FORCED LINE SPLITS - {forced_line_splits}")
     print(f"Took {round(time_taken, 2)}s to run {num_files} files")
     print(f"Avg of {round(time_taken / num_files, 3)}s per file")
 
@@ -108,13 +114,14 @@ def insert_into_help_table(fp, table_information) -> None:
     return None
 
 def main():
+    regenerate_text = False
     #get fill_help_tables.sql info
     table_information = read_table_information("fill_help_tables.sql", False)
     #copy fill_help_tables
     with open("fill_help_tables.sql", "r", encoding="utf-8") as infile: content = infile.read()
     with open("new_help_tables.sql", "w", encoding="utf-8") as outfile: outfile.write(content)
     #update table_information
-    update_table_information(table_information)
+    update_table_information(table_information, regenerate_text)
     insert_into_help_table("new_help_tables.sql", table_information)
 
     return None

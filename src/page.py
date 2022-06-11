@@ -35,6 +35,9 @@ class Page:
         text = self.space_paragraphs(text)
         text = self.remove_extra_space(text)
         text = self.reduce_indents(text)
+        #basic operations
+        text = text.replace("'", r"\'")
+        text = text.replace(r"\\'", r"\'")
         #set text
         self.text = text
         
@@ -64,7 +67,7 @@ class Page:
         remove(content, "div", {"class": "table_of_contents"}) #remove side contents bar
         remove(content, "h2", {"id": "see-also"}) #remove see also header
         remove(content, "ul") #remove list items (potentially temporary- to remove elements under see-also)
-        remove(content, "div", {"class": "mariadb"}) #remove mariadb version notices
+        #remove(content, "div", {"class": "mariadb"}) #remove mariadb version notices
 
         remove(content, "h1") #remove main header
         
@@ -222,7 +225,7 @@ def main():
     if calc_time: start_time = time.perf_counter()
 
     for index, name in enumerate(files):
-        
+
         filepath = osjoin("fetched_pages", name)
         #open html
         infile = open(filepath+".html", "r", encoding="utf-8")
@@ -239,8 +242,12 @@ def main():
         outfile = open(filepath+".txt", "w", encoding="utf-8")
         outfile.write(page.text)
         outfile.close()
+        #timing
+        current_time_taken = time.perf_counter() - start_time
+        current_avg_time = current_time_taken / (index+1)
+        est_time_remaining = int(current_avg_time * (num_files - (index+1)))
         #debug
-        sys.stdout.write(f"\rRan Through {index+1}/{num_files} files")
+        sys.stdout.write(f"\rRan Through {index+1}/{num_files} files (est time remaining: {est_time_remaining}s)")
         sys.stdout.flush()
     
     if calc_time: time_taken = time.perf_counter() - start_time
