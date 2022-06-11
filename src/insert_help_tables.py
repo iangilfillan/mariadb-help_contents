@@ -2,6 +2,8 @@
 import re
 import time
 import sys
+import os
+
 from dataclasses import dataclass
 
 
@@ -114,6 +116,7 @@ def insert_into_help_table(fp, table_information) -> None:
     return None
 
 def main():
+    if "current_text_files" not in os.listdir(): os.makedirs("current_text_files")
     regenerate_text = False
     #get fill_help_tables.sql info
     table_information = read_table_information("fill_help_tables.sql", False)
