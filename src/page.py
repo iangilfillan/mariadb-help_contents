@@ -20,14 +20,15 @@ class Page:
         """transforms the full html into stripped raw text for use in documentation"""
         #setup soup
         soup = BeautifulSoup(self.content, features="html5lib")
-        #clean soup
+        #get main content
         content = self.find_content(soup)
-        content = self.clean_content(content)
+        #clean soup
+        self.clean_content(content)
 
-        content = self.fix_tables(content)
+        self.fix_tables(content)
 
-        content = self.space_headers(content)
-        content = self.space_code_blocks(content)
+        self.space_headers(content)
+        self.space_code_blocks(content)
         #retrieve text
         text = content.get_text()
         #clean text
@@ -50,7 +51,7 @@ class Page:
 
         return content
 
-    def clean_content(self, content) -> BeautifulSoup:
+    def clean_content(self, content) -> None:
         """Removes irrelevant content still left in the webpage"""
         #helper method for easy removal
         def remove(content, *args, **kwargs):
@@ -67,13 +68,14 @@ class Page:
         remove(content, "div", {"class": "table_of_contents"}) #remove side contents bar
         remove(content, "h2", {"id": "see-also"}) #remove see also header
         remove(content, "ul") #remove list items (potentially temporary- to remove elements under see-also)
+
         #remove(content, "div", {"class": "mariadb"}) #remove mariadb version notices
 
         remove(content, "h1") #remove main header
         
         return content
 
-    def fix_tables(self, content) -> BeautifulSoup:
+    def fix_tables(self, content) -> None:
         #find the tables
         tables = content.find_all("tbody")
 
@@ -129,7 +131,7 @@ class Page:
         #return
         return text
 
-    def space_headers(self, content) -> BeautifulSoup:
+    def space_headers(self, content) -> None:
         """Modifies headers to have extra space and decoration"""
         for header in content.find_all("h2"):
             length = len(header.text)
@@ -138,16 +140,16 @@ class Page:
         for header in content.find_all("h3") + content.find_all("h5"):
             header.string = "\n" + header.text + "\n"
 
-        return content
+        return None
 
-    def space_code_blocks(self, contents) -> BeautifulSoup:
+    def space_code_blocks(self, contents) -> None:
         """Spaces code blocks to improve readability"""
 
         code_blocks = contents.find_all("pre", {"class": "fixed"})
         for cb in code_blocks:
             cb.string = cb.text + "\n"
 
-        return contents
+        return None
 
     def set_line_limit(self, text) -> str:
         """Assures lines do not extend past a certain length"""
@@ -185,7 +187,7 @@ class Page:
 
     def space_paragraphs(self, text) -> str:
         """Adds extra space for paragraphs to improve readability"""
-        text = re.sub(r'([^.])\. *\n *([^\n])', r'\1.\n\n\2',text)
+        text = re.sub(r'([^.])\. *\n *([^\n])', r'\1.\n\n\2', text)
 
         return text
 
@@ -247,7 +249,7 @@ def main():
         current_avg_time = current_time_taken / (index+1)
         est_time_remaining = int(current_avg_time * (num_files - (index+1)))
         #debug
-        sys.stdout.write(f"\rRan Through {index+1}/{num_files} files (est time remaining: {est_time_remaining}s)")
+        sys.stdout.write(f"\rRan Through {index+1}/{num_files} files - (est time remaining: {est_time_remaining}s)")
         sys.stdout.flush()
     
     if calc_time: time_taken = time.perf_counter() - start_time
