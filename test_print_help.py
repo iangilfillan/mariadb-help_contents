@@ -23,7 +23,6 @@ def main() -> None:
         description = help_structure[requested_keyword]
         print("\n")
         print(description, "\n")
-        print("\n\n\n\n\n\n\n\n\n\n")
     
     return None
 
@@ -51,6 +50,7 @@ def get_help_table() -> str:
     run = True
     while run:
         Input = input("Enter sql file: ")
+        if not Input: Input = "new_help_tables.sql"
         if Input in files: break
         else: print("File not found\n")
     
