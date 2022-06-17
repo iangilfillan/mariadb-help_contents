@@ -7,8 +7,6 @@ import os
 from dataclasses import dataclass
 from os.path import join as osjoin
 
-from tomlkit import table
-
 #local imports
 from page import Page
 #config
@@ -88,7 +86,7 @@ def get_new_description(name):
         with open(osjoin("fetched_pages", name+".html"), "r", encoding="utf-8") as infile:
             page = Page(name, infile.read())
             page.format_text()
-            new_description = page.text#.replace("\n", "\\n")
+            new_description = page.text
     else:
         #read and set
         with open(osjoin("fetched_pages", name+".txt"), "r", encoding="utf-8") as infile:
