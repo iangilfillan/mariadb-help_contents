@@ -8,8 +8,9 @@ from os.path import join as osjoin
 from bs4 import BeautifulSoup
 #classes
 class Page:
-    line_limit = 85
+    line_limit = 79
     forced_line_splits = 0
+    text = ""
     def __init__(self, name, content) -> None:
         self.name = name
         self.content = content
@@ -19,20 +20,53 @@ class Page:
     def format_text(self) -> None:
         """transforms the full html into stripped raw text for use in documentation"""
         #setup soup
-        soup = BeautifulSoup(self.content, features="html5lib")
+        html = self.content
+
+        soup = BeautifulSoup(html, features="html5lib")
         #get main content
         content = self.find_content(soup)
-        #clean soup
+        content = self.modify_content(content)
+        #html manipulation
+        html = str(content)
+        html = self.remove_from_html(html)
+        #text manipulation
+        text = BeautifulSoup(html, features="html5lib").get_text()
+        text = self.modify_text(text)
+        #set text
+        self.text = text
+        
+        return None
+
+    def modify_content(self, content) -> BeautifulSoup:
+        """Removes information from a BeautifulSoup object"""
         self.clean_content(content)
-
         self.fix_tables(content)
-
         self.space_headers(content)
         self.space_code_blocks(content)
         self.remove_extra_newlines(content)
-        #retrieve text
-        text = content.get_text()
-        #clean text
+
+        return content
+
+    def remove_from_html(self, html):
+        """Removes extra information at the bottom of the page"""
+        #If examples is present
+        index = html.find('<h2 class="anchored_heading" id="examples">')
+        if index != -1:
+            #Remove everything from the Examples heading
+            html = html[:index]
+            return html
+
+        #If see also is present
+        index = html.find('<h2 class="anchored_heading" id="see-also">')
+        if index != -1:
+            #Remove everything from the See Also heading
+            html = html[:index]
+            return html
+
+        return html
+
+    def modify_text(self, text) -> str:
+        """Removes and modifies text"""
         text = self.set_line_limit(text)
         text = self.space_paragraphs(text)
         text = self.remove_extra_space(text)
@@ -40,16 +74,14 @@ class Page:
         #basic operations
         text = text.replace("'", r"\'")
         text = text.replace(r"\\'", r"\'")
-        #set text
-        self.text = text
         
-        return None
+        return text
 
     def find_content(self, soup) -> BeautifulSoup:
         """Finds the relevant content in the webpage"""
         #find main content
         content = soup.find("section", {"id": "content"})
-
+        
         return content
 
     def clean_content(self, content) -> None:
@@ -67,13 +99,14 @@ class Page:
         remove(content, "div", {"class": "simple_section_nav"}) #removes extra links
 
         remove(content, "div", {"class": "table_of_contents"}) #remove side contents bar
-        remove(content, "h2", {"id": "see-also"}) #remove see also header
-        remove(content, "ul") #remove list items (potentially temporary- to remove elements under see-also)
+        #remove(content, "h2", {"id": "see-also"}) #remove see also header
 
         #remove(content, "div", {"class": "mariadb"}) #remove mariadb version notices
 
-        remove(content, "h1") #remove main header
-        
+        #remove main header
+        tag = content.find("h1")
+        if tag != None: tag.decompose()
+
         return content
 
     def fix_tables(self, content) -> None:
@@ -99,38 +132,90 @@ class Page:
             for th in ths:
                 text = th.get_text()
                 columns[-1].append(text)
-
         return columns
 
-    def format_table(self, table) -> str:
-
-        #get the maximum width for an element in the table
-        max_width = 0
-        for c in table:
-            for column_index, e in enumerate(c):
-                length = len(e)
-                max_width = max(length, max_width)
-
-        #lambda function to add top and bottom border
-        add_border = lambda max_width, column_index: "+" + "".join(["-" * max_width + "+" for _ in range(column_index+1)])
-
-        #add text
-        text = ""
-        text += add_border(max_width, column_index) + "\n"
-
+    def equalise_table(self, table):
+        """makes sure there are no rows with less columns than other rows"""
+        max_row_length = 0
         for row in table:
-            text += "|"
-            for element in row:
-                #make spacing consistent
-                if len(element) < max_width:
-                    element += " " * (max_width - len(element))
+            row_length = len(row)
+            max_row_length = max(max_row_length, row_length)
+        
+        for row in table:
+            row_length = len(row)
+            if row_length < max_row_length:
+                row += [""] * (max_row_length - row_length)
+        
+        return table
 
-                text += element + "|"
-            text += "\n"
-        text += add_border(max_width, column_index)
+    def format_table(self, table):
+        output = ""
 
-        #return
-        return text
+        self.equalise_table(table)
+        column_widths = self.get_column_widths(table)
+        for row in table:
+            str_line = self.add_row_break(column_widths)
+            row_lines, number_of_lines = self.get_lines(row, column_widths)
+            #print(row_lines)
+            for i in range(number_of_lines):
+                str_line += "|"
+                for index, line in enumerate(row_lines):
+                    str_line += " "
+                    if i < len(line):
+                        str_line += line[i] + " " * (column_widths[index] - len(line[i]))
+                    else:
+                        str_line += " " * column_widths[index]
+                    str_line += " |"
+                str_line += "\n"
+            output += str_line
+        output += self.add_row_break(column_widths)
+        return output
+
+    def get_column_widths(self, table):
+        row = table[0]
+
+        lengths = []
+        ratio = []
+
+        for column in row:
+            lengths.append(len(column))
+        
+        up_to = sum(lengths)
+        
+        column_widths = []
+        for l in lengths:
+            ratio = l / up_to
+            c_width = self.line_limit - (3*len(lengths))
+            c_width *= ratio
+            column_widths.append(int(c_width))
+
+        return column_widths
+
+    def add_row_break(self, column_widths):
+        row_break = "+"
+        for i in column_widths:
+            row_break += "-" * (i + 2) + "+"#(plus 2 to account for the two extra spaces)
+        return row_break + "\n"
+
+    def get_lines(self, row, column_widths):
+        lines = []
+        number_of_lines = 0
+        for index, width in enumerate(column_widths):
+            elines = self.sep_lines(row[index], width)
+            lines.append(elines)
+            number_of_lines = max(len(elines), number_of_lines)
+        return lines, number_of_lines
+    
+    
+    def sep_lines(self, string, len_line):
+        lines = []
+        line2 = string.strip()
+        while len(line2) > len_line:
+            line1, line2 = self.seperate_line(line2, len_line)
+            lines.append(line1)
+        lines.append(line2)
+
+        return lines
 
     def space_headers(self, content) -> None:
         """Modifies headers to have extra space and decoration"""
@@ -141,16 +226,12 @@ class Page:
         for header in content.find_all("h3") + content.find_all("h5"):
             header.string = "\n" + header.text + "\n"
 
-        return None
-
     def space_code_blocks(self, content) -> None:
         """Spaces code blocks to improve readability"""
 
         code_blocks = content.find_all("pre", {"class": "fixed"})
         for cb in code_blocks:
             cb.string = cb.text + "\n"
-
-        return None
 
     #transfer BeautifulSoup to text
     def remove_extra_newlines(self, content) -> None:
@@ -165,10 +246,15 @@ class Page:
         lines = []
         for line in text.split("\n"):
             line2 = line
+            count = 0
             while len(line2) > self.line_limit:
+                count += 1
                 line1, line2 = self.seperate_line(line2, self.line_limit)
                 lines.append(line1)
-
+                if count > 100:
+                    print(line)
+                    print(self.name())
+                    exit()
             lines.append(line2)
         
         new_text = "\n".join(lines)
@@ -177,20 +263,17 @@ class Page:
 
     def seperate_line(self, line, line_limit) -> list:
         """returns the given string capped to the line_limit and returns the remaining string"""
-        start = 0
+
         matches = list(re.finditer(" ", line))
-        for i, m in enumerate(matches):
-            prev_start = start
+        for m in reversed(matches):
             start = m.start()
-            if (start > line_limit) or (i + 1 == len(matches)):
-                line1 = line[:prev_start]
-                line2 = line[prev_start + 1:]
+            if (start < line_limit):
+                line1 = line[:start]
+                line2 = line[start + 1:]
                 break
 
-        #force the split
-        if len(matches) == 0:
-            self.forced_line_splits += 1
-            line1, line2 = line[:self.line_limit], line[line_limit+1:]
+        else:# len(matches) == 0:
+            line1, line2 = line[:line_limit], line[line_limit+1:]
 
         return line1, line2
 
@@ -225,23 +308,20 @@ class Page:
 
 def main():
     """goes through each .html file in fetched_pages and writes the text version"""
-    files = [html_file.replace(".html", "") for html_file in os.listdir("fetched_pages") if html_file.endswith(".html")]
+    files = set((html_file.replace(".html", "") for html_file in os.listdir("fetched_pages") if html_file.endswith(".html")))
     num_files = len(files)
     calc_time = True
     forced_line_splits = 0
     time_taken = 0
 
     print_line_splits = False
-
     if calc_time: start_time = time.perf_counter()
-
     for index, name in enumerate(files):
 
         filepath = osjoin("fetched_pages", name)
         #open html
-        infile = open(filepath+".html", "r", encoding="utf-8")
-        html = infile.read()
-        infile.close()
+        with open(filepath+".html", "r", encoding="utf-8") as infile:
+            html = infile.read()
         #get text
         page = Page(name, html)
         page.format_text()
@@ -250,9 +330,8 @@ def main():
         #print forced line splits
         if page.forced_line_splits > 0 and print_line_splits: print(f"{page.forced_line_splits} - forced line splits - {page.name}")
         #write text
-        outfile = open(filepath+".txt", "w", encoding="utf-8")
-        outfile.write(page.text)
-        outfile.close()
+        with open(filepath+".txt", "w", encoding="utf-8") as outfile:
+            outfile.write(page.text)
         #timing
         current_time_taken = time.perf_counter() - start_time
         current_avg_time = current_time_taken / (index+1)
@@ -267,6 +346,7 @@ def main():
     print(f"{forced_line_splits} - TOTAL FORCED LINE SPLITS - {forced_line_splits}")
     print(f"Took {round(time_taken, 2)}s to run {num_files} files")
     print(f"Avg of {round(time_taken / num_files, 3)}s per file")
+
 
 if __name__ == "__main__":
     main()

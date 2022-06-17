@@ -15,7 +15,8 @@ SELECT
    [LIMIT {[offset,] row_count | row_count OFFSET offset  [ROWS EXAMINED
 rows_limit] } |
     [OFFSET start { ROW | ROWS }]
-    [FETCH { FIRST | NEXT } [ count ] { ROW | ROWS } { ONLY | WITH TIES }] ]
+    [FETCH { FIRST | NEXT } [ count ] { ROW | ROWS } { ONLY | WITH TIES }]
+]
    procedure|[PROCEDURE procedure_name(argument_list)]
    [INTO OUTFILE \'file_name\' [CHARACTER SET charset_name] [export_options] |
     INTO DUMPFILE \'file_name\' | INTO var_name [, var_name] ]
@@ -35,56 +36,103 @@ lock_option:
 
 Description
 -----------
-SELECT is used to retrieve rows selected from one or more
-tables, and can include UNION statements and subqueries.
+SELECT is used to retrieve rows selected from one or more tables, and can
+include UNION statements and subqueries.
 
-SELECT can also be used to retrieve rows computed without reference to
-any table.
+Each select_expr expression indicates a column or data that you want to
+retrieve. You
+must have at least one select expression. See Select Expressions below.
+
+The FROM clause indicates the table or tables from which to retrieve rows.
+
+Use either a single table name or a JOIN expression. See JOIN
+for details. If no table is involved, FROM DUAL can be specified.
+
+Each table can also be specified as db_name.tabl_name. Each column can also be
+specified as tbl_name.col_name or even db_name.tbl_name.col_name. This allows
+one to write queries which involve multiple databases. See Identifier
+Qualifiers for syntax details.
+
+The WHERE clause, if given, indicates the condition or
+ conditions that rows must satisfy to be selected.
+
+where_condition is an expression that evaluates to true for
+ each row to be selected. The statement selects all rows if there is no WHERE
+ clause.
+
+In the WHERE clause, you can use any of the functions and
+ operators that MariaDB supports, except for aggregate (summary) functions.
+
+See Functions and Operators and Functions and Modifiers for use with GROUP BY
+(aggregate).
+
+Use the ORDER BY clause to order the results.
+
+Use the LIMIT clause allows you to restrict the results to only
+a certain number of rows, optionally with an offset.
+
+Use the GROUP BY and HAVING clauses to group
+rows together when they have columns or computed values in common.
+
+SELECT can also be used to retrieve rows computed without reference to any
+table.
 
 Select Expressions
 
-A SELECT statement must contain one or more select expressions, separated
-by commas. Each select expression can be one of the following:
+A SELECT statement must contain one or more select expressions, separated by
+commas. Each select expression can be one of the following:
+The name of a column.
+
+Any expression using functions and operators.
+
+* to select all columns from all tables in the FROM clause.
+
+tbl_name.* to select all columns from just the table tbl_name.
 
 When specifying a column, you can either use just the column name or qualify
-the column
-name with  the name of the table using tbl_name.col_name. The qualified form is
-useful if you are joining multiple tables in the FROM clause. If you do not
-qualify the
-column names when selecting from multiple tables, MariaDB will try to find the
-column in
-each table. It is an error if that column name exists in multiple tables.
+the column name with the name of the table using tbl_name.col_name. The
+qualified form is useful if you are joining multiple tables in the FROM
+clause. If you do not qualify the column names when selecting from multiple
+tables, MariaDB will try to find the column in each table. It is an error if
+that column name exists in multiple tables.
 
 You can quote column names using backticks. If you are qualifying column names
 with table names, quote each part separately as `tbl_name`.`col_name`.
 
-If you use any grouping functions
-in any of the select expressions, all rows in your results will be implicitly
-grouped, as if
-you had used GROUP BY NULL.
+If you use any grouping functions in any of the select expressions, all rows
+in your results will be implicitly grouped, as if you had used GROUP BY NULL.
 
 DISTINCT
 
-A query may produce some identical rows. By default, all rows are retrieved, even
-when their values are the same. To explicitly specify that you want to retrieve
-identical rows, use the ALL option. If you want duplicates to be removed from the
-resultset, use the DISTINCT option. DISTINCTROW is a synonym for DISTINCT. See also
-COUNT DISTINCT and SELECT UNIQUE in Oracle mode.
+A query may produce some identical rows. By default, all rows are retrieved,
+even when their values are the same. To explicitly specify that you want to
+retrieve identical rows, use the ALL option. If you want duplicates to be
+removed from the resultset, use the DISTINCT option. DISTINCTROW is a synonym
+for DISTINCT. See also COUNT DISTINCT and SELECT UNIQUE in Oracle mode.
 
 INTO
 
-The INTO clause is used to specify that the query results should be written to a file
-or variable.
+The INTO clause is used to specify that the query results should be written to
+a file or variable.
+
+SELECT INTO OUTFILE - formatting and writing the result to an external file.
+
+SELECT INTO DUMPFILE - binary-safe writing of the unformatted results to an
+external file.
+
+SELECT INTO Variable - selecting and setting variables.
 
 The reverse of SELECT INTO OUTFILE is LOAD DATA.
 
 LIMIT
 
-Restricts the number of returned rows. See LIMIT and LIMIT ROWS EXAMINED for details.
+Restricts the number of returned rows. See LIMIT and LIMIT ROWS EXAMINED for
+details.
 
 LOCK IN SHARE MODE/FOR UPDATE
 
-See LOCK IN SHARE MODE and FOR UPDATE for details on the respective locking clauses.
+See LOCK IN SHARE MODE and FOR UPDATE for details on the respective locking
+clauses.
 
 OFFSET ... FETCH
 
@@ -102,38 +150,32 @@ partitions will not be read.  See Partition Pruning and Selection for details.
 
 PROCEDURE
 
-Passes the whole result set to a C Procedure. See PROCEDURE and PROCEDURE ANALYSE
-(the only built-in procedure not requiring the server to be recompiled).
+Passes the whole result set to a C Procedure. See PROCEDURE and PROCEDURE
+ANALYSE (the only built-in procedure not requiring the server to be
+recompiled).
 
 SKIP LOCKED
 
 MariaDB starting with 10.6
 The SKIP LOCKED clause was introduced in MariaDB 10.6.0.
 
-This causes those rows that couldn\'t be locked (LOCK IN SHARE MODE or FOR UPDATE) to
-be excluded from the result set. An explicit NOWAIT is implied here. This is only
-implemented on InnoDB tables and ignored otherwise.
+This causes those rows that couldn\'t be locked (LOCK IN SHARE MODE or FOR
+UPDATE) to be excluded from the result set. An explicit NOWAIT is implied
+here. This is only implemented on InnoDB tables and ignored otherwise.
 
 SQL_CALC_FOUND_ROWS
 
-When SQL_CALC_FOUND_ROWS is used, then MariaDB will calculate how many rows would
-have been in the result, if there would be no LIMIT clause. The result can be found
-by calling the function FOUND_ROWS() in your next sql statement.
+When SQL_CALC_FOUND_ROWS is used, then MariaDB will calculate how many rows
+would have been in the result, if there would be no LIMIT clause. The result
+can be found by calling the function FOUND_ROWS() in your next sql statement.
 
 max_statement_time clause
 
-By using max_statement_time in conjunction with SET STATEMENT, it is possible to
-limit the execution time of individual queries. For example:
+By using max_statement_time in conjunction with SET STATEMENT, it is possible
+to limit the execution time of individual queries. For example:
 SET STATEMENT max_statement_time=100 FOR 
  SELECT field1 FROM table_name ORDER BY field1;
 
 WAIT/NOWAIT
 
 Set the lock wait timeout. See WAIT and NOWAIT.
-
-Examples
---------
-SELECT f1,f2 FROM t1 WHERE (f3<=10) AND (f4=\'y\');
-
-See Getting Data from MariaDB (Beginner tutorial), or the various sub-articles, for
-more examples.

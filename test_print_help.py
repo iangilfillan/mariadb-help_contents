@@ -21,8 +21,9 @@ def main() -> None:
             print(f"Invalid Keyword ({requested_keyword})\n")
             continue
         description = help_structure[requested_keyword]
-        print("\n\n\n\n\n\n\n\n\n\n")
+        print("\n")
         print(description, "\n")
+        print("\n\n\n\n\n\n\n\n\n\n")
     
     return None
 
@@ -31,18 +32,18 @@ def create_help_structure(help_table_file) -> dict:
     #read file
     infile = open(help_table_file, encoding="utf-8")
     lines = infile.readlines()
-    infile.close()    
+    infile.close()
     #process lines
     for line in lines:
         #ignore non insert lines
         if not line.startswith("insert into help_topic (help_topic_id,help_category_id,name,description,example,url) values ("): continue
-        #get info
+        #pattern for splitting line
         pattern = r"insert into help_topic \(help_topic_id,help_category_id,name,description,example,url\) values "
-        pattern += r"\((\d+),(\d+),'(.*)','(.*)','()','(.*)'\)"
-        help_topic_id, help_category_id, name, description, example, url = re.search(pattern, line).groups()
-        #set description
-        output[name] = description.replace("\\n", "\n")
-
+        pattern += r"\((\d+),(\d+),'(.*)','(.*)','()','(.*)'\)"\
+        #split into help_topic_id, help_category_id, name, description, example, url 
+        _, _, name, description, _, _ = re.search(pattern, line).groups()
+        #save the description
+        output[name] = description.replace("\\n", "\n").replace("\'", "'")
     return output
 
 def get_help_table() -> str:

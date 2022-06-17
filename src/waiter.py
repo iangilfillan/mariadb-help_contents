@@ -1,7 +1,7 @@
 import time
 
 class Waiter:
-    def __init__(self, debug=False, wait_time=10) -> None:
+    def __init__(self, wait_time=10, debug=False) -> None:
         self.wait_time = wait_time
         self.last_waited = time.perf_counter() - wait_time 
         self.debug = debug
