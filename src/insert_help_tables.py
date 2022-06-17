@@ -12,24 +12,26 @@ from page import Page
 #config
 
 REGENERATE_TEXT = False
-DEBUG = True
+DEBUG = False
+
 #consts
 FETCHED_PAGES = os.listdir("fetched_pages")
 INSERT_INTO = "insert into help_topic (help_topic_id,help_category_id,name,description,example,url) values ("
 
-
 #classes
 @dataclass
 class HelpTopic:
+    """Basic container for help_topic information"""
     help_topic_id: str
     help_category_id: str
     name: str
     description: str
     example: str
     url: str
+    #new description replacing old description
+    new_description: str = ""
 
 #functions
-
 def get_name(url) -> str:
     """returns the last text in a url eg: mariadb.com/kb/en/insert/ -> insert"""
     #reversing string
@@ -44,7 +46,7 @@ def get_name(url) -> str:
     return name
 
 def get_help_topic_info(line) -> HelpTopic:
-    """Creates a """
+    """Returns a HelpTopic containing all the necessary information"""
     pattern = r"insert into help_topic \(help_topic_id,help_category_id,name,description,example,url\) values "
     pattern += r"\((\d+),(\d+),'(.*)','(.*)','()','(.*)'\)"
 
@@ -66,7 +68,7 @@ def read_table_information(read_from) -> list:
 
 
 def update_table_information(table_information) -> None:
-
+    """Updates the new description of each HelpTopic"""
     num_files = len(table_information)
     for index, help_topic in enumerate(table_information):
         #debug
@@ -76,11 +78,10 @@ def update_table_information(table_information) -> None:
         #set new information
         name = get_name(help_topic.url)
         help_topic.new_description = get_new_description(name)
-    
     return None
 
 def get_new_description(name):
-
+    """Returns new documentation for the given page"""
     if REGENERATE_TEXT or name+".txt" not in FETCHED_PAGES:
         #read, convert, set new description
         with open(osjoin("fetched_pages", name+".html"), "r", encoding="utf-8") as infile:
@@ -91,10 +92,11 @@ def get_new_description(name):
         #read and set
         with open(osjoin("fetched_pages", name+".txt"), "r", encoding="utf-8") as infile:
             new_description = infile.read().replace("\n", "\\n")
-    
+
     return new_description
 
 def insert_into_help_table(fp, table_information) -> None:
+    """Inserts the table information into the sql file"""
     #read help table
     with open(fp, "r", encoding="utf-8") as infile:
         text = infile.read()
@@ -105,24 +107,28 @@ def insert_into_help_table(fp, table_information) -> None:
         #replace old url
         url = help_topic.url.replace("/library", "")
         text = text.replace(help_topic.url, url)
+    #write help table
     with open(fp, "w", encoding="utf-8") as outfile:
         outfile.write(text)
 
-    return None
-
 def main():
+    """Main"""
     #Create the directory 'current_text_files' if absent
     if "current_text_files" not in os.listdir(): os.makedirs("current_text_files")
-    #get fill_help_tables.sql info
-    table_information = read_table_information("fill_help_tables.sql")
-    #copy fill_help_tables
+    #copy fill_help_tables to new_help_tables.sql
     with open("fill_help_tables.sql", "r", encoding="utf-8") as infile: content = infile.read()
     with open("new_help_tables.sql", "w", encoding="utf-8") as outfile: outfile.write(content)
-    #update table_information
-    update_table_information(table_information)
-    insert_into_help_table("new_help_tables.sql", table_information)
+    #main processes
+    table_information = read_table_information("fill_help_tables.sql") #get information from 'fill_help_tables.sql'
+    update_table_information(table_information) # update table_information
+    insert_into_help_table("new_help_tables.sql", table_information) #insert new information into 'new_help_tables.sql'
 
     return None
 
 if __name__ == "__main__":
+    #keep track of time
+    start = time.perf_counter()
+    #main function call
     main()
+    #manage and print time
+    print(time.perf_counter() - start)
