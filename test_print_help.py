@@ -43,7 +43,7 @@ def create_help_structure(help_table_file) -> dict:
         #split into help_topic_id, help_category_id, name, description, example, url 
         _, _, name, description, _, _ = re.search(pattern, line).groups()
         #save the description
-        output[name] = description.replace("\\n", "\n").replace("\'", "'")
+        output[name] = description.replace("\\n", "\n").replace(r"\'", "'")
     return output
 
 def get_help_table() -> str:
