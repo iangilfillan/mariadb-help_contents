@@ -6,11 +6,13 @@ import sys
 
 from os.path import join as osjoin
 from bs4 import BeautifulSoup
+
 #classes
 class Page:
     line_limit = 79
     forced_line_splits = 0
     text = ""
+
     def __init__(self, name, content) -> None:
         self.name = name
         self.content = content
@@ -74,7 +76,13 @@ class Page:
         #basic operations
         text = text.replace("'", r"\'")
         text = text.replace(r"\\'", r"\'")
-        
+
+        #add new lines for URL
+        text += "\n" * 4
+        #add URL
+        url = "mariadb.com/kb/en/" + self.name + "/"
+        text = text + "URL: " + url 
+
         return text
 
     def find_content(self, soup) -> BeautifulSoup:
@@ -251,9 +259,9 @@ class Page:
                 count += 1
                 line1, line2 = self.seperate_line(line2, self.line_limit)
                 lines.append(line1)
+                #error, exits program
                 if count > 100:
-                    print(line)
-                    print(self.name())
+                    print(f"ERROR for LINE {line} in {self.name}")
                     exit()
             lines.append(line2)
         

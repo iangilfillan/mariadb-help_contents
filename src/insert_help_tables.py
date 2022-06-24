@@ -11,8 +11,9 @@ from os.path import join as osjoin
 from page import Page
 #config
 
-REGENERATE_TEXT = False
-DEBUG = False
+SQL_FILENAME = "new_help_tables.sql"
+REGENERATE_TEXT = True
+DEBUG = True
 
 #consts
 FETCHED_PAGES = os.listdir("fetched_pages")
@@ -67,11 +68,11 @@ def read_table_information(read_from) -> list:
 
 
 
-def update_table_information(table_information) -> None:
-    """Updates the new description of each HelpTopic"""
+def update_table_information(table_information):
+    """Updates the new description documentation for each HelpTopic"""
     num_files = len(table_information)
     for index, help_topic in enumerate(table_information):
-        #debug
+        #debug progress
         if DEBUG:
             sys.stdout.write(f"\rRan Through {index+1}/{num_files} files")
             sys.stdout.flush()
@@ -81,19 +82,19 @@ def update_table_information(table_information) -> None:
     return None
 
 def get_new_description(name):
-    """Returns new documentation for the given page"""
+    """Returns new description documentation for the given page name"""
     if REGENERATE_TEXT or name+".txt" not in FETCHED_PAGES:
-        #read, convert, set new description
+        #read, convert, set new description from html file
         with open(osjoin("fetched_pages", name+".html"), "r", encoding="utf-8") as infile:
             page = Page(name, infile.read())
             page.format_text()
             new_description = page.text
     else:
-        #read and set
+        #read and set new description from txt file
         with open(osjoin("fetched_pages", name+".txt"), "r", encoding="utf-8") as infile:
-            new_description = infile.read().replace("\n", "\\n")
-
-    return new_description
+            new_description = infile.read()
+    #returns the new description with it'`s` newlines escaped
+    return "\\n".join(new_description.splitlines())
 
 def insert_into_help_table(fp, table_information) -> None:
     """Inserts the table information into the sql file"""
@@ -126,9 +127,27 @@ def main():
     return None
 
 if __name__ == "__main__":
+    #keep track of 
+    files = os.listdir()
+        
+    if SQL_FILENAME in files:
+        with open(SQL_FILENAME, "r", encoding="utf-8") as infile:
+            old_file = infile.read()
+    else:
+        old_file = ""
     #keep track of time
     start = time.perf_counter()
     #main function call
     main()
     #manage and print time
-    print(time.perf_counter() - start)
+    print("\nSeconds to execute:", round(time.perf_counter() - start, 2))
+    with open(SQL_FILENAME, "r", encoding="utf-8") as infile:
+        new_file = infile.read()
+    
+    #print changes in new_help_tables.sql
+    if old_file == "":
+        print("wrote to", SQL_FILENAME)
+    elif old_file != new_file:
+        print("updated", SQL_FILENAME)
+    else:
+        print("no change was made to", SQL_FILENAME)
