@@ -12,7 +12,7 @@ from page import Page
 #config
 
 SQL_FILENAME = "new_help_tables.sql"
-REGENERATE_TEXT = True
+REGENERATE_TEXT = False
 DEBUG = True
 
 #consts
@@ -79,6 +79,8 @@ def update_table_information(table_information):
         #set new information
         name = get_name(help_topic.url)
         help_topic.new_description = get_new_description(name)
+    #new line for prints after this function    
+    if DEBUG: print()
     return None
 
 def get_new_description(name):
@@ -151,4 +153,4 @@ if __name__ == "__main__":
         print("no change was made to", SQL_FILENAME)
     
     #manage and print time
-    print("\nSeconds to execute:", round(time.perf_counter() - start, 2))
+    print("Seconds to execute:", round(time.perf_counter() - start, 2))
