@@ -139,15 +139,16 @@ if __name__ == "__main__":
     start = time.perf_counter()
     #main function call
     main()
-    #manage and print time
-    print("\nSeconds to execute:", round(time.perf_counter() - start, 2))
+    #print changes in new_help_tables.sql
     with open(SQL_FILENAME, "r", encoding="utf-8") as infile:
         new_file = infile.read()
     
-    #print changes in new_help_tables.sql
     if old_file == "":
         print("wrote to", SQL_FILENAME)
     elif old_file != new_file:
         print("updated", SQL_FILENAME)
     else:
         print("no change was made to", SQL_FILENAME)
+    
+    #manage and print time
+    print("\nSeconds to execute:", round(time.perf_counter() - start, 2))
