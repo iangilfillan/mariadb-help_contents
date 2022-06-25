@@ -81,7 +81,7 @@ class Page:
         text += "\n" * 4
         #add URL
         url = "mariadb.com/kb/en/" + self.name + "/"
-        text = text + "URL: " + url 
+        text = text + "URL: " + url.strip()
 
         return text
 
