@@ -12,8 +12,9 @@ from page import Page
 #config
 
 SQL_FILENAME = "new_help_tables.sql"
-REGENERATE_TEXT = False
+REGENERATE_TEXT = True
 DEBUG = True
+CURRENT_TEXT_FILES = True
 
 #consts
 FETCHED_PAGES = os.listdir("fetched_pages")
@@ -63,6 +64,13 @@ def read_table_information(read_from) -> list:
     #get help topics
     gen = (get_help_topic_info(line) for line in lines if line.startswith(INSERT_INTO))
     table_information = [help_topic for help_topic in gen if help_topic.url != ""]
+
+    if CURRENT_TEXT_FILES:
+        for h_topic in table_information:
+            text = h_topic.description
+            filename = get_name(h_topic.url) + ".txt"
+            with open(osjoin("current_text_files", filename), "w", encoding = "utf-8") as outfile:
+                outfile.write(text.replace("\\n", "\n"))
 
     return table_information
 
