@@ -3,6 +3,8 @@ import re
 import time
 import sys
 import os
+import datetime
+import calendar
 
 from dataclasses import dataclass
 from os.path import join as osjoin
@@ -56,6 +58,7 @@ def get_help_topic_info(line) -> HelpTopic:
 
 def read_table_information(read_from) -> list:
     """Returns a list containing the HelpTopic from each replacable line"""
+    if DEBUG: print("Reading Help Tables")
     table_information = []
     #get lines
     with open(read_from, "r", encoding="utf-8") as infile:
@@ -76,8 +79,10 @@ def read_table_information(read_from) -> list:
 
 
 
-def update_table_information(table_information):
+def update_table_information(table_information: list):
     """Updates the new description documentation for each HelpTopic"""
+    if DEBUG: print("Updating Help Tables")
+    
     num_files = len(table_information)
     for index, help_topic in enumerate(table_information):
         #debug progress
@@ -106,7 +111,7 @@ def get_new_description(name):
     #returns the new description with it'`s` newlines escaped
     return "\\n".join(new_description.splitlines())
 
-def insert_into_help_table(fp, table_information) -> None:
+def insert_into_help_table(fp: str, table_information: list) -> None:
     """Inserts the table information into the sql file"""
     #read help table
     with open(fp, "r", encoding="utf-8") as infile:
@@ -118,6 +123,9 @@ def insert_into_help_table(fp, table_information) -> None:
         #replace old url
         url = help_topic.url.replace("/library", "")
         text = text.replace(help_topic.url, url)
+
+    text = update_help_date(text)
+
     #write help table
     with open(fp, "w", encoding="utf-8") as outfile:
         outfile.write(text)
@@ -136,6 +144,25 @@ def main():
 
     return None
 
+def update_help_date(text: str) -> str:
+    """Updates the help date to the current date"""
+    #get old description
+    for line in text.split("\n"):
+        if line.count(",'HELP_DATE',") > 0:
+            help_topic = get_help_topic_info(line)
+            description = help_topic.description
+            break
+    #make new description
+    date = datetime.date.today()
+    day, month, year = date.day, calendar.month_name[date.month], date.year
+
+    updated_description = f"This help information was generated from the MariaDB Knowledge Base\non {day} {month} {year}."
+    print(updated_description)
+    #replace old with new
+    text = text.replace(description, updated_description.replace("\n", " "))
+
+    return text
+
 if __name__ == "__main__":
     #keep track of 
     files = os.listdir()
@@ -145,6 +172,7 @@ if __name__ == "__main__":
             old_file = infile.read()
     else:
         old_file = ""
+    
     #keep track of time
     start = time.perf_counter()
     #main function call
@@ -152,13 +180,13 @@ if __name__ == "__main__":
     #print changes in new_help_tables.sql
     with open(SQL_FILENAME, "r", encoding="utf-8") as infile:
         new_file = infile.read()
-    
+
     if old_file == "":
-        print("wrote to", SQL_FILENAME)
+        print("Wrote to", SQL_FILENAME)
     elif old_file != new_file:
-        print("updated", SQL_FILENAME)
+        print("Updated", SQL_FILENAME)
     else:
-        print("no change was made to", SQL_FILENAME)
+        print("No change was made to", SQL_FILENAME)
     
     #manage and print time
     print("Seconds to execute:", round(time.perf_counter() - start, 2))
