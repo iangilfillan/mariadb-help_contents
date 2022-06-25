@@ -7,6 +7,9 @@ import sys
 from os.path import join as osjoin
 from bs4 import BeautifulSoup
 
+#custom line break character
+LINE_BREAK = "<line-break>"
+
 #classes
 class Page:
     line_limit = 79
@@ -42,21 +45,21 @@ class Page:
     def modify_content(self, content) -> BeautifulSoup:
         """Removes information from a BeautifulSoup object"""
         self.clean_content(content)
+        self.mark_list_items(content)
         self.fix_tables(content)
         self.space_headers(content)
         self.space_code_blocks(content)
         self.remove_extra_newlines(content)
-
         return content
 
     def remove_from_html(self, html):
         """Removes extra information at the bottom of the page"""
         #If examples is present
-        index = html.find('<h2 class="anchored_heading" id="examples">')
-        if index != -1:
+        #index = html.find('<h2 class="anchored_heading" id="examples">')
+        #if index != -1:
             #Remove everything from the Examples heading
-            html = html[:index]
-            return html
+        #    html = html[:index]
+        #    return html
 
         #If see also is present
         index = html.find('<h2 class="anchored_heading" id="see-also">')
@@ -69,20 +72,21 @@ class Page:
 
     def modify_text(self, text) -> str:
         """Removes and modifies text"""
+        text = text.replace(LINE_BREAK, "\n")
+        
         text = self.set_line_limit(text)
         text = self.space_paragraphs(text)
         text = self.remove_extra_space(text)
         text = self.reduce_indents(text)
-        #basic operations
+        #escape character nonsense
         text = text.replace("'", r"\'")
         text = text.replace(r"\\'", r"\'")
-
+        text = text.replace(r"\\", r"\\\\")
         #add new lines for URL
         text += "\n" * 4
         #add URL
         url = "mariadb.com/kb/en/" + self.name + "/"
         text = text + "URL: " + url.strip()
-
         return text
 
     def find_content(self, soup) -> BeautifulSoup:
@@ -117,6 +121,12 @@ class Page:
 
         return content
 
+    def mark_list_items(self, content) -> None:
+        #Marks list items with a *
+        lis = content.find_all("li")
+        for li in lis:
+            li.string = "* " + li.text
+
     def fix_tables(self, content) -> None:
         #find the tables
         tables = content.find_all("tbody")
@@ -127,7 +137,7 @@ class Page:
             structured_table = self.create_table(table)
             text = self.format_table(structured_table)
             #table.tbody.decompose()
-            table.string = text
+            table.string = "\n" + text
 
         return content
 
@@ -227,21 +237,21 @@ class Page:
 
     def space_headers(self, content) -> None:
         """Modifies headers to have extra space and decoration"""
-        for header in content.find_all("h2"):
-            length = len(header.text)
-            header.string = "\n" + header.text + "\n" + "-" * length
+        #for header in content.find_all("h2"):
+        #    length = len(header.text)
+        #    header.string = "\n" + header.text + "\n" + "-" * length
 
-        for header in content.find_all("h3") + content.find_all("h5"):
-            header.string = "\n" + header.text + "\n"
+        for header in content.find_all("h2") + content.find_all("h3") + content.find_all("h4") + content.find_all("h5"):
+            length = len(header.text)
+            header.string = "\n" + header.text + "\n" + "-" * length + "\n"
 
     def space_code_blocks(self, content) -> None:
         """Spaces code blocks to improve readability"""
 
         code_blocks = content.find_all("pre", {"class": "fixed"})
         for cb in code_blocks:
-            cb.string = cb.text + "\n"
-
-    #transfer BeautifulSoup to text
+            cb.string = LINE_BREAK + cb.text + "\n"
+    
     def remove_extra_newlines(self, content) -> None:
         """Removes new lines found in paragraphs where newlines are normally ignored"""
         for tag in content.find_all("p"):
