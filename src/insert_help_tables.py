@@ -163,10 +163,10 @@ def update_help_date(text: str) -> str:
 if __name__ == "__main__":
     #keep track of 
     files = os.listdir()
-        
+
     if SQL_FILENAME in files:
-        with open(SQL_FILENAME, "r", encoding="utf-8") as infile:
-            old_file = infile.read()
+        with open(SQL_FILENAME, "r", encoding="utf-8") as sql_file:
+            old_file = sql_file.read()
     else:
         old_file = ""
 
@@ -175,8 +175,8 @@ if __name__ == "__main__":
     #main function call
     main()
     #print changes in new_help_tables.sql
-    with open(SQL_FILENAME, "r", encoding="utf-8") as infile:
-        new_file = infile.read()
+    with open(SQL_FILENAME, "r", encoding="utf-8") as sql_file:
+        new_file = sql_file.read()
 
     if old_file == "":
         print("Wrote to", SQL_FILENAME)
@@ -184,6 +184,6 @@ if __name__ == "__main__":
         print("Updated", SQL_FILENAME)
     else:
         print("No change was made to", SQL_FILENAME)
-    
+
     #manage and print time
     print("Seconds to execute:", round(perf_counter() - start, 2))

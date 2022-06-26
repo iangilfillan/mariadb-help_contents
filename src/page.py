@@ -1,8 +1,8 @@
 #imports
 import re
 import os
-import time
 
+from time import perf_counter
 from os.path import join as osjoin
 from bs4 import BeautifulSoup
 
@@ -34,7 +34,7 @@ class Page:
         text = self.modify_text(text)
         #set text
         self.text = text
-        
+
         return None
 
     def modify_content(self, content) -> BeautifulSoup:
@@ -78,7 +78,7 @@ class Page:
         """Finds the relevant content in the webpage"""
         #find main content
         content = soup.find("section", {"id": "content"})
-        
+
         return content
 
     def clean_content(self, content) -> None:
@@ -96,13 +96,10 @@ class Page:
         remove(content, "div", {"class": "simple_section_nav"}) #removes extra links
 
         remove(content, "div", {"class": "table_of_contents"}) #remove side contents bar
-        #remove(content, "h2", {"id": "see-also"}) #remove see also header
-
-        #remove(content, "div", {"class": "mariadb"}) #remove mariadb version notices
 
         #remove main header
         tag = content.find("h1")
-        if tag != None: tag.decompose()
+        if tag is not None: tag.decompose()
 
         return content
 
@@ -113,6 +110,7 @@ class Page:
             li.string = "* " + li.text
 
     def fix_tables(self, content) -> None:
+        """Turns html tables into text tables"""
         #find the tables
         tables = content.find_all("tbody")
 
@@ -127,6 +125,7 @@ class Page:
         return content
 
     def create_table(self, table) -> list:
+        """Creates a table"""
         trs = table.find_all("tr")
         columns = []
         for tr in trs:
@@ -135,6 +134,7 @@ class Page:
             for th in ths:
                 text = th.get_text()
                 columns[-1].append(text)
+
         return columns
 
     def equalise_table(self, table):
@@ -143,15 +143,16 @@ class Page:
         for row in table:
             row_length = len(row)
             max_row_length = max(max_row_length, row_length)
-        
+
         for row in table:
             row_length = len(row)
             if row_length < max_row_length:
                 row += [""] * (max_row_length - row_length)
-        
+
         return table
 
     def format_table(self, table):
+        """Formats a table"""
         output = ""
 
         self.equalise_table(table)
@@ -175,6 +176,7 @@ class Page:
         return output
 
     def get_column_widths(self, table):
+        """Gets the required with for each column"""
         row = table[0]
 
         lengths = []
@@ -182,9 +184,9 @@ class Page:
 
         for column in row:
             lengths.append(len(column))
-        
+
         up_to = sum(lengths)
-        
+
         column_widths = []
         for l in lengths:
             ratio = l / up_to
@@ -195,12 +197,14 @@ class Page:
         return column_widths
 
     def add_row_break(self, column_widths):
+        """Breaks up rows with dashes and pluses"""
         row_break = "+"
         for i in column_widths:
             row_break += "-" * (i + 2) + "+"#(plus 2 to account for the two extra spaces)
         return row_break + "\n"
 
     def get_lines(self, row, column_widths):
+        """Get's the lines and the number of lines"""
         lines = []
         num_lines = 0
         for index, width in enumerate(column_widths):
@@ -208,9 +212,11 @@ class Page:
             lines.append(elines)
             num_lines = max(len(elines), num_lines)
         return lines, num_lines
-    
-    
+
+
     def sep_lines(self, string, len_line):
+        """Seperates the lines based on the given length"""
+
         lines = []
         line2 = string.strip()
         while len(line2) > len_line:
@@ -222,11 +228,12 @@ class Page:
 
     def space_headers(self, content) -> None:
         """Modifies headers to have extra space and decoration"""
-        #for header in content.find_all("h2"):
-        #    length = len(header.text)
-        #    header.string = "\n" + header.text + "\n" + "-" * length
 
-        for header in content.find_all("h2") + content.find_all("h3") + content.find_all("h4") + content.find_all("h5"):
+        headers = []
+        for num in range(2, 6):
+            headers += content.find_all(f"h{num}")
+
+        for header in headers:
             length = len(header.text)
             header.string = "\n" + header.text + "\n" + "-" * length + "\n"
 
@@ -236,7 +243,7 @@ class Page:
         code_blocks = content.find_all("pre", {"class": "fixed"})
         for cb in code_blocks:
             cb.string = "\n\n" + cb.text + "\n"
-    
+
     def remove_extra_newlines(self, content) -> None:
         """Removes new lines found in paragraphs where newlines are normally ignored"""
         for tag in content.find_all("p"):
@@ -311,14 +318,13 @@ class Page:
         
         return output
 
-
 def main():
     """goes through each .html file in fetched_pages and writes the text version"""
     files = set((html_file.replace(".html", "") for html_file in os.listdir("fetched_pages") if html_file.endswith(".html")))
     num_files = len(files)
     time_taken = 0
 
-    start_time = time.perf_counter()
+    start_time = perf_counter()
     for index, name in enumerate(files):
 
         filepath = osjoin("fetched_pages", name)
@@ -332,13 +338,13 @@ def main():
         with open(filepath+".txt", "w", encoding="utf-8") as outfile:
             outfile.write(page.text)
         #timing
-        current_time_taken = time.perf_counter() - start_time
+        current_time_taken = perf_counter() - start_time
         current_avg_time = current_time_taken / (index+1)
         est_time_remaining = int(current_avg_time * (num_files - (index+1)))
         #debug
         print(f"\rRan Through {index+1}/{num_files} files - (est time remaining: {est_time_remaining}s)", end="")
     
-    time_taken = time.perf_counter() - start_time
+    time_taken = perf_counter() - start_time
 
     print()
     print(f"Took {round(time_taken, 2)}s to run {num_files} files")
