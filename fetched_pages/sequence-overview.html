@@ -247,12 +247,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2017-06-29 11:40">4 years, 9 months ago</span></dd>
+<span class="datetime" title="2017-06-29 11:40">4 years, 12 months ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2018-08-28 20:52">3 years, 7 months ago</span></dd>
+<span class="datetime" title="2022-04-25 08:24">2 months ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -474,11 +474,11 @@
 <p>The <a href="/kb/en/create-sequence/">CREATE SEQUENCE</a> statement is used to create a sequence. Here is an example of a sequence starting at 100, incrementing by 10 each time:</p>
 <pre class="fixed"><span class="k">CREATE</span> <span class="n">SEQUENCE</span> <span class="n">s</span> <span class="k">START</span> <span class="k">WITH</span> <span class="mi">100</span> <span class="k">INCREMENT</span> <span class="k">BY</span> <span class="mi">10</span><span class="p">;</span>
 </pre><p>The CREATE SEQUENCE statement, along with defaults, can be viewd with the <a href="/kb/en/show-create-sequence/">SHOW CREATE SEQUENCE STATEMENT</a>, for example:</p>
-<pre class="fixed"><span class="k">SHOW</span> <span class="k">CREATE</span> <span class="n">SEQUENCE</span> <span class="n">s</span><span class="err">\</span><span class="k">G</span>
-<span class="o">***************************</span> <span class="mi">1</span><span class="p">.</span> <span class="k">row</span> <span class="o">***************************</span>
-       <span class="k">Table</span><span class="p">:</span> <span class="n">s</span>
-<span class="k">Create</span> <span class="k">Table</span><span class="p">:</span> <span class="k">CREATE</span> <span class="n">SEQUENCE</span> <span class="o">`</span><span class="n">s</span><span class="o">`</span> <span class="k">start</span> <span class="k">with</span> <span class="mi">100</span> <span class="k">minvalue</span> <span class="mi">1</span> <span class="k">maxvalue</span> <span class="mi">9223372036854775806</span> 
-  <span class="k">increment</span> <span class="k">by</span> <span class="mi">10</span> <span class="k">cache</span> <span class="mi">1000</span> <span class="n">nocycle</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span>
+<pre class="fixed">SHOW CREATE SEQUENCE s\G
+*************************** 1. row ***************************
+       Table: s
+Create Table: CREATE SEQUENCE `s` start with 100 minvalue 1 maxvalue 9223372036854775806 
+  increment by 10 cache 1000 nocycle ENGINE=InnoDB
 </pre><h2 class="anchored_heading" id="using-sequence-objects">Using Sequence Objects</h2>
 <p>To get the  <a href="/kb/en/next-value-for-sequence_name/">next value from a sequence</a>, use</p>
 <pre class="fixed">NEXT VALUE FOR sequence_name
@@ -592,13 +592,14 @@ per insert if the <a href="/kb/en/binary-log/">binary log</a> is enabled).</p>
 <p>The following example shows the table structure of sequences and how it
 can be used as a table.
 (Output of results are slightly edited to make them easier to read)</p>
-<pre class="highlight fixed"><p>create sequence t1;
+<div class="cstm-style" style="font-size:0.8em;"><pre class="fixed wrap">create sequence t1;
 show create sequence t1\G
-<strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong> 1. row </strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong>
+*************************** 1. row ***************************
   CREATE SEQUENCE `t1` start with 1 minvalue 1 maxvalue 9223372036854775806
-  increment by 1 cache 1000 nocycle ENGINE=InnoDB</p>
-<p>show create table t1\G
-<strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong> 1. row </strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong>
+  increment by 1 cache 1000 nocycle ENGINE=InnoDB
+
+show create table t1\G
+*************************** 1. row ***************************
 Create Table: CREATE TABLE `t1` (
   `next_not_cached_value` bigint(21) NOT NULL,
   `minimum_value` bigint(21) NOT NULL,
@@ -608,8 +609,10 @@ Create Table: CREATE TABLE `t1` (
   `cache_size` bigint(21) unsigned NOT NULL,
   `cycle_option` tinyint(1) unsigned NOT NULL COMMENT '0 if no cycles are allowed, 1 if the sequence should begin a new cycle when maximum_value is passed',
   `cycle_count` bigint(21) NOT NULL COMMENT 'How many cycles have been done'
-) ENGINE=InnoDB SEQUENCE=1</p>
-<p>select * from t1\G
+) ENGINE=InnoDB SEQUENCE=1
+
+
+select * from t1\G
 next_not_cached_value: 1
  minimum_value: 1
  maximum_value: 9223372036854775806
@@ -617,7 +620,8 @@ next_not_cached_value: 1
   increment: 1
   cache_size: 1000
   cycle_option: 0
-  cycle_count: 0</p></pre><p>The <code>cycle_count</code> column is incremented every time the sequence wraps around.</p>
+  cycle_count: 0
+</pre></div><p>The <code>cycle_count</code> column is incremented every time the sequence wraps around.</p>
 <h2 class="anchored_heading" id="credits">Credits</h2>
 <ul start="1"><li>Thanks to Jianwe Zhao from Aliyun for his work on SEQUENCE in AliSQL, which gave ideas and inspiration for this work.
 </li><li>Thanks to Peter Gulutzan,who helped test and gave useful comments about the implementation.

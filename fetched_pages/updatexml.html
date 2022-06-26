@@ -255,12 +255,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2010-05-21 19:08">11 years, 10 months ago</span></dd>
+<span class="datetime" title="2010-05-21 19:08">12 years, 1 month ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2019-01-18 14:22">3 years, 2 months ago</span></dd>
+<span class="datetime" title="2022-04-25 09:55">2 months ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -417,20 +417,20 @@ expression <code>xpath_expr</code> supplied by the user. If no expression matchi
 the original <code>xml_target</code> XML fragment. All three arguments should be
 strings.</p>
 <h2 class="anchored_heading" id="examples">Examples</h2>
-<pre class="fixed"><span class="k">SELECT</span>
-    <span class="n">UpdateXML</span><span class="p">(</span><span class="s1">&#39;&lt;a&gt;&lt;b&gt;ccc&lt;/b&gt;&lt;d&gt;&lt;/d&gt;&lt;/a&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;/a&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;e&gt;fff&lt;/e&gt;&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="n">val1</span><span class="p">,</span>
-    <span class="n">UpdateXML</span><span class="p">(</span><span class="s1">&#39;&lt;a&gt;&lt;b&gt;ccc&lt;/b&gt;&lt;d&gt;&lt;/d&gt;&lt;/a&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;/b&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;e&gt;fff&lt;/e&gt;&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="n">val2</span><span class="p">,</span>
-    <span class="n">UpdateXML</span><span class="p">(</span><span class="s1">&#39;&lt;a&gt;&lt;b&gt;ccc&lt;/b&gt;&lt;d&gt;&lt;/d&gt;&lt;/a&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;//b&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;e&gt;fff&lt;/e&gt;&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="n">val3</span><span class="p">,</span>
-    <span class="n">UpdateXML</span><span class="p">(</span><span class="s1">&#39;&lt;a&gt;&lt;b&gt;ccc&lt;/b&gt;&lt;d&gt;&lt;/d&gt;&lt;/a&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;/a/d&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;e&gt;fff&lt;/e&gt;&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="n">val4</span><span class="p">,</span>
-    <span class="n">UpdateXML</span><span class="p">(</span><span class="s1">&#39;&lt;a&gt;&lt;d&gt;&lt;/d&gt;&lt;b&gt;ccc&lt;/b&gt;&lt;d&gt;&lt;/d&gt;&lt;/a&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;/a/d&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;e&gt;fff&lt;/e&gt;&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="n">val5</span>
-    <span class="err">\</span><span class="k">G</span>
-<span class="o">***************************</span> <span class="mi">1</span><span class="p">.</span> <span class="k">row</span> <span class="o">***************************</span>
-<span class="n">val1</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">e</span><span class="o">&gt;</span><span class="n">fff</span><span class="o">&lt;/</span><span class="n">e</span><span class="o">&gt;</span>
-<span class="n">val2</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span><span class="o">&gt;&lt;</span><span class="n">b</span><span class="o">&gt;</span><span class="n">ccc</span><span class="o">&lt;/</span><span class="n">b</span><span class="o">&gt;&lt;</span><span class="n">d</span><span class="o">&gt;&lt;/</span><span class="n">d</span><span class="o">&gt;&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
-<span class="n">val3</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span><span class="o">&gt;&lt;</span><span class="n">e</span><span class="o">&gt;</span><span class="n">fff</span><span class="o">&lt;/</span><span class="n">e</span><span class="o">&gt;&lt;</span><span class="n">d</span><span class="o">&gt;&lt;/</span><span class="n">d</span><span class="o">&gt;&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
-<span class="n">val4</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span><span class="o">&gt;&lt;</span><span class="n">b</span><span class="o">&gt;</span><span class="n">ccc</span><span class="o">&lt;/</span><span class="n">b</span><span class="o">&gt;&lt;</span><span class="n">e</span><span class="o">&gt;</span><span class="n">fff</span><span class="o">&lt;/</span><span class="n">e</span><span class="o">&gt;&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
-<span class="n">val5</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">a</span><span class="o">&gt;&lt;</span><span class="n">d</span><span class="o">&gt;&lt;/</span><span class="n">d</span><span class="o">&gt;&lt;</span><span class="n">b</span><span class="o">&gt;</span><span class="n">ccc</span><span class="o">&lt;/</span><span class="n">b</span><span class="o">&gt;&lt;</span><span class="n">d</span><span class="o">&gt;&lt;/</span><span class="n">d</span><span class="o">&gt;&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
-<span class="mi">1</span> <span class="k">row</span> <span class="k">in</span> <span class="k">set</span> <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">00</span> <span class="n">sec</span><span class="p">)</span>
+<pre class="fixed">SELECT
+    UpdateXML('&lt;a&gt;&lt;b&gt;ccc&lt;/b&gt;&lt;d&gt;&lt;/d&gt;&lt;/a&gt;', '/a', '&lt;e&gt;fff&lt;/e&gt;') AS val1,
+    UpdateXML('&lt;a&gt;&lt;b&gt;ccc&lt;/b&gt;&lt;d&gt;&lt;/d&gt;&lt;/a&gt;', '/b', '&lt;e&gt;fff&lt;/e&gt;') AS val2,
+    UpdateXML('&lt;a&gt;&lt;b&gt;ccc&lt;/b&gt;&lt;d&gt;&lt;/d&gt;&lt;/a&gt;', '//b', '&lt;e&gt;fff&lt;/e&gt;') AS val3,
+    UpdateXML('&lt;a&gt;&lt;b&gt;ccc&lt;/b&gt;&lt;d&gt;&lt;/d&gt;&lt;/a&gt;', '/a/d', '&lt;e&gt;fff&lt;/e&gt;') AS val4,
+    UpdateXML('&lt;a&gt;&lt;d&gt;&lt;/d&gt;&lt;b&gt;ccc&lt;/b&gt;&lt;d&gt;&lt;/d&gt;&lt;/a&gt;', '/a/d', '&lt;e&gt;fff&lt;/e&gt;') AS val5
+    \G
+*************************** 1. row ***************************
+val1: &lt;e&gt;fff&lt;/e&gt;
+val2: &lt;a&gt;&lt;b&gt;ccc&lt;/b&gt;&lt;d&gt;&lt;/d&gt;&lt;/a&gt;
+val3: &lt;a&gt;&lt;e&gt;fff&lt;/e&gt;&lt;d&gt;&lt;/d&gt;&lt;/a&gt;
+val4: &lt;a&gt;&lt;b&gt;ccc&lt;/b&gt;&lt;e&gt;fff&lt;/e&gt;&lt;/a&gt;
+val5: &lt;a&gt;&lt;d&gt;&lt;/d&gt;&lt;b&gt;ccc&lt;/b&gt;&lt;d&gt;&lt;/d&gt;&lt;/a&gt;
+1 row in set (0.00 sec)
 </pre>
     </div>
 

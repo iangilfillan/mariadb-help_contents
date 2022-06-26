@@ -251,12 +251,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2010-06-09 18:07">11 years, 10 months ago</span></dd>
+<span class="datetime" title="2010-06-09 18:07">12 years ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2019-01-23 18:03">3 years, 2 months ago</span></dd>
+<span class="datetime" title="2022-04-25 12:53">2 months ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -411,7 +411,8 @@ GeometryCollectionFromWKB(wkb[,srid])
 <p>Constructs a GEOMETRYCOLLECTION value using its <a href="/kb/en/well-known-binary-wkb-format/">WKB</a>  representation and SRID.</p>
 <p><code>ST_GeomCollFromWKB()</code>, <code>ST_GeometryCollectionFromWKB()</code>, <code>GeomCollFromWKB()</code> and <code>GeometryCollectionFromWKB()</code> are synonyms.</p>
 <h2 class="anchored_heading" id="examples">Examples</h2>
-<pre class="fixed"><span class="k">SET</span> <span class="o">@</span><span class="k">g</span> <span class="o">=</span> <span class="n">ST_AsBinary</span><span class="p">(</span><span class="n">ST_GeomFromText</span><span class="p">(</span><span class="s1">&#39;GEOMETRYCOLLECTION(POLYGON((5 5,10 5,10 10,5 5)),POINT(10 10))&#39;</span><span class="p">));</span>
+<pre class="fixed wrap"><span class="k">SET</span> <span class="o">@</span><span class="k">g</span> <span class="o">=</span> <span class="n">ST_AsBinary</span><span class="p">(</span><span class="n">ST_GeomFromText</span><span class="p">(</span><span class="s1">&#39;GEOMETRYCOLLECTION(</span>
+<span class="s1">   POLYGON((5 5,10 5,10 10,5 5)),POINT(10 10))&#39;</span><span class="p">));</span>
 
 <span class="k">SELECT</span> <span class="n">ST_AsText</span><span class="p">(</span><span class="n">ST_GeomCollFromWKB</span><span class="p">(</span><span class="o">@</span><span class="k">g</span><span class="p">));</span>
 <span class="o">+</span><span class="c1">----------------------------------------------------------------+</span>

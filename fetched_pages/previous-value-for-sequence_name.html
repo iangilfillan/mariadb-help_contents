@@ -251,12 +251,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2017-04-09 11:58">5 years ago</span></dd>
+<span class="datetime" title="2017-04-09 11:58">5 years, 2 months ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2020-09-12 17:13">1 year, 7 months ago</span></dd>
+<span class="datetime" title="2022-04-25 09:10">2 months ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -442,39 +442,35 @@
 </li><li><code>PREVIOUS VALUE FOR</code> requires the <a href="/kb/en/grant/">SELECT privilege</a>.
 </li></ul>
 <h2 class="anchored_heading" id="example">Example</h2>
-<pre class="fixed"><span class="n">MariaDB</span> <span class="p">[</span><span class="n">test</span><span class="p">]</span><span class="o">&gt;</span> <span class="k">CREATE</span> <span class="n">SEQUENCE</span> <span class="n">s</span> <span class="k">START</span> <span class="k">WITH</span> <span class="mi">100</span> <span class="k">INCREMENT</span> <span class="k">BY</span> <span class="mi">10</span><span class="p">;</span>
-<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">0</span> <span class="k">rows</span> <span class="n">affected</span> <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">026</span> <span class="n">sec</span><span class="p">)</span>
+<pre class="fixed"><span class="k">CREATE</span> <span class="n">SEQUENCE</span> <span class="n">s</span> <span class="k">START</span> <span class="k">WITH</span> <span class="mi">100</span> <span class="k">INCREMENT</span> <span class="k">BY</span> <span class="mi">10</span><span class="p">;</span>
 
-<span class="n">MariaDB</span> <span class="p">[</span><span class="n">test</span><span class="p">]</span><span class="o">&gt;</span> <span class="k">SELECT</span> <span class="n">PREVIOUS</span> <span class="n">VALUE</span> <span class="k">FOR</span> <span class="n">s</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">PREVIOUS</span> <span class="n">VALUE</span> <span class="k">FOR</span> <span class="n">s</span><span class="p">;</span>
 <span class="o">+</span><span class="c1">----------------------+</span>
 <span class="o">|</span> <span class="n">PREVIOUS</span> <span class="n">VALUE</span> <span class="k">FOR</span> <span class="n">s</span> <span class="o">|</span>
 <span class="o">+</span><span class="c1">----------------------+</span>
 <span class="o">|</span>                 <span class="k">NULL</span> <span class="o">|</span>
 <span class="o">+</span><span class="c1">----------------------+</span>
-<span class="mi">1</span> <span class="k">row</span> <span class="k">in</span> <span class="k">set</span> <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">000</span> <span class="n">sec</span><span class="p">)</span>
 
 <span class="o">#</span> <span class="n">The</span> <span class="k">function</span> <span class="n">works</span> <span class="k">for</span> <span class="n">sequences</span> <span class="k">only</span><span class="p">,</span> <span class="k">if</span> <span class="n">the</span> <span class="k">table</span> <span class="k">is</span> <span class="n">used</span> <span class="n">an</span> <span class="n">error</span> <span class="k">is</span> <span class="k">generated</span>
-<span class="n">MariaDB</span> <span class="p">[</span><span class="n">test</span><span class="p">]</span><span class="o">&gt;</span> <span class="k">SELECT</span> <span class="n">PREVIOUS</span> <span class="n">VALUE</span> <span class="k">FOR</span> <span class="n">t</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">PREVIOUS</span> <span class="n">VALUE</span> <span class="k">FOR</span> <span class="n">t</span><span class="p">;</span>
 <span class="n">ERROR</span> <span class="mi">4089</span> <span class="p">(</span><span class="mi">42</span><span class="n">S02</span><span class="p">):</span> <span class="s1">&#39;test.t&#39;</span> <span class="k">is</span> <span class="k">not</span> <span class="n">a</span> <span class="n">SEQUENCE</span>
 
 <span class="o">#</span> <span class="k">Call</span> <span class="n">the</span> <span class="k">NEXT</span> <span class="n">VALUE</span> <span class="k">FOR</span> <span class="n">s</span><span class="p">:</span>
-<span class="n">MariaDB</span> <span class="p">[</span><span class="n">test</span><span class="p">]</span><span class="o">&gt;</span> <span class="k">SELECT</span> <span class="k">NEXT</span> <span class="n">VALUE</span> <span class="k">FOR</span> <span class="n">s</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="k">NEXT</span> <span class="n">VALUE</span> <span class="k">FOR</span> <span class="n">s</span><span class="p">;</span>
 <span class="o">+</span><span class="c1">------------------+</span>
 <span class="o">|</span> <span class="k">NEXT</span> <span class="n">VALUE</span> <span class="k">FOR</span> <span class="n">s</span> <span class="o">|</span>
 <span class="o">+</span><span class="c1">------------------+</span>
 <span class="o">|</span>              <span class="mi">100</span> <span class="o">|</span>
 <span class="o">+</span><span class="c1">------------------+</span>
-<span class="mi">1</span> <span class="k">row</span> <span class="k">in</span> <span class="k">set</span> <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">000</span> <span class="n">sec</span><span class="p">)</span>
 
-<span class="n">MariaDB</span> <span class="p">[</span><span class="n">test</span><span class="p">]</span><span class="o">&gt;</span> <span class="k">SELECT</span> <span class="n">PREVIOUS</span> <span class="n">VALUE</span> <span class="k">FOR</span> <span class="n">s</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">PREVIOUS</span> <span class="n">VALUE</span> <span class="k">FOR</span> <span class="n">s</span><span class="p">;</span>
 <span class="o">+</span><span class="c1">----------------------+</span>
 <span class="o">|</span> <span class="n">PREVIOUS</span> <span class="n">VALUE</span> <span class="k">FOR</span> <span class="n">s</span> <span class="o">|</span>
 <span class="o">+</span><span class="c1">----------------------+</span>
 <span class="o">|</span>                  <span class="mi">100</span> <span class="o">|</span>
 <span class="o">+</span><span class="c1">----------------------+</span>
-<span class="mi">1</span> <span class="k">row</span> <span class="k">in</span> <span class="k">set</span> <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">000</span> <span class="n">sec</span><span class="p">)</span>
 </pre><p>Now try to start the new connection and check that the last value is still NULL, before updating the value in the new connection after the output of the new connection gets current value (110 in the example below). Note that first connection cannot see this change and the result of last value still remains the same (100 in the example above).</p>
-<pre class="fixed">$ .mysql -uroot <span class="nb">test</span> -e<span class="s2">&quot;SELECT PREVIOUS VALUE FOR s; SELECT NEXT VALUE FOR s; SELECT PREVIOUS VALUE FOR s;&quot;</span>
+<div class="cstm-style" style="font-size:0.9em;"><pre class="fixed wrap">$ .mysql -uroot <span class="nb">test</span> -e<span class="s2">&quot;SELECT PREVIOUS VALUE FOR s; SELECT NEXT VALUE FOR s; SELECT PREVIOUS VALUE FOR s;&quot;</span>
 +----------------------+
 <span class="p">|</span> PREVIOUS VALUE FOR s <span class="p">|</span>
 +----------------------+
@@ -490,7 +486,7 @@
 +----------------------+
 <span class="p">|</span>                  <span class="m">110</span> <span class="p">|</span>
 +----------------------+
-</pre><h2 class="anchored_heading" id="see-also">See Also</h2>
+</pre></div><h2 class="anchored_heading" id="see-also">See Also</h2>
 <ul start="1"><li><a href="/kb/en/sequence-overview/">Sequence Overview</a>
 </li><li><a href="/kb/en/create-sequence/">CREATE SEQUENCE</a>
 </li><li><a href="/kb/en/alter-sequence/">ALTER SEQUENCE</a>

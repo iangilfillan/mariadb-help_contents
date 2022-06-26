@@ -251,12 +251,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2010-07-12 17:53">11 years, 9 months ago</span></dd>
+<span class="datetime" title="2010-07-12 17:53">11 years, 11 months ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2022-04-23 21:32">1 hour, 46 minutes ago</span></dd>
+<span class="datetime" title="2022-06-03 04:32">3 weeks, 2 days ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -672,7 +672,7 @@ certain levels.</p>
 <ul start="1"><li><a href="#global-privileges">Global privileges <em>priv_type</em></a> are granted using <code>*.*</code> for
 <em>priv_level</em>. Global privileges include privileges to administer the database
 and manage user accounts, as well as privileges for all tables, functions, and
-procedures. Global privileges are stored in the <a href="/kb/en/mysqluser-table/">mysql.user table</a>.
+procedures. Global privileges are stored in the <a href="/kb/en/mysqluser-table/">mysql.user table</a> prior to <a href="/kb/en/what-is-mariadb-104/">MariaDB 10.4</a>, and in  <a href="/kb/en/mysqlglobal_priv-table/">mysql.global_priv table</a> afterwards.
 </li><li><a href="#database-privileges">Database privileges <em>priv_type</em></a> are granted using <code>db_name.*</code>
 for <em>priv_level</em>, or using just <code>*</code> to use default database. Database
 privileges include privileges to create tables and functions, as well as
@@ -915,7 +915,8 @@ from the same table, such as salaries.</p>
 <tr><td><code>EXECUTE</code></td><td>Execute a <a href="/kb/en/stored-procedures/">stored procedure</a> using the <a href="/kb/en/call/">CALL</a> statement. The privilege to call a procedure may allow you to perform actions you wouldn't otherwise be able to do, such as insert rows into a table.</td></tr>
 <tr><td><code>GRANT OPTION</code></td><td>Grant procedure privileges. You can only grant privileges that you have.</td></tr>
 </table>
-</div><h3 class="anchored_heading" id="proxy-privileges">Proxy Privileges</h3>
+</div><pre class="fixed">GRANT EXECUTE ON PROCEDURE mysql.create_db TO maintainer;
+</pre><h3 class="anchored_heading" id="proxy-privileges">Proxy Privileges</h3>
 <div class="cstm-style darkheader-nospace-borders"><table><tr><th>Privilege</th><th>Description</th></tr>
 <tr><td><code>PROXY</code></td><td>Permits one user to be a proxy for another.</td></tr>
 </table>
@@ -1010,7 +1011,7 @@ from the same table, such as salaries.</p>
 <h2 class="anchored_heading" id="authentication-options">Authentication Options</h2>
 <p>The authentication options for the <code>GRANT</code> statement are the same as those for the <a href="/kb/en/create-user/">CREATE USER</a> statement.</p>
 <h3 class="anchored_heading" id="identified-by-password">IDENTIFIED BY 'password'</h3>
-<p>The optional <code>IDENTIFIED BY</code> clause can be used to provide an account with a password. The password should be specified in plain text. It will be hashed by the <a href="/kb/en/password/">PASSWORD</a> function prior to being stored to the <a href="/kb/en/mysqluser-table/">mysql.user</a> table.</p>
+<p>The optional <code>IDENTIFIED BY</code> clause can be used to provide an account with a password. The password should be specified in plain text. It will be hashed by the <a href="/kb/en/password/">PASSWORD</a> function prior to being stored.</p>
 <p>For example, if our password is <code>mariadb</code>, then we can create the user with:</p>
 <pre class="fixed"><span class="k">GRANT</span> <span class="k">USAGE</span> <span class="k">ON</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="k">TO</span> <span class="n">foo2</span><span class="o">@</span><span class="n">test</span> <span class="n">IDENTIFIED</span> <span class="k">BY</span> <span class="s1">&#39;mariadb&#39;</span><span class="p">;</span>
 </pre><p>If you do not specify a password with the <code>IDENTIFIED BY</code> clause, the user
@@ -1021,7 +1022,7 @@ password is set.</p>
 statement to change a user's password with <code>GRANT</code>.</p>
 <p>The only <a href="/kb/en/authentication-plugins/">authentication plugins</a> that this clause supports are <a href="/kb/en/authentication-plugin-mysql_native_password/">mysql_native_password</a> and <a href="/kb/en/authentication-plugin-mysql_old_password/">mysql_old_password</a>.</p>
 <h3 class="anchored_heading" id="identified-by-password-password_hash">IDENTIFIED BY PASSWORD 'password_hash'</h3>
-<p>The optional <code>IDENTIFIED BY PASSWORD</code> clause can be used to provide an account with a password that has already been hashed. The password should be specified as a hash that was provided by the <a href="/kb/en/password/">PASSWORD</a> function. It will be stored to the <a href="/kb/en/mysqluser-table/">mysql.user</a> table as-is.</p>
+<p>The optional <code>IDENTIFIED BY PASSWORD</code> clause can be used to provide an account with a password that has already been hashed. The password should be specified as a hash that was provided by the <a href="/kb/en/password/">PASSWORD</a> function. It will be stored as-is.</p>
 <p>For example, if our password is <code>mariadb</code>, then we can find the hash with:</p>
 <pre class="fixed"><span class="k">SELECT</span> <span class="n">PASSWORD</span><span class="p">(</span><span class="s1">&#39;mariadb&#39;</span><span class="p">);</span>
 <span class="o">+</span><span class="c1">-------------------------------------------+</span>
@@ -1123,6 +1124,7 @@ statement to change a user's password with <code>GRANT</code>.</p>
 </li><li><a href="/kb/en/drop-user/">DROP USER</a>
 </li><li><a href="/kb/en/set-password/">SET PASSWORD</a>
 </li><li><a href="/kb/en/show-create-user/">SHOW CREATE USER</a>
+</li><li><a href="/kb/en/mysqlglobal_priv-table/">mysql.global_priv table</a>
 </li><li><a href="/kb/en/mysqluser-table/">mysql.user table</a>
 </li><li><a href="/kb/en/password-validation-plugins/">Password Validation Plugins</a> - permits the setting of basic criteria for passwords
 </li><li><a href="/kb/en/authentication-plugins/">Authentication Plugins</a> - allow various authentication methods to be used, and new ones to be developed.</li></ul>

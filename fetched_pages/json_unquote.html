@@ -259,12 +259,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2017-02-15 09:53">5 years, 1 month ago</span></dd>
+<span class="datetime" title="2017-02-15 09:53">5 years, 4 months ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2021-04-08 07:23">1 year ago</span></dd>
+<span class="datetime" title="2022-04-25 15:31">2 months ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -448,14 +448,14 @@
 <span class="o">|</span> <span class="n">Sng</span>	<span class="n">ing</span>                   <span class="o">|</span>
 <span class="o">+</span><span class="c1">-----------------------------+</span>
 </pre><p>Setting NO_BACKSLASH_ESCAPES:</p>
-<pre class="fixed"><span class="k">SET</span> <span class="o">@@</span><span class="n">sql_mode</span> <span class="o">=</span> <span class="s1">&#39;NO_BACKSLASH_ESCAPES&#39;</span><span class="p">;</span>
+<pre class="fixed">SET @@sql_mode = 'NO_BACKSLASH_ESCAPES';
 
-<span class="k">SELECT</span> <span class="n">JSON_UNQUOTE</span><span class="p">(</span><span class="s1">&#39;Si\bng\ting&#39;</span><span class="p">);</span>
-<span class="o">+</span><span class="c1">-----------------------------+</span>
-<span class="o">|</span> <span class="n">JSON_UNQUOTE</span><span class="p">(</span><span class="s1">&#39;Si\bng\ting&#39;</span><span class="p">)</span> <span class="o">|</span>
-<span class="o">+</span><span class="c1">-----------------------------+</span>
-<span class="o">|</span> <span class="n">Si</span><span class="err">\</span><span class="n">bng</span><span class="err">\</span><span class="n">ting</span>                 <span class="o">|</span>
-<span class="o">+</span><span class="c1">-----------------------------+</span>
+SELECT JSON_UNQUOTE('Si\bng\ting');
++-----------------------------+
+| JSON_UNQUOTE('Si\bng\ting') |
++-----------------------------+
+| Si\bng\ting                 |
++-----------------------------+
 </pre>
     </div>
 

@@ -251,12 +251,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2010-06-09 18:12">11 years, 10 months ago</span></dd>
+<span class="datetime" title="2010-06-09 18:12">12 years ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2019-01-23 17:50">3 years, 2 months ago</span></dd>
+<span class="datetime" title="2022-06-03 11:17">3 weeks, 1 day ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -409,14 +409,11 @@ MultiPolygonFromWKB(wkb[,srid])
 <p>Constructs a <a href="/kb/en/multipolygon/">MULTIPOLYGON</a> value using its <a href="/kb/en/well-known-binary-wkb-format/">WKB</a>  representation and <a href="/kb/en/srid/">SRID</a>.</p>
 <p><code>MPolyFromWKB()</code> and <code>MultiPolygonFromWKB()</code> are synonyms.</p>
 <h2 class="anchored_heading" id="examples">Examples</h2>
-<pre class="fixed"><span class="k">SET</span> <span class="o">@</span><span class="k">g</span> <span class="o">=</span> <span class="n">ST_AsBinary</span><span class="p">(</span><span class="n">MPointFromText</span><span class="p">(</span><span class="s1">&#39;MULTIPOLYGON(((28 26,28 0,84 0,84 42,28 26),(52 18,66 23,73 9,48 6,52 18)),((59 18,67 18,67 13,59 13,59 18)))&#39;</span><span class="p">));</span>
+<pre class="fixed wrap">SET @g = ST_AsBinary(MPointFromText('MULTIPOLYGON(((28 26,28 0,84 0,84 42,28 26),(52 18,66 23,73 9,48 6,52 18)),((59 18,67 18,67 13,59 13,59 18)))'));
 
-<span class="k">SELECT</span> <span class="n">ST_AsText</span><span class="p">(</span><span class="n">MPolyFromWKB</span><span class="p">(</span><span class="o">@</span><span class="k">g</span><span class="p">));</span>
-<span class="o">+</span><span class="c1">---------------------------------------------------------------------------------------------------------------+</span>
-<span class="o">|</span> <span class="n">ST_AsText</span><span class="p">(</span><span class="n">MPolyFromWKB</span><span class="p">(</span><span class="o">@</span><span class="k">g</span><span class="p">))</span>                                                                                   <span class="o">|</span>
-<span class="o">+</span><span class="c1">---------------------------------------------------------------------------------------------------------------+</span>
-<span class="o">|</span> <span class="n">MULTIPOLYGON</span><span class="p">(((</span><span class="mi">28</span> <span class="mi">26</span><span class="p">,</span><span class="mi">28</span> <span class="mi">0</span><span class="p">,</span><span class="mi">84</span> <span class="mi">0</span><span class="p">,</span><span class="mi">84</span> <span class="mi">42</span><span class="p">,</span><span class="mi">28</span> <span class="mi">26</span><span class="p">),(</span><span class="mi">52</span> <span class="mi">18</span><span class="p">,</span><span class="mi">66</span> <span class="mi">23</span><span class="p">,</span><span class="mi">73</span> <span class="mi">9</span><span class="p">,</span><span class="mi">48</span> <span class="mi">6</span><span class="p">,</span><span class="mi">52</span> <span class="mi">18</span><span class="p">)),((</span><span class="mi">59</span> <span class="mi">18</span><span class="p">,</span><span class="mi">67</span> <span class="mi">18</span><span class="p">,</span><span class="mi">67</span> <span class="mi">13</span><span class="p">,</span><span class="mi">59</span> <span class="mi">13</span><span class="p">,</span><span class="mi">59</span> <span class="mi">18</span><span class="p">)))</span> <span class="o">|</span>
-<span class="o">+</span><span class="c1">---------------------------------------------------------------------------------------------------------------+</span>
+SELECT ST_AsText(MPolyFromWKB(@g))\G
+*************************** 1. row ***************************
+ST_AsText(MPolyFromWKB(@g)): MULTIPOLYGON(((28 26,28 0,84 0,84 42,28 26),(52 18,66 23,73 9,48 6,52 18)),((59 18,67 18,67 13,59 13,59 18)))
 </pre>
     </div>
 

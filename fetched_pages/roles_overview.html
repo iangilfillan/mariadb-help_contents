@@ -251,12 +251,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2013-11-12 10:40">8 years, 5 months ago</span></dd>
+<span class="datetime" title="2013-11-12 10:40">8 years, 7 months ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2022-03-08 10:32">1 month ago</span></dd>
+<span class="datetime" title="2022-04-26 20:56">2 months ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -509,7 +509,7 @@
 </pre><h2 class="anchored_heading" id="roles-and-views-and-stored-routines">Roles and Views (and Stored Routines)</h2>
 <p>When a user sets a role, he, in a sense, has two identities with two associated sets of privileges.
 But a view (or a stored routine) can have only one definer. So, when a view (or a stored routine) is created with the <code>SQL SECURITY DEFINER</code>, one can specify whether the definer should be <code>CURRENT_USER</code> (and the view will have none of the privileges of the user's role) or <code>CURRENT_ROLE</code> (in this case, the view will use role's privileges, but none of the user's privileges). As a result, sometimes one can create a view that is impossible to use.</p>
-<pre class="fixed"><span class="k">CREATE</span> <span class="k">ROLE</span> <span class="n">r1</span><span class="p">;</span>
+<pre class="fixed wrap"><span class="k">CREATE</span> <span class="k">ROLE</span> <span class="n">r1</span><span class="p">;</span>
 
 <span class="k">GRANT</span> <span class="k">ALL</span> <span class="k">ON</span> <span class="n">db1</span><span class="p">.</span><span class="o">*</span> <span class="k">TO</span> <span class="n">r1</span><span class="p">;</span>
 

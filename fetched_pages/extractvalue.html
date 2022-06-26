@@ -255,12 +255,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2010-05-21 18:40">11 years, 10 months ago</span></dd>
+<span class="datetime" title="2010-05-21 18:40">12 years, 1 month ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2019-11-22 10:14">2 years, 4 months ago</span></dd>
+<span class="datetime" title="2022-04-25 09:50">2 months ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -433,15 +433,16 @@
 <p>In cases where a valid XPath expression does not match any text nodes in a valid XML fragment, (including the implicit <code>/text()</code> expression), the <code>EXTRACTVALUE()</code> function returns an empty string.</p>
 <h3 class="anchored_heading" id="invalid-arguments">Invalid Arguments</h3>
 <p>When either the XML fragment or the XPath expression is <code>NULL</code>, the <code>EXTRACTVALUE()</code> function returns <code>NULL</code>.  When the XML fragment is invalid, it raises a warning Code 1525:</p>
-<pre class="fixed">Warning (Code 1525): Incorrect XML value: 'parse error at line 1 pos 11: unexpected END-OF-INPUT'
+<pre class="fixed wrap">Warning (Code 1525): Incorrect XML value: 'parse error at line 1 pos 11: unexpected END-OF-INPUT'
 </pre><p>When the XPath value is invalid, it generates an Error 1105:</p>
 <pre class="fixed">ERROR 1105 (HY000): XPATH syntax error: ')'
-</pre><h3 class="anchored_heading" id="explicit-text-expressions">Explicit <code>text()</code> Expressions</h3>
+</pre><h3 class="anchored_heading" id="explicit-text-expressions">Explicit text() Expressions</h3>
 <p>This function is the equivalent of performing a match using the XPath expression after appending <code>/text()</code>.  In other words:</p>
-<pre class="fixed"><span class="k">SELECT</span>
-   <span class="n">EXTRACTVALUE</span><span class="p">(</span><span class="s1">&#39;&lt;cases&gt;&lt;case&gt;example&lt;/case&gt;&lt;/cases&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;/cases/case&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="s1">&#39;Base Example&#39;</span><span class="p">,</span>
-   <span class="n">EXTRACTVALUE</span><span class="p">(</span><span class="s1">&#39;&lt;cases&gt;&lt;case&gt;example&lt;/case&gt;&lt;/cases&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;/cases/case/text()&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="s1">&#39;text() Example&#39;</span><span class="p">;</span>
-
+<pre class="fixed wrap"><span class="k">SELECT</span>
+   <span class="n">EXTRACTVALUE</span><span class="p">(</span><span class="s1">&#39;&lt;cases&gt;&lt;case&gt;example&lt;/case&gt;&lt;/cases&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;/cases/case&#39;</span><span class="p">)</span> 
+    <span class="k">AS</span> <span class="s1">&#39;Base Example&#39;</span><span class="p">,</span>
+   <span class="n">EXTRACTVALUE</span><span class="p">(</span><span class="s1">&#39;&lt;cases&gt;&lt;case&gt;example&lt;/case&gt;&lt;/cases&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;/cases/case/text()&#39;</span><span class="p">)</span> 
+    <span class="k">AS</span> <span class="s1">&#39;text() Example&#39;</span><span class="p">;</span>
 <span class="o">+</span><span class="c1">--------------+----------------+</span>
 <span class="o">|</span> <span class="n">Base</span> <span class="n">Example</span> <span class="o">|</span> <span class="nb">text</span><span class="p">()</span> <span class="n">Example</span> <span class="o">|</span>
 <span class="o">+</span><span class="c1">--------------+----------------+</span>
@@ -451,20 +452,22 @@
 <p>When <code>EXTRACTVALUE()</code> returns multiple matches, it returns the content of the first child text node of each matching element, in the matched order, as a single, space-delimited string.</p>
 <p>By design, the <code>EXTRACTVALUE()</code> function makes no distinction between a match on an empty element and no match at all.  If you need to determine whether no matching element was found in the XML fragment or if an element was found that contained no child text nodes, use the XPath <code>count()</code> function.  </p>
 <p>For instance, when looking for a value that exists, but contains no child text nodes, you would get a count of the number of matching instances:</p>
-<pre class="fixed"><span class="k">SELECT</span>
-   <span class="n">EXTRACTVALUE</span><span class="p">(</span><span class="s1">&#39;&lt;cases&gt;&lt;case/&gt;&lt;/cases&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;/cases/case&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="s1">&#39;Empty Example&#39;</span><span class="p">,</span>
-   <span class="n">EXTRACTVALUE</span><span class="p">(</span><span class="s1">&#39;&lt;cases&gt;&lt;case/&gt;&lt;/cases&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;count(/cases/case)&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="s1">&#39;count() Example&#39;</span><span class="p">;</span>
-
+<pre class="fixed wrap"><span class="k">SELECT</span>
+   <span class="n">EXTRACTVALUE</span><span class="p">(</span><span class="s1">&#39;&lt;cases&gt;&lt;case/&gt;&lt;/cases&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;/cases/case&#39;</span><span class="p">)</span> 
+    <span class="k">AS</span> <span class="s1">&#39;Empty Example&#39;</span><span class="p">,</span>
+   <span class="n">EXTRACTVALUE</span><span class="p">(</span><span class="s1">&#39;&lt;cases&gt;&lt;case/&gt;&lt;/cases&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;count(/cases/case)&#39;</span><span class="p">)</span> 
+    <span class="k">AS</span> <span class="s1">&#39;count() Example&#39;</span><span class="p">;</span>
 <span class="o">+</span><span class="c1">---------------+-----------------+</span>
 <span class="o">|</span> <span class="n">Empty</span> <span class="n">Example</span> <span class="o">|</span> <span class="k">count</span><span class="p">()</span> <span class="n">Example</span> <span class="o">|</span>
 <span class="o">+</span><span class="c1">---------------+-----------------+</span>
 <span class="o">|</span>               <span class="o">|</span>               <span class="mi">1</span> <span class="o">|</span>
 <span class="o">+</span><span class="c1">---------------+-----------------+</span>
 </pre><p>Alternatively, when looking for a value that doesn't exist, <code>count()</code> returns 0.</p>
-<pre class="fixed"><span class="k">SELECT</span>
-   <span class="n">EXTRACTVALUE</span><span class="p">(</span><span class="s1">&#39;&lt;cases&gt;&lt;case/&gt;&lt;/cases&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;/cases/person&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="s1">&#39;No Match Example&#39;</span><span class="p">,</span>
-   <span class="n">EXTRACTVALUE</span><span class="p">(</span><span class="s1">&#39;&lt;cases&gt;&lt;case/&gt;&lt;/cases&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;count(/cases/person)&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="s1">&#39;count() Example&#39;</span><span class="p">;</span>
-
+<pre class="fixed wrap"><span class="k">SELECT</span>
+   <span class="n">EXTRACTVALUE</span><span class="p">(</span><span class="s1">&#39;&lt;cases&gt;&lt;case/&gt;&lt;/cases&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;/cases/person&#39;</span><span class="p">)</span> 
+    <span class="k">AS</span> <span class="s1">&#39;No Match Example&#39;</span><span class="p">,</span>
+   <span class="n">EXTRACTVALUE</span><span class="p">(</span><span class="s1">&#39;&lt;cases&gt;&lt;case/&gt;&lt;/cases&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;count(/cases/person)&#39;</span><span class="p">)</span> 
+    <span class="k">AS</span> <span class="s1">&#39;count() Example&#39;</span><span class="p">;</span>
 <span class="o">+</span><span class="c1">------------------+-----------------+</span>
 <span class="o">|</span> <span class="k">No</span> <span class="k">Match</span> <span class="n">Example</span> <span class="o">|</span> <span class="k">count</span><span class="p">()</span> <span class="n">Example</span> <span class="o">|</span>
 <span class="o">+</span><span class="c1">------------------+-----------------+</span>
@@ -472,8 +475,9 @@
 <span class="o">+</span><span class="c1">------------------+-----------------+</span>
 </pre><h3 class="anchored_heading" id="matches">Matches</h3>
 <p><strong>Important</strong>: The <code>EXTRACTVALUE()</code> function only returns CDDATA.  It does not return tags that the element might contain or the text that these child elements contain.</p>
-<pre class="fixed"><span class="k">SELECT</span> <span class="n">EXTRACTVALUE</span><span class="p">(</span><span class="s1">&#39;&lt;cases&gt;&lt;case&gt;Person&lt;email&gt;x@example.com&lt;/email&gt;&lt;/case&gt;&lt;/cases&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;/cases&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="k">Case</span><span class="p">;</span>
-
+<pre class="fixed wrap"><span class="k">SELECT</span> 
+  <span class="n">EXTRACTVALUE</span><span class="p">(</span><span class="s1">&#39;&lt;cases&gt;&lt;case&gt;Person&lt;email&gt;x@example.com&lt;/email&gt;&lt;/case&gt;&lt;/cases&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;/cases&#39;</span><span class="p">)</span>
+   <span class="k">AS</span> <span class="k">Case</span><span class="p">;</span>
 <span class="o">+</span><span class="c1">--------+</span>
 <span class="o">|</span> <span class="k">Case</span>   <span class="o">|</span>
 <span class="o">+</span><span class="c1">--------+</span>

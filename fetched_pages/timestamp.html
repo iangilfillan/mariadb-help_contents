@@ -247,12 +247,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2010-05-20 19:42">11 years, 10 months ago</span></dd>
+<span class="datetime" title="2010-05-20 19:42">12 years, 1 month ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2020-01-17 07:47">2 years, 2 months ago</span></dd>
+<span class="datetime" title="2022-06-21 14:57">4 days, 18 hours ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -321,30 +321,6 @@
 </div>
 
     
-
-
-
-    
-    
-
-<div class="well well-small box"><div><h5>Product Versions</h5></div><div>
-
-        <ul id="product_chooser">
-            
-                <li class="mariadb_from_10_1_2">
-                    <label><input type="checkbox" data-product-class="mariadb_from_10_1_2"
-                            >MariaDB starting with 10.1.2</label>
-                </li>
-            
-                <li class="mariadb_from_10_1_2">
-                    <label><input type="checkbox" data-product-class="mariadb_from_10_1_2"
-                            >MariaDB starting with 10.1.2</label>
-                </li>
-            
-        </ul>
-    
-</div>
-</div>
 
 
 
@@ -428,33 +404,33 @@
 <h3>Contents</h3>
  <ol class="toc">
 
-    <li class="mariadb_from_10_1_2"><a href="#syntax" title="Syntax">Syntax</a></li>
+    <li class=""><a href="#syntax" title="Syntax">Syntax</a></li>
 
-    <li class="mariadb_from_10_1_2"><a href="#description" title="Description">Description</a></li>
+    <li class=""><a href="#description" title="Description">Description</a></li>
 
-    <li class="mariadb_from_10_1_2"><a href="#supported-values" title="Supported Values">Supported Values</a></li>
+    <li class=""><a href="#supported-values" title="Supported Values">Supported Values</a></li>
 
-    <li class="mariadb_from_10_1_2"><a href="#automatic-values" title="Automatic Values">Automatic Values</a></li>
+    <li class=""><a href="#automatic-values" title="Automatic Values">Automatic Values</a></li>
 
-    <li class="mariadb_from_10_1_2"><a href="#time-zones" title="Time Zones">Time Zones</a></li>
+    <li class=""><a href="#time-zones" title="Time Zones">Time Zones</a></li>
 
-    <li class="mariadb_from_10_1_2"><a href="#limitations" title="Limitations">Limitations</a></li>
+    <li class=""><a href="#limitations" title="Limitations">Limitations</a></li>
 
-    <li class="mariadb_from_10_1_2"><a href="#sql_modemaxdb" title="SQL_MODE=MAXDB">SQL_MODE=MAXDB</a></li>
+    <li class=""><a href="#sql_modemaxdb" title="SQL_MODE=MAXDB">SQL_MODE=MAXDB</a></li>
 
-    <li class="mariadb_from_10_1_2"><a href="#internal-format" title="Internal Format">Internal Format</a></li>
+    <li class=""><a href="#internal-format" title="Internal Format">Internal Format</a></li>
 
-    <li class="mariadb_from_10_1_2"><a href="#examples" title="Examples">Examples</a></li>
+    <li class=""><a href="#examples" title="Examples">Examples</a></li>
 
-    <li class="mariadb_from_10_1_2"><a href="#see-also" title="See Also">See Also</a> </ol>
+    <li class=""><a href="#see-also" title="See Also">See Also</a> </ol>
 </li>
 </div>
 <h2 class="anchored_heading" id="description">Description</h2>
 <p>A timestamp in the format <code>YYYY-MM-DD HH:MM:SS.ffffff</code>.</p>
 <p>The timestamp field is generally used to define at which moment in time a row was added or updated and by default will automatically be assigned the current datetime when a record is inserted or updated. The automatic properties only apply to the first TIMESTAMP in the record; subsequent TIMESTAMP columns will not be changed.</p>
-<div class="mariadb_from_10_1_2 mariadb from_10_1_2 product"><h5 class="product_title">MariaDB starting with <a href="/kb/en/mariadb-1012-release-notes/">10.1.2</a></h5><p><a href="/kb/en/mariadb-1012-release-notes/">MariaDB 10.1.2</a> introduced the <a href="/kb/en/server-system-variables/#mysql56_temporal_format">--mysql56-temporal-format</a> option, on by default, which allows MariaDB to store TIMESTAMPs using the same low-level format MySQL 5.6 uses.</p>
+<p>MariaDB includes the <a href="/kb/en/server-system-variables/#mysql56_temporal_format">--mysql56-temporal-format</a> option, on by default, which allows MariaDB to store TIMESTAMPs using the same low-level format MySQL 5.6 uses.</p>
 <p>For more information, see <a href="#internal-format">Internal Format</a>.</p>
-</div><h2 class="anchored_heading" id="supported-values">Supported Values</h2>
+<h2 class="anchored_heading" id="supported-values">Supported Values</h2>
 <p>MariaDB stores values that use the <code>TIMESTAMP</code> data type as the number of seconds since '1970-01-01 00:00:00' (<a href="/kb/en/coordinated-universal-time/">UTC</a>). This means that the <code>TIMESTAMP</code> data type can hold values between '1970-01-01 00:00:01' (<a href="/kb/en/coordinated-universal-time/">UTC</a>) and '2038-01-19 03:14:07' (<a href="/kb/en/coordinated-universal-time/">UTC</a>). </p>
 <p>MariaDB can also store <a href="/kb/en/microseconds-in-mariadb/">microseconds</a> with a precision between 0 and 6. If no microsecond precision is specified, then 0 is used by default.</p>
 <h2 class="anchored_heading" id="automatic-values">Automatic Values</h2>

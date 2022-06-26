@@ -251,12 +251,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2010-06-09 19:55">11 years, 10 months ago</span></dd>
+<span class="datetime" title="2010-06-09 19:55">12 years ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2019-01-23 18:09">3 years, 2 months ago</span></dd>
+<span class="datetime" title="2022-04-25 12:55">2 months ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -414,7 +414,9 @@ MultiLineStringFromText(wkt[,srid])
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">gis_multi_line</span> <span class="k">VALUES</span>
     <span class="p">(</span><span class="n">MultiLineStringFromText</span><span class="p">(</span><span class="s1">&#39;MULTILINESTRING((10 48,10 21,10 0),(16 0,16 23,16 48))&#39;</span><span class="p">)),</span>
     <span class="p">(</span><span class="n">MLineFromText</span><span class="p">(</span><span class="s1">&#39;MULTILINESTRING((10 48,10 21,10 0))&#39;</span><span class="p">)),</span>
-    <span class="p">(</span><span class="n">MLineFromWKB</span><span class="p">(</span><span class="n">AsWKB</span><span class="p">(</span><span class="n">MultiLineString</span><span class="p">(</span><span class="n">LineString</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)),</span> <span class="n">LineString</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">21</span><span class="p">,</span> <span class="mi">7</span><span class="p">))))));</span>
+    <span class="p">(</span><span class="n">MLineFromWKB</span><span class="p">(</span><span class="n">AsWKB</span><span class="p">(</span><span class="n">MultiLineString</span><span class="p">(</span>
+      <span class="n">LineString</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)),</span> 
+      <span class="n">LineString</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">21</span><span class="p">,</span> <span class="mi">7</span><span class="p">))))));</span>
 </pre>
     </div>
 

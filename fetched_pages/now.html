@@ -255,12 +255,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2010-03-27 17:13">12 years ago</span></dd>
+<span class="datetime" title="2010-03-27 17:13">12 years, 3 months ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2018-07-10 07:48">3 years, 9 months ago</span></dd>
+<span class="datetime" title="2022-04-25 10:01">2 months ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -458,27 +458,27 @@ current <a href="/kb/en/time-zones/">time zone</a>.</p>
 </pre><p>Used as a default TIMESTAMP:</p>
 <pre class="fixed"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">t</span> <span class="p">(</span><span class="n">createdTS</span> <span class="k">TIMESTAMP</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="k">CURRENT_TIMESTAMP</span><span class="p">);</span>
 </pre><p>From <a href="/kb/en/mariadb-1022-release-notes/">MariaDB 10.2.2</a>:</p>
-<pre class="fixed"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">INFORMATION_SCHEMA</span><span class="p">.</span><span class="n">COLUMNS</span> <span class="k">WHERE</span> <span class="n">TABLE_SCHEMA</span><span class="o">=</span><span class="s1">&#39;test&#39;</span>
-  <span class="k">AND</span> <span class="k">COLUMN_NAME</span> <span class="k">LIKE</span> <span class="s1">&#39;%ts%&#39;</span><span class="err">\</span><span class="k">G</span>
-<span class="o">***************************</span> <span class="mi">1</span><span class="p">.</span> <span class="k">row</span> <span class="o">***************************</span>
-           <span class="n">TABLE_CATALOG</span><span class="p">:</span> <span class="n">def</span>
-            <span class="n">TABLE_SCHEMA</span><span class="p">:</span> <span class="n">test</span>
-              <span class="k">TABLE_NAME</span><span class="p">:</span> <span class="n">t</span>
-             <span class="k">COLUMN_NAME</span><span class="p">:</span> <span class="n">ts</span>
-        <span class="n">ORDINAL_POSITION</span><span class="p">:</span> <span class="mi">1</span>
-          <span class="n">COLUMN_DEFAULT</span><span class="p">:</span> <span class="k">current_timestamp</span><span class="p">()</span>
-<span class="p">...</span>
+<pre class="fixed">SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='test'
+  AND COLUMN_NAME LIKE '%ts%'\G
+*************************** 1. row ***************************
+           TABLE_CATALOG: def
+            TABLE_SCHEMA: test
+              TABLE_NAME: t
+             COLUMN_NAME: ts
+        ORDINAL_POSITION: 1
+          COLUMN_DEFAULT: current_timestamp()
+...
 </pre><p>&lt;= <a href="/kb/en/mariadb-1021-release-notes/">MariaDB 10.2.1</a></p>
-<pre class="fixed"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">INFORMATION_SCHEMA</span><span class="p">.</span><span class="n">COLUMNS</span> <span class="k">WHERE</span> <span class="n">TABLE_SCHEMA</span><span class="o">=</span><span class="s1">&#39;test&#39;</span>
-  <span class="k">AND</span> <span class="k">COLUMN_NAME</span> <span class="k">LIKE</span> <span class="s1">&#39;%ts%&#39;</span><span class="err">\</span><span class="k">G</span>
-<span class="o">***************************</span> <span class="mi">1</span><span class="p">.</span> <span class="k">row</span> <span class="o">***************************</span>
-           <span class="n">TABLE_CATALOG</span><span class="p">:</span> <span class="n">def</span>
-            <span class="n">TABLE_SCHEMA</span><span class="p">:</span> <span class="n">test</span>
-              <span class="k">TABLE_NAME</span><span class="p">:</span> <span class="n">t</span>
-             <span class="k">COLUMN_NAME</span><span class="p">:</span> <span class="n">createdTS</span>
-        <span class="n">ORDINAL_POSITION</span><span class="p">:</span> <span class="mi">1</span>
-          <span class="n">COLUMN_DEFAULT</span><span class="p">:</span> <span class="k">CURRENT_TIMESTAMP</span>
-<span class="p">...</span>
+<pre class="fixed">SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='test'
+  AND COLUMN_NAME LIKE '%ts%'\G
+*************************** 1. row ***************************
+           TABLE_CATALOG: def
+            TABLE_SCHEMA: test
+              TABLE_NAME: t
+             COLUMN_NAME: createdTS
+        ORDINAL_POSITION: 1
+          COLUMN_DEFAULT: CURRENT_TIMESTAMP
+...
 </pre><h2 class="anchored_heading" id="see-also">See Also</h2>
 <ul start="1"><li><a href="/kb/en/microseconds-in-mariadb/">Microseconds in MariaDB</a>
 </li><li><a href="/kb/en/server-system-variables/#timestamp">timestamp server system variable</a></li></ul>

@@ -255,12 +255,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2010-07-12 20:18">11 years, 9 months ago</span></dd>
+<span class="datetime" title="2010-07-12 20:18">11 years, 11 months ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2022-02-25 23:00">1 month, 2 weeks ago</span></dd>
+<span class="datetime" title="2022-04-23 23:25">2 months ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -550,8 +550,8 @@ From <a href="/kb/en/what-is-mariadb-104/">MariaDB 10.4</a>, these temporary tab
 <p>From <a href="/kb/en/mariadb-1033-release-notes/">MariaDB 10.3.3</a>, the same name as the .frm file is used for the intermediate copy of the table. The #sql-ib names are used by TRUNCATE and delayed DROP.</p>
 <p>From <a href="/kb/en/mariadb-10219-release-notes/">MariaDB 10.2.19</a> and <a href="/kb/en/mariadb-10310-release-notes/">MariaDB 10.3.10</a>, the #sql-ib tables will be deleted automatically.</p>
 <h2 class="anchored_heading" id="dropping-all-tables-in-a-database">Dropping All Tables in a Database</h2>
-<p>The best way to drop all tables in a database is by executing <code><a href="/kb/en/drop-database/">DROP DATABASE</a></code>, which will drop the database itself, and all tables in it.</p>
-<p>However, if you want to drop all tables in the database, but you also want to keep the database itself and any other non-table objects in it, then you would need to execute <code>DROP TABLE</code> to drop each individual table. You can construct these <code>DROP TABLE</code> commands by querying the <code><a href="/kb/en/information-schema-tables-table/">TABLES</a></code> table in the <code><a href="/kb/en/information-schema-tables/">information_schema</a></code> database. For example:</p>
+<p>The best way to drop all tables in a database is by executing <a href="/kb/en/drop-database/">DROP DATABASE</a>, which will drop the database itself, and all tables in it.</p>
+<p>However, if you want to drop all tables in the database, but you also want to keep the database itself and any other non-table objects in it, then you would need to execute <code>DROP TABLE</code> to drop each individual table. You can construct these <code>DROP TABLE</code> commands by querying the <a href="/kb/en/information-schema-tables-table/">TABLES</a> table in the <a href="/kb/en/information-schema-tables/">information_schema</a> database. For example:</p>
 <pre class="fixed">SELECT CONCAT('DROP TABLE IF EXISTS `', TABLE_SCHEMA, '`.`', TABLE_NAME, '`;')
 FROM information_schema.TABLES
 WHERE TABLE_SCHEMA = 'mydb';

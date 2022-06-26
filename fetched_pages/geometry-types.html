@@ -247,12 +247,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2010-05-21 19:47">11 years, 10 months ago</span></dd>
+<span class="datetime" title="2010-05-21 19:47">12 years, 1 month ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2015-02-09 15:08">7 years, 2 months ago</span></dd>
+<span class="datetime" title="2022-04-25 08:02">2 months ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -461,7 +461,7 @@ tables. See also <a href="/kb/en/spatial/">SPATIAL INDEX</a>.</p>
 row can contain multiple types. For example:</p>
 <pre class="fixed"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">object</span> <span class="p">(</span><span class="n">shapeA</span> <span class="n">POLYGON</span><span class="p">,</span> <span class="n">shapeB</span> <span class="n">LINESTRING</span><span class="p">);</span>
 </pre></div><h3 class="anchored_heading" id="pointpoint"><a href="/kb/en/point/">POINT</a></h3>
-<pre class="fixed"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">gis_point</span>  <span class="p">(</span><span class="k">g</span> <span class="n">POINT</span><span class="p">);</span>
+<pre class="fixed wrap"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">gis_point</span>  <span class="p">(</span><span class="k">g</span> <span class="n">POINT</span><span class="p">);</span>
 <span class="k">SHOW</span> <span class="n">FIELDS</span> <span class="k">FROM</span> <span class="n">gis_point</span><span class="p">;</span>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">gis_point</span> <span class="k">VALUES</span>
     <span class="p">(</span><span class="n">PointFromText</span><span class="p">(</span><span class="s1">&#39;POINT(10 10)&#39;</span><span class="p">)),</span>
@@ -469,42 +469,42 @@ row can contain multiple types. For example:</p>
     <span class="p">(</span><span class="n">PointFromText</span><span class="p">(</span><span class="s1">&#39;POINT(20 20)&#39;</span><span class="p">)),</span>
     <span class="p">(</span><span class="n">PointFromWKB</span><span class="p">(</span><span class="n">AsWKB</span><span class="p">(</span><span class="n">PointFromText</span><span class="p">(</span><span class="s1">&#39;POINT(10 20)&#39;</span><span class="p">))));</span>
 </pre><h3 class="anchored_heading" id="linestringlinestring"><a href="/kb/en/linestring/">LINESTRING</a></h3>
-<pre class="fixed"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">gis_line</span>  <span class="p">(</span><span class="k">g</span> <span class="n">LINESTRING</span><span class="p">);</span>
+<pre class="fixed wrap"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">gis_line</span>  <span class="p">(</span><span class="k">g</span> <span class="n">LINESTRING</span><span class="p">);</span>
 <span class="k">SHOW</span> <span class="n">FIELDS</span> <span class="k">FROM</span> <span class="n">gis_line</span><span class="p">;</span>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">gis_line</span> <span class="k">VALUES</span>
     <span class="p">(</span><span class="n">LineFromText</span><span class="p">(</span><span class="s1">&#39;LINESTRING(0 0,0 10,10 0)&#39;</span><span class="p">)),</span>
     <span class="p">(</span><span class="n">LineStringFromText</span><span class="p">(</span><span class="s1">&#39;LINESTRING(10 10,20 10,20 20,10 20,10 10)&#39;</span><span class="p">)),</span>
     <span class="p">(</span><span class="n">LineStringFromWKB</span><span class="p">(</span><span class="n">AsWKB</span><span class="p">(</span><span class="n">LineString</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">10</span><span class="p">)))));</span>
 </pre><h3 class="anchored_heading" id="polygonpolygon"><a href="/kb/en/polygon/">POLYGON</a></h3>
-<pre class="fixed"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">gis_polygon</span>   <span class="p">(</span><span class="k">g</span> <span class="n">POLYGON</span><span class="p">);</span>
+<pre class="fixed wrap"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">gis_polygon</span>   <span class="p">(</span><span class="k">g</span> <span class="n">POLYGON</span><span class="p">);</span>
 <span class="k">SHOW</span> <span class="n">FIELDS</span> <span class="k">FROM</span> <span class="n">gis_polygon</span><span class="p">;</span>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">gis_polygon</span> <span class="k">VALUES</span>
     <span class="p">(</span><span class="n">PolygonFromText</span><span class="p">(</span><span class="s1">&#39;POLYGON((10 10,20 10,20 20,10 20,10 10))&#39;</span><span class="p">)),</span>
     <span class="p">(</span><span class="n">PolyFromText</span><span class="p">(</span><span class="s1">&#39;POLYGON((0 0,50 0,50 50,0 50,0 0), (10 10,20 10,20 20,10 20,10 10))&#39;</span><span class="p">)),</span>
     <span class="p">(</span><span class="n">PolyFromWKB</span><span class="p">(</span><span class="n">AsWKB</span><span class="p">(</span><span class="n">Polygon</span><span class="p">(</span><span class="n">LineString</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))))));</span>
 </pre><h3 class="anchored_heading" id="multipointmultipoint"><a href="/kb/en/multipoint/">MULTIPOINT</a></h3>
-<pre class="fixed"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">gis_multi_point</span> <span class="p">(</span><span class="k">g</span> <span class="n">MULTIPOINT</span><span class="p">);</span>
+<pre class="fixed wrap"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">gis_multi_point</span> <span class="p">(</span><span class="k">g</span> <span class="n">MULTIPOINT</span><span class="p">);</span>
 <span class="k">SHOW</span> <span class="n">FIELDS</span> <span class="k">FROM</span> <span class="n">gis_multi_point</span><span class="p">;</span>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">gis_multi_point</span> <span class="k">VALUES</span>
     <span class="p">(</span><span class="n">MultiPointFromText</span><span class="p">(</span><span class="s1">&#39;MULTIPOINT(0 0,10 10,10 20,20 20)&#39;</span><span class="p">)),</span>
     <span class="p">(</span><span class="n">MPointFromText</span><span class="p">(</span><span class="s1">&#39;MULTIPOINT(1 1,11 11,11 21,21 21)&#39;</span><span class="p">)),</span>
     <span class="p">(</span><span class="n">MPointFromWKB</span><span class="p">(</span><span class="n">AsWKB</span><span class="p">(</span><span class="n">MultiPoint</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">)))));</span>
 </pre><h3 class="anchored_heading" id="multilinestringmultilinestring"><a href="/kb/en/multilinestring/">MULTILINESTRING</a></h3>
-<pre class="fixed"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">gis_multi_line</span> <span class="p">(</span><span class="k">g</span> <span class="n">MULTILINESTRING</span><span class="p">);</span>
+<pre class="fixed wrap"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">gis_multi_line</span> <span class="p">(</span><span class="k">g</span> <span class="n">MULTILINESTRING</span><span class="p">);</span>
 <span class="k">SHOW</span> <span class="n">FIELDS</span> <span class="k">FROM</span> <span class="n">gis_multi_line</span><span class="p">;</span>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">gis_multi_line</span> <span class="k">VALUES</span>
     <span class="p">(</span><span class="n">MultiLineStringFromText</span><span class="p">(</span><span class="s1">&#39;MULTILINESTRING((10 48,10 21,10 0),(16 0,16 23,16 48))&#39;</span><span class="p">)),</span>
     <span class="p">(</span><span class="n">MLineFromText</span><span class="p">(</span><span class="s1">&#39;MULTILINESTRING((10 48,10 21,10 0))&#39;</span><span class="p">)),</span>
     <span class="p">(</span><span class="n">MLineFromWKB</span><span class="p">(</span><span class="n">AsWKB</span><span class="p">(</span><span class="n">MultiLineString</span><span class="p">(</span><span class="n">LineString</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)),</span> <span class="n">LineString</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">21</span><span class="p">,</span> <span class="mi">7</span><span class="p">))))));</span>
 </pre><h3 class="anchored_heading" id="multipolygonmultipolygon"><a href="/kb/en/multipolygon/">MULTIPOLYGON</a></h3>
-<pre class="fixed"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">gis_multi_polygon</span>  <span class="p">(</span><span class="k">g</span> <span class="n">MULTIPOLYGON</span><span class="p">);</span>
+<pre class="fixed wrap"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">gis_multi_polygon</span>  <span class="p">(</span><span class="k">g</span> <span class="n">MULTIPOLYGON</span><span class="p">);</span>
 <span class="k">SHOW</span> <span class="n">FIELDS</span> <span class="k">FROM</span> <span class="n">gis_multi_polygon</span><span class="p">;</span>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">gis_multi_polygon</span> <span class="k">VALUES</span>
     <span class="p">(</span><span class="n">MultiPolygonFromText</span><span class="p">(</span><span class="s1">&#39;MULTIPOLYGON(((28 26,28 0,84 0,84 42,28 26),(52 18,66 23,73 9,48 6,52 18)),((59 18,67 18,67 13,59 13,59 18)))&#39;</span><span class="p">)),</span>
     <span class="p">(</span><span class="n">MPolyFromText</span><span class="p">(</span><span class="s1">&#39;MULTIPOLYGON(((28 26,28 0,84 0,84 42,28 26),(52 18,66 23,73 9,48 6,52 18)),((59 18,67 18,67 13,59 13,59 18)))&#39;</span><span class="p">)),</span>
     <span class="p">(</span><span class="n">MPolyFromWKB</span><span class="p">(</span><span class="n">AsWKB</span><span class="p">(</span><span class="n">MultiPolygon</span><span class="p">(</span><span class="n">Polygon</span><span class="p">(</span><span class="n">LineString</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))))));</span>
 </pre><h3 class="anchored_heading" id="geometrycollectiongeometrycollection"><a href="/kb/en/geometrycollection/">GEOMETRYCOLLECTION</a></h3>
-<pre class="fixed"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">gis_geometrycollection</span>  <span class="p">(</span><span class="k">g</span> <span class="n">GEOMETRYCOLLECTION</span><span class="p">);</span>
+<pre class="fixed wrap"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">gis_geometrycollection</span>  <span class="p">(</span><span class="k">g</span> <span class="n">GEOMETRYCOLLECTION</span><span class="p">);</span>
 <span class="k">SHOW</span> <span class="n">FIELDS</span> <span class="k">FROM</span> <span class="n">gis_geometrycollection</span><span class="p">;</span>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">gis_geometrycollection</span> <span class="k">VALUES</span>
     <span class="p">(</span><span class="n">GeomCollFromText</span><span class="p">(</span><span class="s1">&#39;GEOMETRYCOLLECTION(POINT(0 0), LINESTRING(0 0,10 10))&#39;</span><span class="p">)),</span>
@@ -512,7 +512,7 @@ row can contain multiple types. For example:</p>
     <span class="p">(</span><span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;GeometryCollection()&#39;</span><span class="p">)),</span>
     <span class="p">(</span><span class="n">GeomFromText</span><span class="p">(</span><span class="s1">&#39;GeometryCollection EMPTY&#39;</span><span class="p">));</span>
 </pre><h3 class="anchored_heading" id="geometrygeometry"><a href="/kb/en/geometry/">GEOMETRY</a></h3>
-<pre class="fixed"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">gis_geometry</span> <span class="p">(</span><span class="k">g</span> <span class="n">GEOMETRY</span><span class="p">);</span>
+<pre class="fixed wrap"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">gis_geometry</span> <span class="p">(</span><span class="k">g</span> <span class="n">GEOMETRY</span><span class="p">);</span>
 <span class="k">SHOW</span> <span class="n">FIELDS</span> <span class="k">FROM</span> <span class="n">gis_geometry</span><span class="p">;</span>
 <span class="k">INSERT</span> <span class="k">into</span> <span class="n">gis_geometry</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">gis_point</span><span class="p">;</span>
 <span class="k">INSERT</span> <span class="k">into</span> <span class="n">gis_geometry</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">gis_line</span><span class="p">;</span>

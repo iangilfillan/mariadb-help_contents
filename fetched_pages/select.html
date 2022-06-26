@@ -255,12 +255,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2010-08-16 14:44">11 years, 7 months ago</span></dd>
+<span class="datetime" title="2010-08-16 14:44">11 years, 10 months ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2022-02-04 10:02">2 months, 1 week ago</span></dd>
+<span class="datetime" title="2022-02-04 10:02">4 months, 3 weeks ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -550,7 +550,11 @@ by commas. Each select expression can be one of the following:</p>
 </li><li><code>*</code> to select all columns from all tables in the <code>FROM</code> clause.
 </li><li><code>tbl_name.*</code> to select all columns from just the table <em>tbl_name</em>.
 </li></ul>
-<p>When specifying a column, you can either use just the column name or qualify the column name with the name of the table using <code>tbl_name.col_name</code>. The qualified form is useful if you are joining multiple tables in the <code>FROM</code> clause. If you do not qualify the column names when selecting from multiple tables, MariaDB will try to find the column in each table. It is an error if that column name exists in multiple tables.</p>
+<p>When specifying a column, you can either use just the column name or qualify the column
+name with  the name of the table using <code>tbl_name.col_name</code>. The qualified form is
+useful if you are joining multiple tables in the <code>FROM</code> clause. If you do not qualify the
+column names when selecting from multiple tables, MariaDB will try to find the column in
+each table. It is an error if that column name exists in multiple tables.</p>
 <p>You can quote column names using backticks. If you are qualifying column names
 with table names, quote each part separately as <code>`tbl_name`.`col_name`</code>.</p>
 <p>If you use any <a href="/kb/en/functions-and-modifiers-for-use-with-group-by/">grouping functions</a>

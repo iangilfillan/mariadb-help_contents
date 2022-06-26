@@ -247,12 +247,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2010-05-20 18:56">11 years, 10 months ago</span></dd>
+<span class="datetime" title="2010-05-20 18:56">12 years, 1 month ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2018-04-08 19:41">4 years ago</span></dd>
+<span class="datetime" title="2022-06-21 12:42">4 days, 21 hours ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -321,30 +321,6 @@
 </div>
 
     
-
-
-
-    
-    
-
-<div class="well well-small box"><div><h5>Product Versions</h5></div><div>
-
-        <ul id="product_chooser">
-            
-                <li class="mariadb_from_10_2">
-                    <label><input type="checkbox" data-product-class="mariadb_from_10_2"
-                            >MariaDB starting with 10.2</label>
-                </li>
-            
-                <li class="mariadb_from_10_2">
-                    <label><input type="checkbox" data-product-class="mariadb_from_10_2"
-                            >MariaDB starting with 10.2</label>
-                </li>
-            
-        </ul>
-    
-</div>
-</div>
 
 
 
@@ -468,7 +444,7 @@ unless the <code>PAD_CHAR_TO_FULL_LENGTH</code> <a href="/kb/en/sql_mode/">SQL m
 <span class="o">|</span>              <span class="mi">1</span> <span class="o">|</span>                 <span class="mi">0</span> <span class="o">|</span>
 <span class="o">+</span><span class="c1">----------------+-------------------+</span>
 </pre><h2 class="anchored_heading" id="no-pad-collations">NO PAD Collations</h2>
-<div class="mariadb_from_10_2 mariadb from_10_2 product"><h5 class="product_title">MariaDB starting with <a href="/kb/en/what-is-mariadb-102/">10.2</a></h5><p>NO PAD collations regard trailing spaces as normal characters. You can get a list of all NO PAD collations by querying the <a href="/kb/en/information-schema-collations-table/">Information Schema Collations table</a>, for example:</p>
+<p>NO PAD collations regard trailing spaces as normal characters. You can get a list of all NO PAD collations by querying the <a href="/kb/en/information-schema-collations-table/">Information Schema Collations table</a>, for example:</p>
 <pre class="fixed"><span class="k">SELECT</span> <span class="k">collation_name</span> <span class="k">FROM</span> <span class="n">information_schema</span><span class="p">.</span><span class="n">collations</span> 
   <span class="k">WHERE</span> <span class="k">collation_name</span> <span class="k">LIKE</span> <span class="ss">&quot;%nopad%&quot;</span><span class="p">;</span>  
 <span class="o">+</span><span class="c1">------------------------------+</span>
@@ -477,7 +453,7 @@ unless the <code>PAD_CHAR_TO_FULL_LENGTH</code> <a href="/kb/en/sql_mode/">SQL m
 <span class="o">|</span> <span class="n">big5_chinese_nopad_ci</span>        <span class="o">|</span>
 <span class="o">|</span> <span class="n">big5_nopad_bin</span>               <span class="o">|</span>
 <span class="p">...</span>
-</pre></div><h2 class="anchored_heading" id="see-also">See Also</h2>
+</pre><h2 class="anchored_heading" id="see-also">See Also</h2>
 <ul start="1"><li><a href="/kb/en/char-function/">CHAR Function</a>
 </li><li><a href="/kb/en/varchar/">VARCHAR</a>
 </li><li><a href="/kb/en/binary/">BINARY</a>
@@ -614,6 +590,15 @@ unless the <code>PAD_CHAR_TO_FULL_LENGTH</code> <a href="/kb/en/sql_mode/">SQL m
                         <a href="/kb/en/enum/">
                             
                             ENUM
+                        </a>
+                    </li>
+                
+            
+                
+                    <li>
+                        <a href="/kb/en/inet4/">
+                            
+                            INET4
                         </a>
                     </li>
                 

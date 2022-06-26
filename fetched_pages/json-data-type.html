@@ -247,12 +247,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2017-08-20 11:59">4 years, 7 months ago</span></dd>
+<span class="datetime" title="2017-08-20 11:59">4 years, 10 months ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2022-02-17 15:02">1 month, 3 weeks ago</span></dd>
+<span class="datetime" title="2022-05-30 07:58">3 weeks, 6 days ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -457,7 +457,8 @@ This means that row based replication will not work for JSON types from MySQL to
 <h2 class="anchored_heading" id="converting-a-mysql-table-with-json-fields-to-mariadb">Converting a MySQL TABLE with JSON Fields to MariaDB</h2>
 <p>MariaDB can't directly access MySQL's JSON format.</p>
 <p>There are a a few different ways to move the table to MariaDB:</p>
-<ul start="1"><li>Change the JSON column to type TEXT in MySQL.  After this, MariaDB can directly use the table without any need for a dump and restore.
+<ul start="1"><li>From <a href="/kb/en/mariadb-1057-release-notes/">MariaDB 10.5.7</a>, see the you can use the <a href="/kb/en/mysql_json/">mysql_json</a> plugin. See <a href="https://mariadb.org/making-mariadb-understand-mysql-json/">Making MariaDB understand MySQL JSON</a>.
+</li><li>Change the JSON column to type TEXT in MySQL.  After this, MariaDB can directly use the table without any need for a dump and restore.
 </li><li><a href="/kb/en/mysqldump/#examples">Use mariadb-dump/mysqldump to copy the table</a>.
 </li></ul>
 <h2 class="anchored_heading" id="differences-between-mysql-json-strings-and-mariadb-json-strings">Differences Between MySQL JSON Strings and MariaDB JSON Strings</h2>
@@ -601,6 +602,15 @@ This means that row based replication will not work for JSON types from MySQL to
                         <a href="/kb/en/enum/">
                             
                             ENUM
+                        </a>
+                    </li>
+                
+            
+                
+                    <li>
+                        <a href="/kb/en/inet4/">
+                            
+                            INET4
                         </a>
                     </li>
                 

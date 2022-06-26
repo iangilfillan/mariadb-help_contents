@@ -251,12 +251,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2010-06-09 20:00">11 years, 10 months ago</span></dd>
+<span class="datetime" title="2010-06-09 20:00">12 years ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2019-01-23 18:10">3 years, 2 months ago</span></dd>
+<span class="datetime" title="2022-04-25 12:56">2 months ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -412,9 +412,14 @@ MultiPolygonFromText(wkt[,srid])
 <pre class="fixed"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">gis_multi_polygon</span>  <span class="p">(</span><span class="k">g</span> <span class="n">MULTIPOLYGON</span><span class="p">);</span>
 <span class="k">SHOW</span> <span class="n">FIELDS</span> <span class="k">FROM</span> <span class="n">gis_multi_polygon</span><span class="p">;</span>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">gis_multi_polygon</span> <span class="k">VALUES</span>
-    <span class="p">(</span><span class="n">MultiPolygonFromText</span><span class="p">(</span><span class="s1">&#39;MULTIPOLYGON(((28 26,28 0,84 0,84 42,28 26),(52 18,66 23,73 9,48 6,52 18)),((59 18,67 18,67 13,59 13,59 18)))&#39;</span><span class="p">)),</span>
-    <span class="p">(</span><span class="n">MPolyFromText</span><span class="p">(</span><span class="s1">&#39;MULTIPOLYGON(((28 26,28 0,84 0,84 42,28 26),(52 18,66 23,73 9,48 6,52 18)),((59 18,67 18,67 13,59 13,59 18)))&#39;</span><span class="p">)),</span>
-    <span class="p">(</span><span class="n">MPolyFromWKB</span><span class="p">(</span><span class="n">AsWKB</span><span class="p">(</span><span class="n">MultiPolygon</span><span class="p">(</span><span class="n">Polygon</span><span class="p">(</span><span class="n">LineString</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))))));</span>
+    <span class="p">(</span><span class="n">MultiPolygonFromText</span><span class="p">(</span><span class="s1">&#39;MULTIPOLYGON(</span>
+<span class="s1">       ((28 26,28 0,84 0,84 42,28 26),(52 18,66 23,73 9,48 6,52 18)),</span>
+<span class="s1">       ((59 18,67 18,67 13,59 13,59 18)))&#39;</span><span class="p">)),</span>
+    <span class="p">(</span><span class="n">MPolyFromText</span><span class="p">(</span><span class="s1">&#39;MULTIPOLYGON(</span>
+<span class="s1">       ((28 26,28 0,84 0,84 42,28 26),(52 18,66 23,73 9,48 6,52 18)),</span>
+<span class="s1">       ((59 18,67 18,67 13,59 13,59 18)))&#39;</span><span class="p">)),</span>
+    <span class="p">(</span><span class="n">MPolyFromWKB</span><span class="p">(</span><span class="n">AsWKB</span><span class="p">(</span><span class="n">MultiPolygon</span><span class="p">(</span><span class="n">Polygon</span><span class="p">(</span>
+       <span class="n">LineString</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))))));</span>
 </pre>
     </div>
 

@@ -255,12 +255,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2010-05-21 18:57">11 years, 10 months ago</span></dd>
+<span class="datetime" title="2010-05-21 18:57">12 years, 1 month ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2019-01-18 14:10">3 years, 2 months ago</span></dd>
+<span class="datetime" title="2022-04-25 09:53">2 months ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -416,19 +416,19 @@ with each instance of single quote ("<code>'</code>"), backslash ("<code>\</code
 is <code>NULL</code>, the return value is the word "<code>NULL</code>" without enclosing single
 quotes.</p>
 <h2 class="anchored_heading" id="examples">Examples</h2>
-<pre class="fixed"><span class="k">SELECT</span> <span class="n">QUOTE</span><span class="p">(</span><span class="ss">&quot;Don&#39;t!&quot;</span><span class="p">);</span>
-<span class="o">+</span><span class="c1">-----------------+</span>
-<span class="o">|</span> <span class="n">QUOTE</span><span class="p">(</span><span class="ss">&quot;Don&#39;t!&quot;</span><span class="p">)</span> <span class="o">|</span>
-<span class="o">+</span><span class="c1">-----------------+</span>
-<span class="o">|</span> <span class="s1">&#39;Don\&#39;</span><span class="n">t</span><span class="o">!</span><span class="err">&#39;</span>       <span class="o">|</span>
-<span class="o">+</span><span class="c1">-----------------+</span>
+<pre class="fixed">SELECT QUOTE(&#34;Don't!&#34;);
++-----------------+
+| QUOTE(&#34;Don't!&#34;) |
++-----------------+
+| 'Don\'t!'       |
++-----------------+
 
-<span class="k">SELECT</span> <span class="n">QUOTE</span><span class="p">(</span><span class="k">NULL</span><span class="p">);</span> 
-<span class="o">+</span><span class="c1">-------------+</span>
-<span class="o">|</span> <span class="n">QUOTE</span><span class="p">(</span><span class="k">NULL</span><span class="p">)</span> <span class="o">|</span>
-<span class="o">+</span><span class="c1">-------------+</span>
-<span class="o">|</span> <span class="k">NULL</span>        <span class="o">|</span>
-<span class="o">+</span><span class="c1">-------------+</span>
+SELECT QUOTE(NULL); 
++-------------+
+| QUOTE(NULL) |
++-------------+
+| NULL        |
++-------------+
 </pre>
     </div>
 

@@ -243,12 +243,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2010-07-12 20:31">11 years, 9 months ago</span></dd>
+<span class="datetime" title="2010-07-12 20:31">11 years, 11 months ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2019-01-11 11:14">3 years, 3 months ago</span></dd>
+<span class="datetime" title="2022-06-03 11:15">3 weeks, 1 day ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -475,38 +475,46 @@ matter.</p>
 <span class="o">|</span> <span class="mi">3</span> <span class="o">|</span> <span class="n">t2</span>      <span class="o">|</span>
 <span class="o">+</span><span class="c1">---+---------+</span>
 </pre><p>In the following example, we'll create three MyISAM tables, and then a MERGE table on them. However, one of them uses a different data type for the column b, so a SELECT will produce an error:</p>
-<pre class="fixed"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">t1</span> <span class="p">(</span>
-  <span class="n">a</span> <span class="nb">INT</span><span class="p">,</span>
-  <span class="n">b</span> <span class="nb">INT</span>
-<span class="p">)</span> <span class="n">ENGINE</span> <span class="o">=</span> <span class="n">MyISAM</span><span class="p">;</span>
+<pre class="fixed">CREATE TABLE t1 (
+  a INT,
+  b INT
+) ENGINE = MyISAM;
 
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">t2</span> <span class="p">(</span>
-  <span class="n">a</span> <span class="nb">INT</span><span class="p">,</span>
-  <span class="n">b</span> <span class="nb">INT</span>
-<span class="p">)</span> <span class="n">ENGINE</span> <span class="o">=</span> <span class="n">MyISAM</span><span class="p">;</span>
+CREATE TABLE t2 (
+  a INT,
+  b INT
+) ENGINE = MyISAM;
 
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">t3</span> <span class="p">(</span>
-  <span class="n">a</span> <span class="nb">INT</span><span class="p">,</span>
-  <span class="n">b</span> <span class="n">TINYINT</span>
-<span class="p">)</span> <span class="n">ENGINE</span> <span class="o">=</span> <span class="n">MyISAM</span><span class="p">;</span>
+CREATE TABLE t3 (
+  a INT,
+  b TINYINT
+) ENGINE = MyISAM;
 
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">t_mrg</span> <span class="p">(</span>
-  <span class="n">a</span> <span class="nb">INT</span><span class="p">,</span>
-  <span class="n">b</span> <span class="nb">INT</span>
-<span class="p">)</span> <span class="n">ENGINE</span> <span class="o">=</span> <span class="n">MERGE</span><span class="p">,</span><span class="k">UNION</span><span class="o">=</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span><span class="n">t2</span><span class="p">,</span><span class="n">t3</span><span class="p">);</span>
+CREATE TABLE t_mrg (
+  a INT,
+  b INT
+) ENGINE = MERGE,UNION=(t1,t2,t3);
 
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t_mrg</span><span class="p">;</span>
-<span class="n">ERROR</span> <span class="mi">1168</span> <span class="p">(</span><span class="n">HY000</span><span class="p">):</span> <span class="n">Unable</span> <span class="k">to</span> <span class="k">open</span> <span class="n">underlying</span> <span class="k">table</span> <span class="n">which</span> <span class="k">is</span> <span class="n">differently</span> <span class="k">defined</span>
- <span class="k">or</span> <span class="k">of</span> <span class="n">non</span><span class="o">-</span><span class="n">MyISAM</span> <span class="k">type</span> <span class="k">or</span> <span class="n">doesn</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">exist</span>
+SELECT * FROM t_mrg;
+ERROR 1168 (HY000): Unable to open underlying table which is differently defined
+ or of non-MyISAM type or doesn't exist
 </pre><p>To find out what's wrong, we'll use a CHECK TABLE:</p>
-<pre class="fixed"><span class="k">CHECK</span> <span class="k">TABLE</span> <span class="n">t_mrg</span><span class="p">;</span>
-<span class="o">+</span><span class="c1">------------+-------+----------+-----------------------------------------------------------------------------------------------------+</span>
-<span class="o">|</span> <span class="k">Table</span>      <span class="o">|</span> <span class="n">Op</span>    <span class="o">|</span> <span class="n">Msg_type</span> <span class="o">|</span> <span class="n">Msg_text</span>                                                      <span class="o">|</span>
-<span class="o">+</span><span class="c1">------------+-------+----------+-----------------------------------------------------------------------------------------------------+</span>
-<span class="o">|</span> <span class="n">test</span><span class="p">.</span><span class="n">t_mrg</span> <span class="o">|</span> <span class="k">check</span> <span class="o">|</span> <span class="n">Error</span>    <span class="o">|</span> <span class="k">Table</span> <span class="s1">&#39;test.t3&#39;</span> <span class="k">is</span> <span class="n">differently</span> <span class="k">defined</span> <span class="k">or</span> <span class="k">of</span> <span class="n">non</span><span class="o">-</span><span class="n">MyISAM</span> <span class="k">type</span> <span class="k">or</span> <span class="n">doesn</span><span class="s1">&#39;t exist                       |</span>
-<span class="s1">| test.t_mrg | check | Error    | Unable to open underlying table which is differently defined or of non-MyISAM type or doesn&#39;</span><span class="n">t</span> <span class="n">exist</span> <span class="o">|</span>
-<span class="o">|</span> <span class="n">test</span><span class="p">.</span><span class="n">t_mrg</span> <span class="o">|</span> <span class="k">check</span> <span class="o">|</span> <span class="n">error</span>    <span class="o">|</span> <span class="n">Corrupt</span>                                                      <span class="o">|</span>
-<span class="o">+</span><span class="c1">------------+-------+----------+-----------------------------------------------------------------------------------------------------+</span>
+<pre class="fixed wrap">CHECK TABLE t_mrg\G
+*************************** 1. row ***************************
+   Table: test.t_mrg
+      Op: check
+Msg_type: Error
+Msg_text: Table 'test.t3' is differently defined or of non-MyISAM type or doesn't exist
+*************************** 2. row ***************************
+   Table: test.t_mrg
+      Op: check
+Msg_type: Error
+Msg_text: Unable to open underlying table which is differently defined or of non-MyISAM type or doesn't exist
+*************************** 3. row ***************************
+   Table: test.t_mrg
+      Op: check
+Msg_type: error
+Msg_text: Corrupt
 </pre><p>Now, we know that the problem is in <code>t3</code>'s definition.</p>
 
     </div>

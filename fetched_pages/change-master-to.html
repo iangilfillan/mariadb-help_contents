@@ -255,12 +255,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2010-08-30 18:59">11 years, 7 months ago</span></dd>
+<span class="datetime" title="2010-08-30 18:59">11 years, 9 months ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2022-04-24 13:45">7 hours, 51 minutes ago</span></dd>
+<span class="datetime" title="2022-06-25 18:22">15 hours, 17 minutes ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -567,7 +567,7 @@ master_def:
 
     <li class="mariadb_from_10_7_0"><a href="#gtid-persistence" title="GTID Persistence">GTID Persistence</a></li>
 
-    <li class="mariadb_from_10_7_0"><a href="#creating-a-slave-from-a-backup" title="Creating a Slave from a Backup">Creating a Slave from a Backup</a></li>
+    <li class="mariadb_from_10_7_0"><a href="#creating-a-replica-from-a-backup" title="Creating a Replica from a Backup">Creating a Replica from a Backup</a></li>
 
     <li class="mariadb_from_10_7_0"><a href="#example" title="Example">Example</a></li>
 
@@ -655,8 +655,8 @@ log</a> file name and position to be invalid for the new primary. As a side effe
 master_retry_count=4294967295
 </pre><h4 class="anchored_heading" id="master_bind"><code>MASTER_BIND</code></h4>
 <div class="cstm-style redbox"><p>The <code>MASTER_BIND</code> option for <code>CHANGE MASTER</code> is only supported by MySQL 5.6.2 and later and by MySQL NDB Cluster 7.3.1 and later. This option is not supported by MariaDB. See <a href="https://jira.mariadb.org/browse/MDEV-19248">MDEV-19248</a> for more information.</p>
-</div><p>The <code>MASTER_BIND</code> option for <code>CHANGE MASTER</code> can be used on replicas that have multiple network interfaces to choose which network interface the replica will use to connect to the primary.</p>
-<h4 class="anchored_heading" id="master_heartbeat_period"><code>MASTER_HEARTBEAT_PERIOD</code></h4>
+</div><div class="cstm-style hidden"><p>The <code>MASTER_BIND</code> option for <code>CHANGE MASTER</code> can be used on replicas that have multiple network interfaces to choose which network interface the replica will use to connect to the primary.</p>
+</div><h4 class="anchored_heading" id="master_heartbeat_period"><code>MASTER_HEARTBEAT_PERIOD</code></h4>
 <p>The <code>MASTER_HEARTBEAT_PERIOD</code> option for <code>CHANGE MASTER</code> can be used to set the interval in seconds between replication heartbeats. Whenever the primary's <a href="/kb/en/binary-log/">binary log</a> is updated with an event, the waiting period for the next heartbeat is reset.</p>
 <p>This option's <em>interval</em> argument has the following characteristics:</p>
 <ul start="1"><li>It is a decimal value with a range of <code>0</code> to <code>4294967</code> seconds.
@@ -921,7 +921,7 @@ relay_log_info_file=/mariadb/myserver1-relay-log.info
 </pre><h2 class="anchored_heading" id="gtid-persistence">GTID Persistence</h2>
 <p>If the replica is replicating <a href="/kb/en/binary-log/">binary log</a> events that contain <a href="/kb/en/gtid/">GTIDs</a>, then the <a href="/kb/en/replication-threads/#slave-sql-thread">replica's SQL thread</a> will write every GTID that it applies to the <a href="/kb/en/mysqlgtid_slave_pos-table/">mysql.gtid_slave_pos</a> table. This GTID can be inspected and modified through the <a href="/kb/en/gtid/#gtid_slave_pos">gtid_slave_pos</a> system variable.</p>
 <p>If the replica has the <a href="/kb/en/replication-and-binary-log-system-variables/#log_slave_updates">log_slave_updates</a> system variable enabled and if the replica has the <a href="/kb/en/binary-log/">binary log</a> enabled, then every write by the <a href="/kb/en/replication-threads/#slave-sql-thread">replica's SQL thread</a> will also go into the replica's <a href="/kb/en/binary-log/">binary log</a>. This means that <a href="/kb/en/gtid/">GTIDs</a> of replicated transactions would be reflected in the value of the <a href="/kb/en/gtid/#gtid_binlog_pos">gtid_binlog_pos</a> system variable.</p>
-<h2 class="anchored_heading" id="creating-a-slave-from-a-backup">Creating a Slave from a Backup</h2>
+<h2 class="anchored_heading" id="creating-a-replica-from-a-backup">Creating a Replica from a Backup</h2>
 <p>The <code>CHANGE MASTER</code> statement is useful for setting up a replica when you have a backup of the primary and you also have the <a href="/kb/en/binary-log/">binary log</a> position or <a href="/kb/en/gtid/">GTID</a> position corresponding to the backup.</p>
 <p>After restoring the backup on the replica, you could execute something like this to use the <a href="/kb/en/binary-log/">binary log</a> position:</p>
 <pre class="fixed"><span class="k">CHANGE</span> <span class="n">MASTER</span> <span class="k">TO</span>

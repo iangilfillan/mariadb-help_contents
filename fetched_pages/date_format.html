@@ -255,12 +255,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2010-03-27 16:53">12 years ago</span></dd>
+<span class="datetime" title="2010-03-27 16:53">12 years, 3 months ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2021-10-18 14:55">5 months, 3 weeks ago</span></dd>
+<span class="datetime" title="2022-04-25 09:59">2 months ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -530,12 +530,12 @@
 <span class="o">|</span> <span class="mi">00</span>                              <span class="o">|</span>
 <span class="o">+</span><span class="c1">---------------------------------+</span>
 </pre><div class="mariadb_from_10_3_2 mariadb from_10_3_2 product"><h5 class="product_title">MariaDB starting with <a href="/kb/en/mariadb-1032-release-notes/">10.3.2</a></h5><p>Optionally, the locale can be explicitly specified as the third DATE_FORMAT() argument. Doing so makes the function independent from the session settings, and the three argument version of DATE_FORMAT() can be used in virtual indexed and persistent <a href="/kb/en/generated-columns/">generated-columns</a>:</p>
-<pre class="fixed"><span class="k">SELECT</span> <span class="n">DATE_FORMAT</span><span class="p">(</span><span class="s1">&#39;2006-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;%W&#39;</span><span class="p">,</span> <span class="s1">&#39;el_GR&#39;</span><span class="p">);</span>
-<span class="o">+</span><span class="c1">------------------------------------------+</span>
-<span class="o">|</span> <span class="n">DATE_FORMAT</span><span class="p">(</span><span class="s1">&#39;2006-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;%W&#39;</span><span class="p">,</span> <span class="s1">&#39;el_GR&#39;</span><span class="p">)</span> <span class="o">|</span>
-<span class="o">+</span><span class="c1">------------------------------------------+</span>
-<span class="o">|</span> <span class="err">Κυριακή</span>                                  <span class="o">|</span>
-<span class="o">+</span><span class="c1">------------------------------------------+</span>
+<pre class="fixed">SELECT DATE_FORMAT('2006-01-01', '%W', 'el_GR');
++------------------------------------------+
+| DATE_FORMAT('2006-01-01', '%W', 'el_GR') |
++------------------------------------------+
+| Κυριακή                                  |
++------------------------------------------+
 </pre></div><h2 class="anchored_heading" id="see-also">See Also</h2>
 <ul start="1"><li><a href="/kb/en/str_to_date/">STR_TO_DATE()</a>
 </li><li><a href="/kb/en/from_unixtime/">FROM_UNIXTIME()</a></li></ul>

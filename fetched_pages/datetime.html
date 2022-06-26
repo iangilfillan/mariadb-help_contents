@@ -247,12 +247,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2010-05-20 19:02">11 years, 10 months ago</span></dd>
+<span class="datetime" title="2010-05-20 19:02">12 years, 1 month ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2021-03-10 13:19">1 year, 1 month ago</span></dd>
+<span class="datetime" title="2022-05-23 20:01">1 month ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -456,7 +456,7 @@ numbers. For details, see <a href="/kb/en/date-and-time-literals/">date and time
 <h2 class="anchored_heading" id="supported-values">Supported Values</h2>
 <p>MariaDB stores values that use the <code>DATETIME</code> data type in a format that supports values between <code>1000-01-01 00:00:00.000000</code> and <code>9999-12-31 23:59:59.999999</code>.</p>
 <p>MariaDB can also store <a href="/kb/en/microseconds-in-mariadb/">microseconds</a> with a precision between 0 and 6. If no microsecond precision is specified, then 0 is used by default.</p>
-<p>MariaDB also supports '<code>0000-00-00</code>' as a special <em>zero-date</em> value, unless <a href="/kb/en/sql-mode/#no_zero_date">NO_ZERO_DATE</a> is specified in the <a href="/kb/en/sql-mode/">SQL_MODE</a>. Similarly, individual components of a date can be set to <code>0</code> (for example: '<code>2015-00-12</code>'), unless <a href="/kb/en/sql-mode/#no_zero_date">NO_ZERO_DATE</a> is specified in the <a href="/kb/en/sql-mode/">SQL_MODE</a>. In many cases, the result of en expression involving a zero-date, or a date with zero-parts, is <code>NULL</code>. If the <a href="/kb/en/sql-mode/#allow_invalid_dates">ALLOW_INVALID_DATES</a> SQL_MODE is enabled, if the day part is in the range between 1 and 31, the date does not produce any error, even for months that have less than 31 days.</p>
+<p>MariaDB also supports '<code>0000-00-00</code>' as a special <em>zero-date</em> value, unless <a href="/kb/en/sql-mode/#no_zero_date">NO_ZERO_DATE</a> is specified in the <a href="/kb/en/sql-mode/">SQL_MODE</a>. Similarly, individual components of a date can be set to <code>0</code> (for example: '<code>2015-00-12</code>'), unless <a href="/kb/en/sql-mode/#no_zero_in_date">NO_ZERO_IN_DATE</a> is specified in the <a href="/kb/en/sql-mode/">SQL_MODE</a>. In many cases, the result of en expression involving a zero-date, or a date with zero-parts, is <code>NULL</code>. If the <a href="/kb/en/sql-mode/#allow_invalid_dates">ALLOW_INVALID_DATES</a> SQL_MODE is enabled, if the day part is in the range between 1 and 31, the date does not produce any error, even for months that have less than 31 days.</p>
 <h2 class="anchored_heading" id="time-zones">Time Zones</h2>
 <p>If a column uses the <code>DATETIME</code> data type, then any inserted values are stored as-is, so no automatic time zone conversions are performed.</p>
 <p>MariaDB also does not currently support time zone literals that contain time zone identifiers. See <a href="https://jira.mariadb.org/browse/MDEV-11829">MDEV-11829</a> for more information.</p>
