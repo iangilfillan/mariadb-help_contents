@@ -316,7 +316,6 @@ class Page:
 def main():
     """goes through each .html file in fetched_pages and writes the text version"""
     files = set((html_file.replace(".html", "") for html_file in os.listdir("fetched_pages") if html_file.endswith(".html")))
-    files = ["alter-user"]
     num_files = len(files)
     time_taken = 0
 
