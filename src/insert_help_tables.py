@@ -1,7 +1,6 @@
 #module imports
 import re
 import time
-import sys
 import os
 import datetime
 import calendar
@@ -13,14 +12,15 @@ from os.path import join as osjoin
 from page import Page
 #config
 
-SQL_FILENAME = "new_help_tables.sql"
-REGENERATE_TEXT = True
-DEBUG = True
-CURRENT_TEXT_FILES = True
+SQL_FILENAME: str = "new_help_tables.sql"
+REGENERATE_TEXT: bool = True
+DEBUG: bool = True
+CURRENT_TEXT_FILES: bool = True
 
-#consts
-FETCHED_PAGES = os.listdir("fetched_pages")
-INSERT_INTO = "insert into help_topic (help_topic_id,help_category_id,name,description,example,url) values ("
+#set containing each text file in the fetched_pages directory
+FETCHED_PAGES: list = set([file for file in os.listdir("fetched_pages") if file.endswith('txt')]) # files 
+#lines need to start with this string in order to have it's description read
+INSERT_INTO: str = "insert into help_topic (help_topic_id,help_category_id,name,description,example,url) values ("
 
 #classes
 @dataclass
@@ -37,7 +37,7 @@ class HelpTopic:
 
 #functions
 def get_name(url) -> str:
-    """returns the last text in a url eg: mariadb.com/kb/en/insert/ -> insert"""
+    """returns the unique text in a url eg: mariadb.com/kb/en/insert/ -> insert"""
     #reversing string
     lru = ""
     for char in url: lru = char + lru
@@ -59,7 +59,6 @@ def get_help_topic_info(line) -> HelpTopic:
 def read_table_information(read_from) -> list:
     """Returns a list containing the HelpTopic from each replacable line"""
     if DEBUG: print("Reading Help Tables")
-    table_information = []
     #get lines
     with open(read_from, "r", encoding="utf-8") as infile:
         lines = infile.readlines()
@@ -67,7 +66,7 @@ def read_table_information(read_from) -> list:
     #get help topics
     gen = (get_help_topic_info(line) for line in lines if line.startswith(INSERT_INTO))
     table_information = [help_topic for help_topic in gen if help_topic.url != ""]
-
+    #writes descriptions located in the fill_help_tables.sql file
     if CURRENT_TEXT_FILES:
         for h_topic in table_information:
             text = h_topic.description
@@ -77,8 +76,6 @@ def read_table_information(read_from) -> list:
 
     return table_information
 
-
-
 def update_table_information(table_information: list):
     """Updates the new description documentation for each HelpTopic"""
     if DEBUG: print("Updating Help Tables")
@@ -86,9 +83,7 @@ def update_table_information(table_information: list):
     num_files = len(table_information)
     for index, help_topic in enumerate(table_information):
         #debug progress
-        if DEBUG:
-            sys.stdout.write(f"\rRan Through {index+1}/{num_files} files")
-            sys.stdout.flush()
+        if DEBUG: print(f"\rRan Through {index+1}/{num_files} files", end="")
         #set new information
         name = get_name(help_topic.url)
         help_topic.new_description = get_new_description(name)
@@ -98,17 +93,17 @@ def update_table_information(table_information: list):
 
 def get_new_description(name):
     """Returns new description documentation for the given page name"""
-    if REGENERATE_TEXT or name+".txt" not in FETCHED_PAGES:
+    #if regenerate text bool or if txt file is not in the fetched_pages directory
+    if REGENERATE_TEXT or (name+".txt" not in FETCHED_PAGES):
         #read, convert, set new description from html file
         with open(osjoin("fetched_pages", name+".html"), "r", encoding="utf-8") as infile:
             page = Page(name, infile.read())
             page.format_text()
             new_description = page.text
-    else:
-        #read and set new description from txt file
+    else: #load text file without computation
         with open(osjoin("fetched_pages", name+".txt"), "r", encoding="utf-8") as infile:
             new_description = infile.read()
-    #returns the new description with it'`s` newlines escaped
+    #returns the new description with it's newlines escaped
     return "\\n".join(new_description.splitlines())
 
 def insert_into_help_table(fp: str, table_information: list) -> None:
@@ -157,7 +152,7 @@ def update_help_date(text: str) -> str:
     #make new description
     date = datetime.date.today()
     day, month, year = date.day, calendar.month_name[date.month], date.year
-
+    #string inputed for HELP_DATE
     updated_description = f"Help contents generated from the MariaDB Knowledge Base on {day} {month} {year}."
     #replace old with new
     text = text.replace(description, updated_description)
@@ -177,7 +172,7 @@ if __name__ == "__main__":
             old_file = infile.read()
     else:
         old_file = ""
-    
+
     #keep track of time
     start = time.perf_counter()
     #main function call
