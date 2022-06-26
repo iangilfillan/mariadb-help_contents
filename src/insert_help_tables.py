@@ -125,6 +125,8 @@ def insert_into_help_table(fp: str, table_information: list) -> None:
         text = text.replace(help_topic.url, url)
 
     text = update_help_date(text)
+    text = remove_update_into(text)
+
 
     #write help table
     with open(fp, "w", encoding="utf-8") as outfile:
@@ -156,12 +158,15 @@ def update_help_date(text: str) -> str:
     date = datetime.date.today()
     day, month, year = date.day, calendar.month_name[date.month], date.year
 
-    updated_description = f"This help information was generated from the MariaDB Knowledge Base\non {day} {month} {year}."
-    print(updated_description)
+    updated_description = f"Help contents generated from the MariaDB Knowledge Base on {day} {month} {year}."
     #replace old with new
-    text = text.replace(description, updated_description.replace("\n", " "))
+    text = text.replace(description, updated_description)
 
     return text
+
+def remove_update_into(text: str):
+    """Removes weird concatenations in the sql file"""
+    return "\n".join([line for line in text.split("\n") if not line.startswith("update help")])
 
 if __name__ == "__main__":
     #keep track of 

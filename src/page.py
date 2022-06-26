@@ -7,13 +7,9 @@ import sys
 from os.path import join as osjoin
 from bs4 import BeautifulSoup
 
-#custom line break character
-LINE_BREAK = "<line-break>"
-
 #classes
 class Page:
     line_limit = 79
-    forced_line_splits = 0
     text = ""
 
     def __init__(self, name, content) -> None:
@@ -54,26 +50,16 @@ class Page:
 
     def remove_from_html(self, html):
         """Removes extra information at the bottom of the page"""
-        #If examples is present
-        #index = html.find('<h2 class="anchored_heading" id="examples">')
-        #if index != -1:
-            #Remove everything from the Examples heading
-        #    html = html[:index]
-        #    return html
-
-        #If see also is present
-        index = html.find('<h2 class="anchored_heading" id="see-also">')
-        if index != -1:
-            #Remove everything from the See Also heading
-            html = html[:index]
-            return html
+        for n in range(2, 6):
+            index = html.find(f'<h{n} class="anchored_heading" id="see-also">')
+            if index != -1:
+                html = html[:index]
+                return html
 
         return html
 
     def modify_text(self, text) -> str:
         """Removes and modifies text"""
-        text = text.replace(LINE_BREAK, "\n")
-        
         text = self.set_line_limit(text)
         text = self.space_paragraphs(text)
         text = self.remove_extra_space(text)
@@ -173,9 +159,9 @@ class Page:
         column_widths = self.get_column_widths(table)
         for row in table:
             str_line = self.add_row_break(column_widths)
-            row_lines, number_of_lines = self.get_lines(row, column_widths)
+            row_lines, num_lines = self.get_lines(row, column_widths)
             #print(row_lines)
-            for i in range(number_of_lines):
+            for i in range(num_lines):
                 str_line += "|"
                 for index, line in enumerate(row_lines):
                     str_line += " "
@@ -217,12 +203,12 @@ class Page:
 
     def get_lines(self, row, column_widths):
         lines = []
-        number_of_lines = 0
+        num_lines = 0
         for index, width in enumerate(column_widths):
             elines = self.sep_lines(row[index], width)
             lines.append(elines)
-            number_of_lines = max(len(elines), number_of_lines)
-        return lines, number_of_lines
+            num_lines = max(len(elines), num_lines)
+        return lines, num_lines
     
     
     def sep_lines(self, string, len_line):
@@ -250,7 +236,7 @@ class Page:
 
         code_blocks = content.find_all("pre", {"class": "fixed"})
         for cb in code_blocks:
-            cb.string = LINE_BREAK + cb.text + "\n"
+            cb.string = "\n\n" + cb.text + "\n"
     
     def remove_extra_newlines(self, content) -> None:
         """Removes new lines found in paragraphs where newlines are normally ignored"""
@@ -262,35 +248,38 @@ class Page:
     def set_line_limit(self, text) -> str:
         """Assures lines do not extend past a certain length"""
         lines = []
+        #go through each line
         for line in text.split("\n"):
             line2 = line
-            count = 0
+            #if the line is greater than the line limit
             while len(line2) > self.line_limit:
-                count += 1
+                #split the lines
                 line1, line2 = self.seperate_line(line2, self.line_limit)
+                #add the correctly sized line back to lines
                 lines.append(line1)
-                #error, exits program
-                if count > 100:
-                    print(f"ERROR for LINE {line} in {self.name}")
-                    exit()
+            #add the leftover line
             lines.append(line2)
-        
+        #recreate the text
         new_text = "\n".join(lines)
 
         return new_text
 
     def seperate_line(self, line, line_limit) -> list:
-        """returns the given string capped to the line_limit and returns the remaining string"""
-
+        """returns two split based on the line limit"""
+        #get an index for each space in the line
         matches = list(re.finditer(" ", line))
+        #iterate through each space from the top
         for m in reversed(matches):
             start = m.start()
+            #if the space is within the line limit
             if (start < line_limit):
+                #split the line at that space's index
                 line1 = line[:start]
                 line2 = line[start + 1:]
                 break
-
-        else:# len(matches) == 0:
+        #if no splits were made
+        else:
+            #force a split at the line limit
             line1, line2 = line[:line_limit], line[line_limit+1:]
 
         return line1, line2
@@ -327,13 +316,11 @@ class Page:
 def main():
     """goes through each .html file in fetched_pages and writes the text version"""
     files = set((html_file.replace(".html", "") for html_file in os.listdir("fetched_pages") if html_file.endswith(".html")))
+    files = ["alter-user"]
     num_files = len(files)
-    calc_time = True
-    forced_line_splits = 0
     time_taken = 0
 
-    print_line_splits = False
-    if calc_time: start_time = time.perf_counter()
+    start_time = time.perf_counter()
     for index, name in enumerate(files):
 
         filepath = osjoin("fetched_pages", name)
@@ -343,10 +330,6 @@ def main():
         #get text
         page = Page(name, html)
         page.format_text()
-        #add forced_line_splits
-        forced_line_splits += page.forced_line_splits
-        #print forced line splits
-        if page.forced_line_splits > 0 and print_line_splits: print(f"{page.forced_line_splits} - forced line splits - {page.name}")
         #write text
         with open(filepath+".txt", "w", encoding="utf-8") as outfile:
             outfile.write(page.text)
@@ -358,10 +341,9 @@ def main():
         sys.stdout.write(f"\rRan Through {index+1}/{num_files} files - (est time remaining: {est_time_remaining}s)")
         sys.stdout.flush()
     
-    if calc_time: time_taken = time.perf_counter() - start_time
+    time_taken = time.perf_counter() - start_time
 
     print()
-    print(f"{forced_line_splits} - TOTAL FORCED LINE SPLITS - {forced_line_splits}")
     print(f"Took {round(time_taken, 2)}s to run {num_files} files")
     print(f"Avg of {round(time_taken / num_files, 3)}s per file")
 
