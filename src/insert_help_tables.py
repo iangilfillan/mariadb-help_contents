@@ -1,10 +1,10 @@
 #module imports
 import re
-import time
 import os
 import datetime
 import calendar
 
+from time import perf_counter
 from dataclasses import dataclass
 from os.path import join as osjoin
 
@@ -53,7 +53,7 @@ def get_help_topic_info(line) -> HelpTopic:
     """Returns a HelpTopic containing all the necessary information"""
     pattern = r"insert into help_topic \(help_topic_id,help_category_id,name,description,example,url\) values "
     pattern += r"\((\d+),(\d+),'(.*)','(.*)','()','(.*)'\)"
-
+    
     return HelpTopic( *re.search(pattern, line).groups() )
 
 def read_table_information(read_from) -> list:
@@ -115,13 +115,14 @@ def insert_into_help_table(fp: str, table_information: list) -> None:
     for help_topic in table_information:
         #replace old description
         text = text.replace(help_topic.description, help_topic.new_description)
-        #replace old url
+        #replace old library url with new url
         url = help_topic.url.replace("/library", "")
+        #replace the url found in text with the new url
         text = text.replace(help_topic.url, url)
 
     text = update_help_date(text)
-    text = remove_update_into(text)
-
+    #removes lines that start with 'update help'
+    text = "\n".join([line for line in text.split("\n") if not line.startswith("update help")])
 
     #write help table
     with open(fp, "w", encoding="utf-8") as outfile:
@@ -159,10 +160,6 @@ def update_help_date(text: str) -> str:
 
     return text
 
-def remove_update_into(text: str):
-    """Removes weird concatenations in the sql file"""
-    return "\n".join([line for line in text.split("\n") if not line.startswith("update help")])
-
 if __name__ == "__main__":
     #keep track of 
     files = os.listdir()
@@ -174,7 +171,7 @@ if __name__ == "__main__":
         old_file = ""
 
     #keep track of time
-    start = time.perf_counter()
+    start = perf_counter()
     #main function call
     main()
     #print changes in new_help_tables.sql
@@ -189,4 +186,4 @@ if __name__ == "__main__":
         print("No change was made to", SQL_FILENAME)
     
     #manage and print time
-    print("Seconds to execute:", round(time.perf_counter() - start, 2))
+    print("Seconds to execute:", round(perf_counter() - start, 2))

@@ -2,7 +2,6 @@
 import re
 import os
 import time
-import sys
 
 from os.path import join as osjoin
 from bs4 import BeautifulSoup
@@ -108,7 +107,7 @@ class Page:
         return content
 
     def mark_list_items(self, content) -> None:
-        #Marks list items with a *
+        """Marks <li> items with a *"""
         lis = content.find_all("li")
         for li in lis:
             li.string = "* " + li.text
@@ -337,15 +336,13 @@ def main():
         current_avg_time = current_time_taken / (index+1)
         est_time_remaining = int(current_avg_time * (num_files - (index+1)))
         #debug
-        sys.stdout.write(f"\rRan Through {index+1}/{num_files} files - (est time remaining: {est_time_remaining}s)")
-        sys.stdout.flush()
+        print(f"\rRan Through {index+1}/{num_files} files - (est time remaining: {est_time_remaining}s)", end="")
     
     time_taken = time.perf_counter() - start_time
 
     print()
     print(f"Took {round(time_taken, 2)}s to run {num_files} files")
     print(f"Avg of {round(time_taken / num_files, 3)}s per file")
-
 
 if __name__ == "__main__":
     main()
