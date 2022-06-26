@@ -1,18 +1,23 @@
 # mariadb-help_contents
 
-# INCOMPLETE README !!!
 
-## Overview
-The purpose of this project is to gather raw text from numerous pages in the mariadb.com/kb/en/ website to automatically update the documentation in the help files. 
+## Function
 
-## Next Goals
-This will list the current short-term objectives for each version of the program 
+The script updates the sql file 'fill_help_tables' with the recent information in the mariaDB knowledge base.
 
-## Repository Structure
+This sql file contains raw text which is displayed when calling 'HELP' on an existing keyword
 
-the 'fetched_pages' directory contains the KB's webpages and contains the text files generated from those webpages
-the 'src' directory contains all the py files
 
-'page.py' currently goes through each .html file in 'fetched_pages' and generates the text
+## Usage
 
-'insert_help_tables.py' currently goes through each line in the 'fill_help_tables.sql' file and updates the description. This is written to 'new_help_tables.sql'
+'insert_help_tables.py' generates an sql file called 'new_help_tables.sql' from an existing sql file called 'fill_help_tables.py'.
+
+'page.py' generates a .txt file for each html file contained in the 'fetched_pages' directory.
+
+The scripts do not update the html contained in 'fetched_pages', you need to move the updated html there manually (hopefully temporary)
+
+## Dependencies
+
+Need a fairly recent python version (probably 3.7 and above, haven't tested)
+
+Need the BeautifulSoup4 python library
