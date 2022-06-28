@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from os.path import join as osjoin
 
 #local imports
-from page import Page
+from page import format_to_text
 #config
 
 SQL_FILENAME: str = "new_help_tables.sql"
@@ -71,7 +71,7 @@ def read_table_information(read_from) -> list:
         for h_topic in table_information:
             text = h_topic.description
             filename = get_name(h_topic.url) + ".txt"
-            with open(osjoin("current_text_files", filename), "w", encoding = "utf-8") as outfile:
+            with open(osjoin("current_text_files", filename), "w", encoding="utf-8") as outfile:
                 outfile.write(text.replace("\\n", "\n"))
 
     return table_information
@@ -89,17 +89,15 @@ def update_table_information(table_information: list):
         help_topic.new_description = get_new_description(name)
     #new line for prints after this function    
     if DEBUG: print()
-    return None
 
 def get_new_description(name):
     """Returns new description documentation for the given page name"""
     #if regenerate text bool or if txt file is not in the fetched_pages directory
-    if REGENERATE_TEXT or (name+".txt" not in FETCHED_PAGES):
+    if REGENERATE_TEXT or (name + ".txt" not in FETCHED_PAGES):
         #read, convert, set new description from html file
-        with open(osjoin("fetched_pages", name+".html"), "r", encoding="utf-8") as infile:
-            page = Page(name, infile.read())
-            page.format_text()
-            new_description = page.text
+        with open(osjoin("fetched_pages", name + ".html"), "r", encoding="utf-8") as infile:
+            html = infile.read()
+        new_description = format_to_text(html, name)
     else: #load text file without computation
         with open(osjoin("fetched_pages", name+".txt"), "r", encoding="utf-8") as infile:
             new_description = infile.read()
@@ -128,20 +126,6 @@ def insert_into_help_table(fp: str, table_information: list) -> None:
     with open(fp, "w", encoding="utf-8") as outfile:
         outfile.write(text)
 
-def main():
-    """Main"""
-    #Create the directory 'current_text_files' if absent
-    if "current_text_files" not in os.listdir(): os.makedirs("current_text_files")
-    #copy fill_help_tables to new_help_tables.sql
-    with open("fill_help_tables.sql", "r", encoding="utf-8") as infile: content = infile.read()
-    with open("new_help_tables.sql", "w", encoding="utf-8") as outfile: outfile.write(content)
-    #main processes
-    table_information = read_table_information("fill_help_tables.sql") #get information from 'fill_help_tables.sql'
-    update_table_information(table_information) # update table_information
-    insert_into_help_table("new_help_tables.sql", table_information) #insert new information into 'new_help_tables.sql'
-
-    return None
-
 def update_help_date(text: str) -> str:
     """Updates the help date to the current date"""
     #get old description
@@ -159,6 +143,18 @@ def update_help_date(text: str) -> str:
     text = text.replace(description, updated_description)
 
     return text
+
+def main():
+    """Main"""
+    #Create the directory 'current_text_files' if absent
+    if "current_text_files" not in os.listdir(): os.makedirs("current_text_files")
+    #copy fill_help_tables to new_help_tables.sql
+    with open("fill_help_tables.sql", "r", encoding="utf-8") as infile: content = infile.read()
+    with open("new_help_tables.sql", "w", encoding="utf-8") as outfile: outfile.write(content)
+    #main processes
+    table_information = read_table_information("fill_help_tables.sql") #get information from 'fill_help_tables.sql'
+    update_table_information(table_information) # update table_information
+    insert_into_help_table("new_help_tables.sql", table_information) #insert new information into 'new_help_tables.sql'
 
 if __name__ == "__main__":
     #keep track of 

@@ -63,7 +63,6 @@ need to remember the columns order. All values are specified in the form col =
 expr.
 
 Values can also be specified in the form of a SQL expression or subquery.
-
 However, the subquery cannot access the same table that is named in the INTO
 clause.
 
@@ -71,7 +70,6 @@ If you use the LOW_PRIORITY keyword, execution of the INSERT is delayed until
 no other clients are reading from the table. If you use the HIGH_PRIORITY
 keyword, the statement has the same priority as SELECTs. This affects only
 storage engines that use only table-level locking (MyISAM, MEMORY, MERGE).
-
 However, if one of these keywords is specified, concurrent inserts cannot be
 used. See HIGH_PRIORITY and LOW_PRIORITY clauses for details.
 
@@ -179,7 +177,6 @@ functions work on a set of values, and if the purpose is to get the row count,
 ROW_COUNT() with SELECT can be used or it can be used in
 INSERT...SELECT...RETURNING if the table in the RETURNING clause is not the
 same as the INSERT table.
-
 
 
 
