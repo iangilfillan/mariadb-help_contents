@@ -87,7 +87,7 @@ commas. Each select expression can be one of the following:
 * tbl_name.* to select all columns from just the table tbl_name.
 
 When specifying a column, you can either use just the column name or qualify
-the column name with  the name of the table using tbl_name.col_name. The
+the column name with the name of the table using tbl_name.col_name. The
 qualified form is useful if you are joining multiple tables in the FROM
 clause. If you do not qualify the column names when selecting from multiple
 tables, MariaDB will try to find the column in each table. It is an error if
@@ -149,7 +149,7 @@ PARTITION
 ---------
 
 Specifies to the optimizer which partitions are relevant for the query. Other
-partitions will not be read.  See Partition Pruning and Selection for details.
+partitions will not be read. See Partition Pruning and Selection for details.
 
 PROCEDURE
 ---------

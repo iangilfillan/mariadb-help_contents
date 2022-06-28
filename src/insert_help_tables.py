@@ -76,19 +76,29 @@ def read_table_information(read_from) -> list:
 
     return table_information
 
-def update_table_information(table_information: list):
+def update_table_information(content: str, table_information: list) -> str:
     """Updates the new description documentation for each HelpTopic"""
     if DEBUG: print("Updating Help Tables")
     
     num_files = len(table_information)
     for index, help_topic in enumerate(table_information):
-        #debug progress
-        if DEBUG: print(f"\rRan Through {index+1}/{num_files} files", end="")
         #set new information
         name = get_name(help_topic.url)
-        help_topic.new_description = get_new_description(name)
+        new_description = get_new_description(name)
+        content = content.replace(help_topic.description, new_description)
+        #debug progress
+        if DEBUG: print(f"\rRan Through {index+1}/{num_files} files", end="")
+
+    #replace old library url with new url
+    content = content.replace("mariadb.com/kb/en/library/", "mariadb.com/kb/en/")
+    #update HELP DATE's date
+    content = update_help_date(content)
+    #removes lines that start with 'update help'
+    content = "\n".join([line for line in content.split("\n") if not line.startswith("update help")])
+    
     #new line for prints after this function    
     if DEBUG: print()
+    return content
 
 def get_new_description(name):
     """Returns new description documentation for the given page name"""
@@ -104,27 +114,20 @@ def get_new_description(name):
     #returns the new description with it's newlines escaped
     return "\\n".join(new_description.splitlines())
 
-def insert_into_help_table(fp: str, table_information: list) -> None:
+def insert_into_help_table(help_table: str, table_information: list) -> None:
     """Inserts the table information into the sql file"""
-    #read help table
-    with open(fp, "r", encoding="utf-8") as infile:
-        text = infile.read()
     #For each help table, replace the old description with the new description
     for help_topic in table_information:
-        #replace old description
-        text = text.replace(help_topic.description, help_topic.new_description)
-        #replace old library url with new url
-        url = help_topic.url.replace("/library", "")
-        #replace the url found in text with the new url
-        text = text.replace(help_topic.url, url)
+        help_table = help_table.replace(help_topic.description, help_topic.new_description)
 
-    text = update_help_date(text)
+    #replace old library url with new url
+    help_table = help_table.replace("mariadb.com/kb/en/library/", "mariadb.com/kb/en/")
+    help_table = update_help_date(help_table)
     #removes lines that start with 'update help'
-    text = "\n".join([line for line in text.split("\n") if not line.startswith("update help")])
+    help_table = "\n".join([line for line in help_table.split("\n") if not line.startswith("update help")])
 
     #write help table
-    with open(fp, "w", encoding="utf-8") as outfile:
-        outfile.write(text)
+    return help_table
 
 def update_help_date(text: str) -> str:
     """Updates the help date to the current date"""
@@ -145,16 +148,15 @@ def update_help_date(text: str) -> str:
     return text
 
 def main():
-    """Main"""
+    """main"""
     #Create the directory 'current_text_files' if absent
     if "current_text_files" not in os.listdir(): os.makedirs("current_text_files")
     #copy fill_help_tables to new_help_tables.sql
     with open("fill_help_tables.sql", "r", encoding="utf-8") as infile: content = infile.read()
-    with open("new_help_tables.sql", "w", encoding="utf-8") as outfile: outfile.write(content)
     #main processes
-    table_information = read_table_information("fill_help_tables.sql") #get information from 'fill_help_tables.sql'
-    update_table_information(table_information) # update table_information
-    insert_into_help_table("new_help_tables.sql", table_information) #insert new information into 'new_help_tables.sql'
+    table_information = read_table_information("fill_help_tables.sql")
+    content = update_table_information(content, table_information)
+    with open(SQL_FILENAME, "w", encoding="utf-8") as outfile: outfile.write(content)
 
 if __name__ == "__main__":
     #keep track of 

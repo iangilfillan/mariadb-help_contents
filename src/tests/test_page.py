@@ -1,7 +1,8 @@
 import os
+import re
 
 from bs4 import BeautifulSoup
-from src.page import clean_html, remove_see_also, format_to_text, LINE_LIMIT
+from src.page import clean_html, remove_see_also, format_to_text, modify_escape_chars, LINE_LIMIT
 
 def test_clean_html():
     html_input = (
@@ -34,6 +35,14 @@ def test_remove_see_also():
     remove_see_also(soup)
     html = str(soup)
     assert html.find('id: "see-also"') == -1
+
+
+def test_modify_escape_characters():
+    input_string = r"\'\\ \\\\\ \\ \\\\ \\ "
+    output_string = modify_escape_chars(input_string)
+
+    match = re.search(r"[^\\]\\\\[^\\]", output_string)
+    assert match is None
 
 def test_format_to_text():
     """Tests all the requirements from format_to_text"""

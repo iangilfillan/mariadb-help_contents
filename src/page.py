@@ -74,7 +74,7 @@ def remove_see_also(content: Soup):
     for n in range(2, 6):
         see_also = content.find(f"h{n}", {"id": "see-also", "class": "anchored_heading"})
         if see_also is not None:
-            ns = see_also.find_next_sibling("ul")
+            ns = see_also.find_next_sibling()
             if ns is not None: ns.decompose()
             see_also.decompose()
 
@@ -180,15 +180,16 @@ def add_row_break(column_widths: str) -> str:
     row_break = "+" + "".join(["-" * (width + 2) + "+" for width in column_widths])
     return row_break + "\n"
 
-def get_lines(row, column_widths):
-    """Get's the lines and the number of lines"""
-    lines = []
+def get_lines(row: list, column_widths: list) -> tuple((list, int)):
+    """returns the rows of lines and the number of lines for the column"""
+    rows = []
     num_lines = 0
     for index, width in enumerate(column_widths):
-        elines = sep_lines(row[index].strip(), width)
-        lines.append(elines)
-        num_lines = max(len(elines), num_lines)
-    return lines, num_lines
+        lines = sep_lines(row[index].strip(), width)
+        rows.append(lines)
+        num_lines = max(len(lines), num_lines)
+    
+    return rows, num_lines
 
 def sep_lines(string, len_line):
     """Seperates the lines based on the given length"""
@@ -200,8 +201,6 @@ def sep_lines(string, len_line):
     lines.append(line2)
 
     return lines
-
-
 #header tag
 def headerTag(content):
     """Modifies headers to have extra space and decoration"""
@@ -256,7 +255,7 @@ def paragraphTag(content: Soup):
     
     p_tags = content.find_all("p")
     for p in p_tags:
-        p.string = p.text.strip().replace("\n", " ") + "\n"
+        p.string = p.text.strip().replace("\n", " ").replace("  ", " ") + "\n"
 
 def remove_extra_newlines(text) -> str:
     """Replaces all groups of newlines with a max of 2"""
@@ -280,19 +279,15 @@ def reduce_indents(text: str) -> str:
 
 def modify_escape_chars(text: str) -> str:
     """escape character nonsense"""
-    #replace single backslash with double backslash
-    text = text.replace(r"\\", r"\\\\")
-    #replace apostrophe with escaped apostrophe
-    text = text.replace("'", r"\\'")
-    #replace double escaped apostrophe with single escaped apostrophe
+    text = text.replace("'", r"\'")
     text = text.replace(r"\\'", r"\'")
+    text = text.replace(r"\\", r"\\\\")
 
     return text
 
 def main():
     """goes through each .html file in fetched_pages and writes the text version"""
     files = [html_file.replace(".html", "") for html_file in os.listdir("fetched_pages") if html_file.endswith(".html")]
-    #files = ["alter-user"]
     num_files = len(files)
     time_taken = 0
 
@@ -301,25 +296,21 @@ def main():
 
         filepath = osjoin("fetched_pages", name)
         #read html
-        with open(filepath+".html", "r", encoding="utf-8") as infile:
-            html = infile.read()
+        with open(filepath+'.html', 'r', encoding='utf-8') as inf: html = inf.read()
         #format html to text
         text = format_to_text(html, name)
         #write out text
-        with open(filepath+".txt", "w", encoding="utf-8") as outfile:
-            outfile.write(text)
-        #calc times
-        current_time_taken = perf_counter() - start_time
-        current_avg_time = current_time_taken / (index+1)
-        est_time_remaining = int(current_avg_time * (num_files - (index+1)))
+        with open(filepath+".txt", "w", encoding="utf-8") as outf: outf.write(text)
         #debug over same line
-        print(f"\rRan Through {index+1}/{num_files} files - (est time remaining: {est_time_remaining}s)", end="")
+        print(f"\rRan Through {index+1}/{num_files} files", end="")
     
     time_taken = perf_counter() - start_time
 
     print()
     print(f"Took {round(time_taken, 2)}s to run {num_files} files")
     print(f"Avg of {round(time_taken / num_files, 3)}s per file")
+
+    return time_taken
 
 if __name__ == "__main__":
     main()
