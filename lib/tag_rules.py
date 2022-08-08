@@ -6,7 +6,9 @@ from lib.format_to_text import LINE_LIMIT
 
 #functions
 def paragraphTag(tag: Soup):
-    tag.string = tag.text.strip().replace("\n", " ").replace("  ", " ") + "\n"
+    string = tag.text.strip().replace("\n", " ")
+    string = re.sub(" +", " ", string)
+    tag.string = string
 
 def headerTag(tag: Soup):
     """Modifies headers to have extra space and decoration"""
