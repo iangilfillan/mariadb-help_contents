@@ -1,6 +1,7 @@
 #tests
 import tests.test_format as test_format
 import tests.test_generate as test_generate
+import tests.test_tag_rules as test_tag_rules
 
 #required imports
 import time
@@ -42,7 +43,7 @@ if __name__ == "__main__":
     #track time
     start = time.perf_counter()
     #modules
-    modules = [test_format, test_generate]
+    modules = [test_format, test_generate, test_tag_rules]
     #test modules
     total_funcs = 0
     total_passed = total_failed = 0
