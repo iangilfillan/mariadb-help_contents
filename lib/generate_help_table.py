@@ -57,11 +57,14 @@ def write_table_information(table_information: TableInfo, pre_topic_text: str, t
         outfile.write("unlock tables;")
 
 def is_valid_row(row: dict[str, str], urls: set[str], version: int) -> bool:
-    if row["HELP Include"] == "":
+    if row["HELP Include"] == "" or row["HELP Include"] == "0":
         # print(f"{CL_YELLOW}{row['URL']} has empty HELP Include{CL_END}")
         return False
 
-    if row["HELP Include"] != "1" and (int(row["HELP Include"]) > version or row["HELP Include"] == '0'):
+
+    if version == 1 or row["HELP Include"] == '1':
+        pass
+    elif (int(row["HELP Include"]) > version):
         return False
     
     if row["URL"] in urls:
