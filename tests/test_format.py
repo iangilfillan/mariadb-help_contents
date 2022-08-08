@@ -1,4 +1,3 @@
-"""Can be run manually"""
 import os
 import re
 from bs4 import BeautifulSoup

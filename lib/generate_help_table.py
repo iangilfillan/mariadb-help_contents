@@ -21,6 +21,7 @@ def get_help_topic_text(help_topic_id, help_category, name, description, example
 def is_valid_row(row: dict, urls: set[str]) -> bool:
     if row["HELP Include"] != "1":
         return False
+    
     if row["URL"] in urls:
         print(row["URL"])
         return False
@@ -29,7 +30,7 @@ def is_valid_row(row: dict, urls: set[str]) -> bool:
     return True
 
 def get_name(url: str) -> str:
-    url = url[:-1]
+    url = url.removesuffix("/")
     index = url.rfind("/")
     return url[index+1:]
 
@@ -40,11 +41,6 @@ def read_html(name: str) -> str:
         html = infile.read()
 
     return html
-
-def get_category_id(help_category: str) -> int:
-    if help_category.isnumeric():
-        return int(help_category)
-    return -1
 
 def write_table_information(table_information: TableInfo, pre_topic_text: str, table_to: str):
     topics, help_keywords, help_relations = table_information
