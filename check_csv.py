@@ -41,7 +41,7 @@ def get_help_table_urls():
     return urls
 
 def get_csv_urls_and_version():
-    with open(f"csvs{SEP}kb_urls.csv", "r") as infile:
+    with open(f"input{SEP}kb_urls.csv", "r") as infile:
         reader = list(csv.DictReader(infile))
     return [(line["URL"], line["HELP Include"]) for line in reader]
 

@@ -4,7 +4,7 @@ import re
 from bs4 import BeautifulSoup
 
 def test_clean_html():
-    from lib.page import clean_html
+    from lib.format_to_text import clean_html
     html_input = (
 """
 <html>
@@ -27,7 +27,7 @@ def test_clean_html():
     assert result == correct_result
 
 def test_remove_see_also():
-    from lib.page import remove_see_also, clean_html
+    from lib.format_to_text import remove_see_also, clean_html
     with open(os.path.join("fetched_html", "alter-user.html"), encoding="utf-8") as infile:
         html_content = infile.read()
     
@@ -39,7 +39,7 @@ def test_remove_see_also():
 
 
 def test_modify_escape_characters():
-    from lib.page import modify_escape_chars
+    from lib.format_to_text import modify_escape_chars
     input_string = r"\'\\ \\\\\ \\ \\\\ \\ "
     output_string = modify_escape_chars(input_string)
     #check for cases where there are less than four backspaces in a row
@@ -47,7 +47,7 @@ def test_modify_escape_characters():
     assert not match
 
 def test_format_to_text():
-    from lib.page import format_to_text, LINE_LIMIT
+    from lib.format_to_text import format_to_text, LINE_LIMIT
     """Tests all the requirements from format_to_text"""
     with open(os.path.join("fetched_html", "alter-user.html"), encoding="utf-8") as infile:
         html_content = infile.read()
@@ -65,7 +65,7 @@ def test_format_to_text():
 
 
 def test_reduce_indents():
-    from lib.page import reduce_indents
+    from lib.format_to_text import reduce_indents
     """Tests reduce_indents to make sure it doesn't remove content, and that it halves each line's indent"""
     text = (
 """
@@ -89,7 +89,7 @@ NoIndents
     assert output == expected_output
 
 def test_add_url():
-    from lib.page import add_url
+    from lib.format_to_text import add_url
 
     output = add_url(text="", name="test")
     expected_output = "\n\n\n\nURL: mariadb.com/kb/en/test/"
@@ -97,7 +97,7 @@ def test_add_url():
     assert output == expected_output
 
 def test_remove_extra_newlines():
-    from lib.page import remove_extra_newlines
+    from lib.format_to_text import remove_extra_newlines
 
     text = "01\n2\n\n3\n\n\n4\n\n\n\n5\n\n\n\n\n"
     output = remove_extra_newlines(text)

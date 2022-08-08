@@ -61,7 +61,7 @@ def write_table_information(table_information: TableInfo, pre_topic_text: str, t
         outfile.write("unlock tables;")
 
 def generate_categories():
-    with open(f"csvs{SEP}help_cats.csv", "r", encoding="utf-8") as infile:
+    with open(f"input{SEP}help_cats.csv", "r", encoding="utf-8") as infile:
         reader = list(csv.DictReader(infile))
     
     category_ids: dict[str, int] = {}
@@ -89,7 +89,7 @@ def generate_categories():
     return output
 
 def get_pre_topic_text() -> str:
-    with open("starting_sql.sql", "r", encoding="utf-8") as infile:
+    with open(f"input{SEP}starting_sql.sql", "r", encoding="utf-8") as infile:
         start = infile.read()
     
     categories = generate_categories()
@@ -97,7 +97,7 @@ def get_pre_topic_text() -> str:
     return start + "\n" + "".join(categories) + "\n"
 
 def read_csv_information() -> CsvInfo:
-    with open(f"csvs{SEP}kb_urls.csv", "r", encoding="utf-8") as infile:
+    with open(f"input{SEP}kb_urls.csv", "r", encoding="utf-8") as infile:
         reader = csv.DictReader(infile)
         urls: set[str] = set()
 
