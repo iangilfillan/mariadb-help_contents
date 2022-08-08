@@ -18,7 +18,10 @@ def get_version() -> int:
     """Reads the version number while giving precise debug info"""
     if len(sys.argv) < 2:
         version = 1
-        print(f"{CL_YELLOW}Warning! No version number given, defaults to 0.{CL_END}")
+        print(f"{CL_YELLOW}Warning! No version number given, defaults to 1.{CL_END}")
+    elif sys.argv[1][0] == '1' and len(sys.argv[1]) == 1:
+        version = int(sys.argv[1])
+        print(f"{CL_GREEN}Selected Version: {version}.{CL_END}")
     elif not sys.argv[1].isnumeric():
         print(f"{CL_RED}Invalid version argument!{CL_END}", end="")
         exit()

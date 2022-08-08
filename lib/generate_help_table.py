@@ -87,7 +87,7 @@ def read_csv_information(version: int) -> CsvInfo:
     return rows
 
 def generate_categories(version: int):
-    valid_version = lambda row: int(row["Include"]) <= version
+    valid_version = lambda row: int(row["Include"]) <= version or version == 1
     with open(f"input{SEP}help_cats.csv", "r", encoding="utf-8") as infile:
         reader = list(filter(valid_version, csv.DictReader(infile)))
     category_ids: dict[str, int] = {}
@@ -167,8 +167,8 @@ def make_table_information(csv_information: CsvInfo) -> tuple[list[str], list[st
     unique_keywords : list[str] = []
 
     num_rows: int = len(csv_information)
-
-    for help_topic_id, row in enumerate(csv_information, 1):
+    # Starting at 2 to make room for HELP DATE
+    for help_topic_id, row in enumerate(csv_information, 2):
         keywords: list[str] = row["keywords"].split(";")
         topic = row["url"]
 
@@ -192,7 +192,7 @@ def make_table_information(csv_information: CsvInfo) -> tuple[list[str], list[st
         row_num: int = help_topic_id
         percent = int((row_num / num_rows) * 100)
         #print differently if processing or finished
-        if row_num < num_rows:
+        if row_num <= num_rows:
             print(f"\rProgess: {percent}%", end="")
         else:
             print(f"{CL_GREEN}\rFinished: {percent}%{CL_END}")
