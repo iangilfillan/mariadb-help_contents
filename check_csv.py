@@ -2,7 +2,7 @@ import csv
 import sys
 from os import sep as SEP
 
-SQL_FILENAME = "new_help_tables.sql"
+SQL_FILENAME = "fill_help_tables.sql"
 
 
 def is_correct_version(url: str, version: str, line_num: int) -> bool:

@@ -10,7 +10,7 @@ os.system('')
 SEP = os.sep
 
 # Paths to output sql file
-SQL_FILENAME: str = "new_help_tables.sql"
+SQL_FILENAME: str = "fill_help_tables.sql"
 SQL_FILEPATH: str = f"output{SEP}{SQL_FILENAME}"
 
 # Functions
