@@ -1,23 +1,23 @@
-# mariadb-help_contents
+# Mariadb-Help_Contents
 
 
 ## Function
 
 The script updates the sql file 'fill_help_tables' with the recent information in the mariaDB knowledge base.
 
-This sql file contains raw text which is displayed when calling 'HELP' on an existing keyword
-
 
 ## Usage
 
-'insert_help_tables.py' generates an sql file called 'new_help_tables.sql' from an existing sql file called 'fill_help_tables.py'.
 
-'page.py' generates a .txt file for each html file contained in the 'fetched_pages' directory.
+## Additional scripts
+- 'check_csv.py' creates text files containing urls found in 'new_help_tables' but not 'kb_urls.csv' and visa versa
 
-The scripts do not update the html contained in 'fetched_pages', you need to move the updated html there manually (hopefully temporary)
+- 'run_tests.py' Runs the tests found in the the tests directory and prints the results
 
 ## Dependencies
 
-Need a fairly recent python version (probably 3.7 and above, haven't tested)
+Recent python3 version
 
-Need the BeautifulSoup4 python library
+BeautifulSoup4 python library
+
+lxml

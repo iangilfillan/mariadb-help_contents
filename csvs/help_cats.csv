@@ -1,0 +1,45 @@
+Name,Parent
+Geographic,0
+Polygon Properties,Geographic Features
+WKT,Geographic Features
+Numeric Functions,Functions
+Plugins,Contents
+MBR,Geographic Features
+Control Flow Functions,Functions
+Transactions,Contents
+Help Metadata,Contents
+Account Management,Contents
+Point Properties,Geographic Features
+Encryption Functions,Functions
+LineString Properties,Geographic Features
+Miscellaneous Functions,Functions
+Logical Operators,Functions
+Functions and Modifiers for Use with GROUP BY,Contents
+Information Functions,Functions
+Comparison Operators,Functions
+Bit Functions,Functions
+Table Maintenance,Contents
+User-Defined Functions,Contents
+Data Types,Contents
+Compound Statements,Contents
+Geometry Constructors,Geographic Features
+Geometry Collection Properties,Geographic
+Administration,Contents
+Data Manipulation,Contents
+Utility,Contents
+Language Structure,Contents
+Geometry Relations,Geographic Features
+Date and Time Functions,Functions
+WKB,Geographic Features
+Procedures,Contents
+Geographic Features,Contents
+Contents,0
+Geometry Properties,Geographic Features
+String Functions,Functions
+Functions,Contents
+Data Definition,Contents
+Sequences,Contents
+JSON Functions,Functions
+Window Functions,Functions
+Spider Functions,Functions
+Dynamic Column Functions,Functions
