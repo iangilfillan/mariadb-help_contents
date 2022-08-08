@@ -1,45 +1,45 @@
-Name,Parent
-Geographic,0
-Polygon Properties,Geographic Features
-WKT,Geographic Features
-Numeric Functions,Functions
-Plugins,Contents
-MBR,Geographic Features
-Control Flow Functions,Functions
-Transactions,Contents
-Help Metadata,Contents
-Account Management,Contents
-Point Properties,Geographic Features
-Encryption Functions,Functions
-LineString Properties,Geographic Features
-Miscellaneous Functions,Functions
-Logical Operators,Functions
-Functions and Modifiers for Use with GROUP BY,Contents
-Information Functions,Functions
-Comparison Operators,Functions
-Bit Functions,Functions
-Table Maintenance,Contents
-User-Defined Functions,Contents
-Data Types,Contents
-Compound Statements,Contents
-Geometry Constructors,Geographic Features
-Geometry Collection Properties,Geographic
-Administration,Contents
-Data Manipulation,Contents
-Utility,Contents
-Language Structure,Contents
-Geometry Relations,Geographic Features
-Date and Time Functions,Functions
-WKB,Geographic Features
-Procedures,Contents
-Geographic Features,Contents
-Contents,0
-Geometry Properties,Geographic Features
-String Functions,Functions
-Functions,Contents
-Data Definition,Contents
-Sequences,Contents
-JSON Functions,Functions
-Window Functions,Functions
-Spider Functions,Functions
-Dynamic Column Functions,Functions
+Name,Parent,Include
+Geographic,0,1
+Polygon Properties,Geographic Features,1
+WKT,Geographic Features,1
+Numeric Functions,Functions,1
+Plugins,Contents,1
+MBR,Geographic Features,1
+Control Flow Functions,Functions,1
+Transactions,Contents,1
+Help Metadata,Contents,1
+Account Management,Contents,1
+Point Properties,Geographic Features,1
+Encryption Functions,Functions,1
+LineString Properties,Geographic Features,1
+Miscellaneous Functions,Functions,1
+Logical Operators,Functions,1
+Functions and Modifiers for Use with GROUP BY,Contents,1
+Information Functions,Functions,1
+Comparison Operators,Functions,1
+Bit Functions,Functions,1
+Table Maintenance,Contents,1
+User-Defined Functions,Contents,1
+Data Types,Contents,1
+Compound Statements,Contents,1
+Geometry Constructors,Geographic Features,1
+Geometry Collection Properties,Geographic,1
+Administration,Contents,1
+Data Manipulation,Contents,1
+Utility,Contents,1
+Language Structure,Contents,1
+Geometry Relations,Geographic Features,1
+Date and Time Functions,Functions,1
+WKB,Geographic Features,1
+Procedures,Contents,1
+Geographic Features,Contents,1
+Contents,0,1
+Geometry Properties,Geographic Features,1
+String Functions,Functions,1
+Functions,Contents,1
+Data Definition,Contents,1
+Sequences,Contents,1
+JSON Functions,Functions,1
+Window Functions,Functions,1
+Spider Functions,Functions,1
+Dynamic Column Functions,Functions,105
