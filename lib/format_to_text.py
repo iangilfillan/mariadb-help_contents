@@ -3,6 +3,7 @@ LINE_LIMIT = 79
 #imports
 import re
 from bs4 import BeautifulSoup as Soup
+import lxml
 #annoying
 from lib.tag_rules import *
 
@@ -99,7 +100,7 @@ def set_line_limit(text: str, line_limit: int = LINE_LIMIT) -> str:
     lines = []
     for line in text.split("\n"):
         lines += sep_lines(line, LINE_LIMIT)
-
+ 
     new_text = "\n".join(lines)
 
     return new_text

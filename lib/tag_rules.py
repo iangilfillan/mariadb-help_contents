@@ -1,6 +1,7 @@
 #imports
 from bs4 import BeautifulSoup as Soup
 import re
+import html
 #annoying
 from lib.format_to_text import LINE_LIMIT
 
@@ -16,6 +17,7 @@ def headerTag(tag: Soup):
     length = len(tag.text)
     tag.string = "\n" + tag.text + "\n" + "-" * length + "\n"
 
+    tag.string = tag.string
 def codeTag(tag: Soup):
     """Spaces code blocks to improve readability"""
 

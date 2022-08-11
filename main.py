@@ -37,8 +37,8 @@ def get_version() -> int:
     elif sys.argv[1][1] != "0":
         print(f"{CL_YELLOW}Warning! Versions above 10.x not accounted for.{CL_END}")
         version = version = int(sys.argv[1])
-    elif int(sys.argv[1][2:]) < 3:
-        print(f"{CL_YELLOW}Warning! Versions below 10.3 have no effect.{CL_END}")
+    elif int(sys.argv[1][2:]) <= 3:
+        print(f"{CL_YELLOW}Warning! Versions below 10.4 have no effect.{CL_END}")
         version = int(sys.argv[1])
     elif sys.argv[1][2] == '0':
         print(f"{CL_BLUE}Note! Unnecessary '0' for third digit.{CL_END}")

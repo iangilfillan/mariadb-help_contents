@@ -4,6 +4,7 @@ import re
 import datetime
 import time
 import requests
+import html as HTML # changing name as gross hack because I used 'html' as a variable name a lot.
 
 from lib.format_to_text import format_to_text
 from lib.colors import CL_RED, CL_YELLOW, CL_GREEN, CL_BLUE, CL_END
@@ -24,7 +25,7 @@ def get_help_topic_text(help_topic_id, help_category, name, description, example
 
 def get_name(url: str) -> str:
     url = url.removesuffix("/")
-    index = url.rfind("/")
+    index = url.rindex("/")
     return url[index+1:]
 
 def read_html(name: str) -> str:
@@ -35,7 +36,7 @@ def read_html(name: str) -> str:
         time.sleep(2)
         html = requests.get(f"https://mariadb.com/kb/en/{name}/").text
         with open(filepath, "w", encoding="utf-8") as outfile:
-            outfile.write(html)
+            outfile.write(str(html))
     else:
         with open(filepath, "r", encoding="utf-8") as infile:
             html = infile.read()
@@ -57,21 +58,21 @@ def write_table_information(table_information: TableInfo, pre_topic_text: str, t
         outfile.write("unlock tables;")
 
 def is_valid_row(row: dict[str, str], urls: set[str], version: int) -> bool:
+    
     if row["HELP Include"] == "" or row["HELP Include"] == "0":
-        # print(f"{CL_YELLOW}{row['URL']} has empty HELP Include{CL_END}")
         return False
-
-
     if version == 1 or row["HELP Include"] == '1':
         pass
     elif (int(row["HELP Include"]) > version):
         return False
     
-    if row["URL"] in urls:
-        print(row["URL"])
+
+    url = row["URL"]
+    if url in urls:
+        print(f"{CL_YELLOW}Duplicate url: '{url}'{CL_END}")
         return False
 
-    urls.add(row["URL"])
+    urls.add(url)
     return True
 
 def read_csv_information(version: int) -> CsvInfo:
@@ -86,7 +87,6 @@ def read_csv_information(version: int) -> CsvInfo:
                 "category": row["HELP Cat"],
                 "keywords": row["HELP Keywords"],
                 } for row in reader if is_valid_row(row, urls, version)]
-
     return rows
 
 def generate_categories(version: int):
@@ -155,8 +155,13 @@ def get_page_h1(html):
     end_index = html.find("</title>", index+1)
 
     title: str = html[index:end_index]
-    title = title.removeprefix("<title>")
-    title = title.removesuffix(" - MariaDB Knowledge Base")
+    title: str = title.removeprefix("<title>")
+    title: str = title.removesuffix(" - MariaDB Knowledge Base")
+
+    # Converts markers like '&amp'; to their text representations: '&'
+    # This is not necessary when getting text from the beautifulsoup structure as it converts automatically.
+    title: str = HTML.unescape(title)
+    
 
     return title
 
@@ -172,22 +177,29 @@ def make_table_information(csv_information: CsvInfo) -> tuple[list[str], list[st
     num_rows: int = len(csv_information)
     # Starting at 2 to make room for HELP DATE
     for help_topic_id, row in enumerate(csv_information, 2):
+
+        name: str = get_name(row["url"])
+        html = read_html(name)
+        page_name: str = get_page_h1(html)
+
         keywords: list[str] = row["keywords"].split(";")
-        topic = row["url"]
 
         for keyword in keywords:
             if keyword == "": continue
+            
+            #if is duplicate: warn and skip keyword.
+            if keyword.upper() == page_name.upper():
+                print(f"\n{CL_YELLOW}Duplicate keyword found: {keyword}{CL_END}")
+                continue
+
             if keyword not in unique_keywords:
                 unique_keywords.append(keyword)
             topic_to_keyword.append((help_topic_id, keyword))
 
-        name: str = get_name(topic)
         #get topic description
         help_category: str = row["category"]
-        html = read_html(name)
-        page_name: str = get_page_h1(html)
         description: str = format_to_text(html, name).replace("\n", "\\n")
-
+        #
         topic = get_help_topic_text(help_topic_id, help_category, page_name, description, "", row["url"])
 
         topics.append(topic)

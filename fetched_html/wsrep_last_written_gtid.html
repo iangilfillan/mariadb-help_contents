@@ -10,22 +10,22 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/kb/static/images/favicons/favicon-16x16.5801f8f0f34e.png">
     <link rel="shortcut icon" href="/kb/static/images/favicons/favicon.d122d305dee4.ico" type="image/x-icon" />
 
-    <title>&amp;&amp; - MariaDB Knowledge Base</title>
+    <title>WSREP_LAST_WRITTEN_GTID - MariaDB Knowledge Base</title>
 
     <link href="/kb/static/css/main.9a0d7dcebefd.css" rel="stylesheet" type="text/css" />
 
     
 
     <!-- FB Open Graph tags -->
-    <meta property="og:title" content="&amp;&amp;" />
+    <meta property="og:title" content="WSREP_LAST_WRITTEN_GTID" />
     <meta property="og:type" content="article" />
-    <meta property="og:url" content="https://mariadb.com/kb/en/and/" />
+    <meta property="og:url" content="https://mariadb.com/kb/en/wsrep_last_written_gtid/" />
     <meta property="og:image" content="http://mariadb.comaskmonty-logo.png" />
     <meta property="og:site_name" content="MariaDB KnowledgeBase" />
     <meta property="fb:admins" content="514852603" />
-    <meta property="og:description" content="Logical AND." />
+    <meta property="og:description" content="Returns the Global Transaction ID of the most recent write transaction performed by the client." />
 
-    <meta name="description" content="Logical AND." />
+    <meta name="description" content="Returns the Global Transaction ID of the most recent write transaction performed by the client." />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="//fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet"/>
@@ -64,7 +64,7 @@
                 </li>
                 
                     <li>
-                        <a href="/kb/user/login?next=/kb/en/and/"> Login</a>
+                        <a href="/kb/user/login?next=/kb/en/wsrep_last_written_gtid/"> Login</a>
                     </li>
                 
             </ul>
@@ -84,7 +84,7 @@
             
                 
                     <li>
-                        <a href="/kb/user/login?next=/kb/en/and/" rel="nofollow">Login</a>
+                        <a href="/kb/user/login?next=/kb/en/wsrep_last_written_gtid/" rel="nofollow">Login</a>
                     </li>
                 
             
@@ -178,15 +178,23 @@
     
 
     
-    » <a class="crumb" href="/kb/en/operators/">Operators</a>
+    » <a class="crumb" href="/kb/en/sql-statements/">SQL Statements</a>
     
 
     
-    » <a class="crumb" href="/kb/en/logical-operators/">Logical Operators</a>
+    » <a class="crumb" href="/kb/en/built-in-functions/">Built-in Functions</a>
+    
+
+    
+    » <a class="crumb" href="/kb/en/special-functions/">Special Functions</a>
+    
+
+    
+    » <a class="crumb" href="/kb/en/galera-functions/">Galera Functions</a>
     
 
 
-    » <a class="node_link crumb" href="/kb/en/and/">&amp;&amp;</a>
+    » <a class="node_link crumb" href="/kb/en/wsrep_last_written_gtid/">WSREP_LAST_WRITTEN_GTID</a>
 
 
                 </div>
@@ -224,17 +232,17 @@
 
 <div class="well well-small box actions"><div>
 
-        <a class="btn btn-block btn-blue btn-sm" href="/kb/en/and/+history" rel="nofollow">History</a>
+        <a class="btn btn-block btn-blue btn-sm" href="/kb/en/wsrep_last_written_gtid/+history" rel="nofollow">History</a>
         
         
         
-        <a class="btn btn-block btn-blue btn-sm" href="/kb/en/and/+source/">Source</a>
+        <a class="btn btn-block btn-blue btn-sm" href="/kb/en/wsrep_last_written_gtid/+source/">Source</a>
         
-        <a class="btn btn-block btn-blue btn-sm flag" href="/kb/en/and/+flag"
-                data-flag-url="/kb/en/and/+flag" rel="nofollow">
+        <a class="btn btn-block btn-blue btn-sm flag" href="/kb/en/wsrep_last_written_gtid/+flag"
+                data-flag-url="/kb/en/wsrep_last_written_gtid/+flag" rel="nofollow">
                 Flag as Spam / Inappropriate</a>
         
-        <a class="btn btn-block btn-blue btn-sm" href="/kb/en/and/+translate/">
+        <a class="btn btn-block btn-blue btn-sm" href="/kb/en/wsrep_last_written_gtid/+translate/">
                 Translate</a>
         
 
@@ -251,12 +259,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2010-03-27 18:34">12 years, 4 months ago</span></dd>
+<span class="datetime" title="2021-07-07 10:16">1 year, 1 month ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2018-07-13 13:47">4 years ago</span></dd>
+<span class="datetime" title="2021-07-07 10:16">1 year, 1 month ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -267,7 +275,7 @@
         <dt>License</dt>
         <dd>
             
-                <a href="/kb/en/and/+license/">GPLv2 fill_help_tables.sql</a>
+                <a href="/kb/en/wsrep_last_written_gtid/+license/">CC BY-SA / Gnu FDL</a>
             
         </dd>
 
@@ -276,10 +284,10 @@
 
     
     <ul class="rss_feeds">
-        <li><a href="/kb/en/and/+history/feed/">
+        <li><a href="/kb/en/wsrep_last_written_gtid/+history/feed/">
             History</a>
         </li>
-        <li><a href="/kb/en/and/+comments/feed/">
+        <li><a href="/kb/en/wsrep_last_written_gtid/+comments/feed/">
             Comments</a>
         </li>
     </ul>
@@ -296,7 +304,7 @@
     
     
 
-<div class="well well-small box attachments"><div><div class="edit_link pull-right"><a href="/kb/en/and/+edit/attachments/">Edit</a></div><h5>Attachments</h5></div><div>
+<div class="well well-small box attachments"><div><div class="edit_link pull-right"><a href="/kb/en/wsrep_last_written_gtid/+edit/attachments/">Edit</a></div><h5>Attachments</h5></div><div>
 
         
             <div class="no_data">No attachments exist</div>
@@ -311,20 +319,25 @@
 
     
     
-        
 
-<div class="well well-small box"><div><h5>Localized Versions</h5></div><div>
 
-        <ul>
-            
-            <li><a href="/kb/it/and/">&amp;&amp;</a> [it]</li>
-            
-        </ul>
-        
-</div>
-</div>
 
     
+    
+
+<div class="well well-small box"><div><h5>Product Versions</h5></div><div>
+
+        <ul id="product_chooser">
+            
+                <li class="mariadb_from_10_4_2">
+                    <label><input type="checkbox" data-product-class="mariadb_from_10_4_2"
+                            >MariaDB starting with 10.4.2</label>
+                </li>
+            
+        </ul>
+    
+</div>
+</div>
 
 
 
@@ -379,7 +392,7 @@
             
             <section id="content" class="limited_width col-md-8 clearfix">
                 
-                    <h1>&amp;&amp;</h1>
+                    <h1>WSREP_LAST_WRITTEN_GTID</h1>
                 
 
                 
@@ -402,66 +415,19 @@
 
     
     <div class="answer formatted">
-        <h2 class="anchored_heading" id="syntax">Syntax</h2>
-<pre class="fixed">AND, &amp;&amp;
-</pre><div class="table_of_contents well well-small">
-<h3>Contents</h3>
- <ol class="toc">
+        <div class="mariadb_from_10_4_2 mariadb from_10_4_2 product"><h5 class="product_title">MariaDB starting with <a href="/kb/en/mariadb-1042-release-notes/">10.4.2</a></h5><p>WSREP_LAST_WRITTEN_GTID was added as part of Galera 4 in <a href="/kb/en/mariadb-1042-release-notes/">MariaDB 10.4.2</a>.</p>
+</div><h2 class="anchored_heading" id="syntax">Syntax</h2>
+<pre class="fixed">WSREP_LAST_WRITTEN_GTID()
+</pre><h2 class="anchored_heading" id="description">Description</h2>
+<p>Returns the <a href="/kb/en/gtid/">Global Transaction ID</a> of the most recent write transaction performed by the client.</p>
 
-    <li class=""><a href="#syntax" title="Syntax">Syntax</a></li>
-
-    <li class=""><a href="#description" title="Description">Description</a></li>
-
-    <li class=""><a href="#examples" title="Examples">Examples</a> </ol>
-</li>
-</div>
-<h2 class="anchored_heading" id="description">Description</h2>
-<p>Logical AND. Evaluates to 1 if all operands are non-zero and not NULL,
-to 0 if one or more operands are 0, otherwise NULL is returned.</p>
-<p>For this operator, <a href="/kb/en/operator-precedence/#short-circuit-evaluation">short-circuit evaluation</a> can be used.</p>
-<h2 class="anchored_heading" id="examples">Examples</h2>
-<pre class="fixed"><span class="k">SELECT</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="mi">1</span><span class="p">;</span>
-<span class="o">+</span><span class="c1">--------+</span>
-<span class="o">|</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="mi">1</span> <span class="o">|</span>
-<span class="o">+</span><span class="c1">--------+</span>
-<span class="o">|</span>      <span class="mi">1</span> <span class="o">|</span>
-<span class="o">+</span><span class="c1">--------+</span>
-
-<span class="k">SELECT</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="mi">0</span><span class="p">;</span>
-<span class="o">+</span><span class="c1">--------+</span>
-<span class="o">|</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="mi">0</span> <span class="o">|</span>
-<span class="o">+</span><span class="c1">--------+</span>
-<span class="o">|</span>      <span class="mi">0</span> <span class="o">|</span>
-<span class="o">+</span><span class="c1">--------+</span>
-
-<span class="k">SELECT</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="k">NULL</span><span class="p">;</span>
-<span class="o">+</span><span class="c1">-----------+</span>
-<span class="o">|</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="k">NULL</span> <span class="o">|</span>
-<span class="o">+</span><span class="c1">-----------+</span>
-<span class="o">|</span>      <span class="k">NULL</span> <span class="o">|</span>
-<span class="o">+</span><span class="c1">-----------+</span>
-
-<span class="k">SELECT</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="k">NULL</span><span class="p">;</span>
-<span class="o">+</span><span class="c1">-----------+</span>
-<span class="o">|</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="k">NULL</span> <span class="o">|</span>
-<span class="o">+</span><span class="c1">-----------+</span>
-<span class="o">|</span>         <span class="mi">0</span> <span class="o">|</span>
-<span class="o">+</span><span class="c1">-----------+</span>
-
-<span class="k">SELECT</span> <span class="k">NULL</span> <span class="o">&amp;&amp;</span> <span class="mi">0</span><span class="p">;</span>
-<span class="o">+</span><span class="c1">-----------+</span>
-<span class="o">|</span> <span class="k">NULL</span> <span class="o">&amp;&amp;</span> <span class="mi">0</span> <span class="o">|</span>
-<span class="o">+</span><span class="c1">-----------+</span>
-<span class="o">|</span>         <span class="mi">0</span> <span class="o">|</span>
-<span class="o">+</span><span class="c1">-----------+</span>
-</pre>
     </div>
 
 
         
             <div id="subscribe" class="well well-small hide hidden-print"
-                 data-subscribe-url="/kb/en/and/+subscriptions/add"
-                 data-unsubscribe-url="/kb/en/and/+subscriptions/remove">
+                 data-subscribe-url="/kb/en/wsrep_last_written_gtid/+subscriptions/add"
+                 data-unsubscribe-url="/kb/en/wsrep_last_written_gtid/+subscriptions/remove">
             </div>
         
 
@@ -471,20 +437,20 @@ to 0 if one or more operands are 0, otherwise NULL is returned.</p>
         <div class="simple_section_nav">
             <ul class="nav nav-pills">
                 
-                    <li><a href="/kb/en/not/">
-                        ← !
+                    <li><a href="/kb/en/wsrep_last_seen_gtid/">
+                        ← WSREP_LAST_SEEN_GTID
                     </a>
                     </li>
                 
                 
-                    <li><a href="/kb/en/logical-operators/">
-                        ↑ Logical Operators ↑
+                    <li><a href="/kb/en/galera-functions/">
+                        ↑ Galera Functions ↑
                     </a>
                     </li>
                 
                 
-                    <li class="pull-right"><a href="/kb/en/xor/">
-                        XOR →
+                    <li class="pull-right"><a href="/kb/en/wsrep_sync_wait_upto_gtid/">
+                        WSREP_SYNC_WAIT_UPTO_GTID →
                     </a>
                     </li>
                 
@@ -498,8 +464,8 @@ to 0 if one or more operands are 0, otherwise NULL is returned.</p>
         <h2>Comments</h2>
         
     
-    <div id="comments" data-node-id="228" data-comments-url="/kb/en/and/+comments"
-         data-reply-url="/kb/en/and/comments/post/">
+    <div id="comments" data-node-id="10881" data-comments-url="/kb/en/wsrep_last_written_gtid/+comments"
+         data-reply-url="/kb/en/wsrep_last_written_gtid/comments/post/">
         Comments loading...
     </div>
 
@@ -523,42 +489,33 @@ to 0 if one or more operands are 0, otherwise NULL is returned.</p>
         
         <ul class="section_navigation well well-small hidden-xs hidden-sm">
             
-                <li class="parent"><a href="/kb/en/logical-operators/">
-                    ↑ Logical Operators ↑
+                <li class="parent"><a href="/kb/en/galera-functions/">
+                    ↑ Galera Functions ↑
                 </a>
                 </li>
             
             
                 
                     <li>
-                        <a href="/kb/en/not/">
+                        <a href="/kb/en/wsrep_last_seen_gtid/">
                             
-                            !
+                            WSREP_LAST_SEEN_GTID
                         </a>
                     </li>
                 
             
                 
                     <li class="active">
-                        <span>&amp;&amp;</span>
+                        <span>WSREP_LAST_WRITTEN_GTID</span>
                         
                     </li>
                 
             
                 
                     <li>
-                        <a href="/kb/en/xor/">
+                        <a href="/kb/en/wsrep_sync_wait_upto_gtid/">
                             
-                            XOR
-                        </a>
-                    </li>
-                
-            
-                
-                    <li>
-                        <a href="/kb/en/or/">
-                            
-                            ||
+                            WSREP_SYNC_WAIT_UPTO_GTID
                         </a>
                     </li>
                 

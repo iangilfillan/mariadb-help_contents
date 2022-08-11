@@ -16,7 +16,7 @@ def get_functions(module) -> list:
         item = getattr(module, name)
         if str(item).startswith("<function ") and name.startswith("test_"):
             funcs.append( (name, item) )
-    return funcs     
+    return funcs
 
 def test_functions(functions: list) -> tuple[int, int]:
     #colours for printing
