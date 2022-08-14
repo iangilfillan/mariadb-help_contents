@@ -126,20 +126,18 @@ def get_pre_topic_text(version: int) -> str:
     return start + "\n" + "".join(categories) + "\n"
 
 def link_help_categories(csv_information: CsvInfo, pre_topic_text: str):
-
-    category_ids: dict[str, int] = {}
-
     pattern = r"values \((\d+),'([\w\- ]+)',"
 
-    for line in pre_topic_text.split("\n"):
-        if line.startswith("insert into help_category"):
-            match = re.search(pattern, line)
-            if match is None: continue
-            help_category_id, help_category = match.groups()
-            category_ids[help_category] = int(help_category_id)
-
+    category_ids: dict[str, int] = {
+        category: int(cat_id) for cat_id, category in [
+            re.search(pattern, line).groups()
+            for line in pre_topic_text.splitlines()
+            if line.startswith("insert into help_category")
+        ]
+    }
     # keys
-    help_categories = set(category_ids)
+    help_categories = category_ids.keys()
+
     for row in list(csv_information):
         if row["category"] in help_categories:
             row["category"] = str(category_ids[row["category"]])
