@@ -1,10 +1,10 @@
 import os
 import csv
-import re
 import datetime
 import time
 import requests
-import html as HTML # changing name as gross hack because I used 'html' as a variable name a lot.
+
+from html import unescape # Gross hack because I used 'html' as a variable name a lot.
 
 from lib.format_to_text import format_to_text
 from lib.colors import CL_RED, CL_YELLOW, CL_GREEN, CL_BLUE, CL_END
@@ -59,14 +59,13 @@ def write_table_information(table_information: TableInfo, pre_topic_text: str, t
 
 def is_valid_row(row: dict[str, str], urls: set[str], version: int) -> bool:
     
-    if row["HELP Include"] == "" or row["HELP Include"] == "0":
+    if row["HELP Include"] == '' or row["HELP Include"] == '0':
         return False
     if version == 1 or row["HELP Include"] == '1':
         pass
     elif (int(row["HELP Include"]) > version):
         return False
     
-
     url = row["URL"]
     if url in urls:
         print(f"{CL_YELLOW}Duplicate url: '{url}'{CL_END}")
@@ -77,99 +76,84 @@ def is_valid_row(row: dict[str, str], urls: set[str], version: int) -> bool:
 
 def read_csv_information(version: int) -> CsvInfo:
     
-    with open(f"input{SEP}kb_urls.csv", "r", encoding="utf-8") as infile:
+    with open(f"input{SEP}kb_urls.csv", 'r', encoding="utf-8") as infile:
         reader = csv.DictReader(infile)
-
-        urls: set[str] = set()
+        urls: set[str] = set() # Used for is_valid_row
 
         rows = [{
                 "url": row["URL"],
                 "category": row["HELP Cat"],
                 "keywords": row["HELP Keywords"],
-                } for row in reader if is_valid_row(row, urls, version)]
+                } for row in reader if is_valid_row(row, urls, version)
+        ]
     return rows
 
 def generate_categories(version: int):
-    valid_version = lambda row: int(row["Include"]) <= version or version == 1
-    with open(f"input{SEP}help_cats.csv", "r", encoding="utf-8") as infile:
-        reader = list(filter(valid_version, csv.DictReader(infile)))
-    category_ids: dict[str, int] = {}
-    categories: set[str] = set()
-
-    for cat_id, row in enumerate(reader, 1):
-        name = row["Name"]
-        category_ids[name] = cat_id
-        categories.add(name)
+    is_valid_version = lambda row: int(row["Include"]) <= version or version == 1
     
-    output: list[str] = []
-
-    text = "insert into help_category (help_category_id,name,parent_category_id,url)"
-    text += " values ({cat_id},'{name}',{parent},'');\n"
-
-    for cat_id, row in enumerate(reader, 1):
-        parent = row["Parent"]
-        if parent in categories:
-            parent = category_ids[parent]
-        elif parent != '0':
-            print(f"{CL_RED}error for help_cats.csv{parent}{CL_END}")
-            continue
-        output.append( (text.format(cat_id=cat_id, name=row["Name"], parent=parent)) )
-    
-    return output
-
-def get_pre_topic_text(version: int) -> str:
-    with open(f"input{SEP}starting_sql.sql", "r", encoding="utf-8") as infile:
-        start = infile.read()
-    
-    categories = generate_categories(version)
-
-    return start + "\n" + "".join(categories) + "\n"
-
-def link_help_categories(csv_information: CsvInfo, pre_topic_text: str):
-    pattern = r"values \((\d+),'([\w\- ]+)',"
-
+    infile = open(f"input{SEP}help_cats.csv", 'r', encoding="utf-8")
+    csv_rows = list(filter(is_valid_version, csv.DictReader(infile)))
+    infile.close()
+    # Give each category an id
     category_ids: dict[str, int] = {
-        category: int(cat_id) for cat_id, category in [
-            re.search(pattern, line).groups()
-            for line in pre_topic_text.splitlines()
-            if line.startswith("insert into help_category")
-        ]
+        row["Name"]: cat_id
+        for (cat_id, row) in enumerate(csv_rows, 1)
     }
-    # keys
-    help_categories = category_ids.keys()
+    # Add '0' as it does not exist in the csv
+    category_ids['0'] = 0
+
+    # SQL format
+    text = "insert into help_category (help_category_id,name,parent_category_id,url)" \
+           " values ({cat_id},'{name}',{parent},'');\n"
+    # Format each line
+    category_strings: list[str] = [
+        (text.format(cat_id=cat_id, name=row["Name"], parent=category_ids[row["Parent"]]))
+        if row["Parent"] in category_ids or row["Parent"] == '0'
+        else (print(f"{CL_RED}Error for help_cats.csv ({row['Parent']}){CL_END}"), exit()) # Maybe I should just use a for loop...
+        for cat_id, row in enumerate(csv_rows, 1)
+    ]
+
+    return category_strings, category_ids
+
+def get_pre_topic_text(version: int) -> tuple[str, dict[str, int]]:
+    infile = open(f"input{SEP}starting_sql.sql", 'r', encoding="utf-8")
+    file_sql = infile.read()
+    infile.close()
+
+    categories, category_info = generate_categories(version)
+    pre_topic_text: str = file_sql + "\n" + "".join(categories) + "\n"
+
+    return pre_topic_text, category_info
+
+def link_help_categories(csv_information: CsvInfo, category_ids):
 
     for row in list(csv_information):
-        if row["category"] in help_categories:
+        if row["category"] in category_ids:
             row["category"] = str(category_ids[row["category"]])
-        elif row["category"] != '0':
+        else:
             name = get_name(row["url"])
             print(f"{CL_YELLOW}{name}: '{row['category']}' was not found in categories{CL_END}")
             csv_information.remove(row)
 
     csv_information.sort(key=lambda row: int(row["category"]))
 
-def get_page_h1(html):
-    index = html.find("<title>")
-    end_index = html.find("</title>", index+1)
+def get_page_h1(html: str, name: str):
+    if not ("<title>" in html and "</title>" in html):
+        print(f"\n{CL_RED}Did not find title tag in '{name}'")
+        exit()
 
-    title: str = html[index:end_index]
-    title: str = title.removeprefix("<title>")
-    title: str = title.removesuffix(" - MariaDB Knowledge Base")
+    index = html.index("<title>")
+    end_index = html.index("</title>", index+1)
 
-    # Converts markers like '&amp'; to their text representations: '&'
-    # This is not necessary when getting text from the beautifulsoup structure as it converts automatically.
-    title: str = HTML.unescape(title)
-    
-
-    return title
+    title: str = html[index:end_index]\
+        .removeprefix("<title>")\
+        .removesuffix(" - MariaDB Knowledge Base")
+    # Converts html escape sequences like '&amp'; to their text representations: '&'
+    return unescape(title)
 
 def make_table_information(csv_information: CsvInfo) -> tuple[list[str], list[str], list[str]]:
-
-    #list of 'include help topic' lines for the sql table
     topics: list[str] = []
-    #list of topics_ids and their extra keywords
     topic_to_keyword: list[tuple[int, str]] = []
-    #list of unique keywords
     unique_keywords : list[str] = []
 
     num_rows: int = len(csv_information)
@@ -178,14 +162,15 @@ def make_table_information(csv_information: CsvInfo) -> tuple[list[str], list[st
 
         name: str = get_name(row["url"])
         html = read_html(name)
-        page_name: str = get_page_h1(html)
+        page_name: str = get_page_h1(html, name)
 
         keywords: list[str] = row["keywords"].split(";")
 
+        # If keywords remains singular this for loop will be removed
         for keyword in keywords:
             if keyword == "": continue
-            
-            #if is duplicate: warn and skip keyword.
+
+            # if is duplicate: warn and skip keyword.
             if keyword.upper() == page_name.upper():
                 print(f"\n{CL_YELLOW}Duplicate keyword found: {keyword}{CL_END}")
                 continue
@@ -194,39 +179,43 @@ def make_table_information(csv_information: CsvInfo) -> tuple[list[str], list[st
                 unique_keywords.append(keyword)
             topic_to_keyword.append((help_topic_id, keyword))
 
-        #get topic description
-        help_category: str = row["category"]
         description: str = format_to_text(html, name).replace("\n", "\\n")
-        #
-        topic = get_help_topic_text(help_topic_id, help_category, page_name, description, "", row["url"])
 
-        topics.append(topic)
-        # Debug
+        topics.append(get_help_topic_text(
+            help_topic_id, row["category"], page_name,
+            description, "", row["url"])
+        )
+
         row_num: int = help_topic_id
         percent = int((row_num / num_rows) * 100)
-        #print differently if processing or finished
+
         if row_num <= num_rows:
             print(f"\rProgess: {percent}%", end="")
         else:
             print(f"{CL_GREEN}\rFinished: {percent}%{CL_END}")
-            time.sleep(0.5)
-    #create a dictionary giving each keyword an id
-    keyword_ids: dict[str, int] = {keyword: keyword_id for (keyword_id, keyword) in enumerate(unique_keywords, 1)}
-    #list where each string is a 'insert help_keyword' line for the sql table
-    help_keywords: list[str] = [insert_help_keyword(keyword_id, keyword) for (keyword, keyword_id) in keyword_ids.items()]
-    #list where each string is a 'insert help_relations' line for the sql table
-    help_relations: list[str] = [insert_help_relations(topic_id, keyword_ids[keyword]) for (topic_id, keyword) in topic_to_keyword]
 
+    keyword_ids: dict[str, int] = {
+        keyword: keyword_id for (keyword_id, keyword)
+        in enumerate(unique_keywords, 1)
+    }
+    help_keywords: list[str] = [
+        insert_help_keyword(keyword_id, keyword)
+        for (keyword, keyword_id) in keyword_ids.items()
+    ]
+    help_relations: list[str] = [
+        insert_help_relations(topic_id, keyword_ids[keyword])
+        for (topic_id, keyword) in topic_to_keyword
+    ]
     topics.insert(0, get_help_date())
 
     return (topics, help_keywords, help_relations)
 
 def get_help_date() -> str:
     string = "insert into help_topic (help_topic_id,help_category_id,name,description,example,url) "
-    string += "values (1,9,'HELP_DATE','Help Contents generated from the MariaDB Knowledge Base on"
+    string += "values (1,9,'HELP_DATE','Help Contents generated from the MariaDB Knowledge Base on "
     
     today = datetime.date.strftime(datetime.date.today(), "%d %B %Y")
-    string += f" {today}.','','');"
+    string += f"{today}.','','');"
     return string
 
 def insert_help_keyword(keyword_id: int, keyword: str) -> str:
@@ -237,9 +226,9 @@ def insert_help_relations(topic_id: int, keyword_id: int) -> str:
 
 #main import function
 def generate_help_table(table_to: str, version: int):
-    pre_topic_text: str = get_pre_topic_text(version)
+    pre_topic_text, category_info = get_pre_topic_text(version)
     csv_information = read_csv_information(version)
-    link_help_categories(csv_information, pre_topic_text)
+    link_help_categories(csv_information, category_info)
     table_information = make_table_information(csv_information)
 
     write_table_information(table_information, pre_topic_text, table_to)
