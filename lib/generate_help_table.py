@@ -1,7 +1,6 @@
 import os
 import csv
 import datetime
-import time
 import requests
 
 from html import unescape # Gross hack because I used 'html' as a variable name a lot.
@@ -28,13 +27,15 @@ def get_name(url: str) -> str:
     index = url.rindex("/")
     return url[index+1:]
 
-def read_html(name: str) -> str:
+def read_html(name: str, url: str) -> str:
     filename = f"{name}.html"
     filepath = f"fetched_html{SEP}{name}.html"
     if filename not in html_files:
-        print(f"\nrequesting {name}")
-        time.sleep(2)
-        html = requests.get(f"https://mariadb.com/kb/en/{name}/").text
+        print(f"\n{CL_BLUE}requesting {name}{CL_END}")
+        req = requests.get(url)
+        status = req.status_code
+        test_status_codes(status, url)
+        html = req.text
         with open(filepath, "w", encoding="utf-8") as outfile:
             outfile.write(str(html))
     else:
@@ -43,6 +44,12 @@ def read_html(name: str) -> str:
 
     return html
 
+def test_status_codes(status_code: int, url: str):
+    invalid_codes = [404]
+    if status_code in invalid_codes:
+        print(f"{CL_RED}Invalid url {url}{CL_END}")
+        exit(1)
+    
 def write_table_information(table_information: TableInfo, pre_topic_text: str, table_to: str):
     topics, help_keywords, help_relations = table_information
 
@@ -57,8 +64,22 @@ def write_table_information(table_information: TableInfo, pre_topic_text: str, t
         outfile.write(string_help_relations)
         outfile.write("unlock tables;")
 
-def is_valid_row(row: dict[str, str], urls: set[str], version: int) -> bool:
+def read_csv_information(version: int) -> CsvInfo:
     
+    with open(f"input{SEP}kb_urls.csv", 'r', encoding="utf-8") as infile:
+        reader = csv.DictReader(infile)
+        urls: set[str] = set() # Used for is_valid_row
+        test_row_variance(list(reader), len(reader.fieldnames))
+
+        rows = [{
+                "url": row["URL"],
+                "category": row["HELP Cat"],
+                "keywords": row["HELP Keywords"],
+                } for row in reader if is_valid_row(row, urls, version)
+        ]
+    return rows
+
+def is_valid_row(row: dict[str, str], urls: set[str], version: int) -> bool:
     if row["HELP Include"] == '' or row["HELP Include"] == '0':
         return False
     if version == 1 or row["HELP Include"] == '1':
@@ -74,19 +95,15 @@ def is_valid_row(row: dict[str, str], urls: set[str], version: int) -> bool:
     urls.add(url)
     return True
 
-def read_csv_information(version: int) -> CsvInfo:
-    
-    with open(f"input{SEP}kb_urls.csv", 'r', encoding="utf-8") as infile:
-        reader = csv.DictReader(infile)
-        urls: set[str] = set() # Used for is_valid_row
-
-        rows = [{
-                "url": row["URL"],
-                "category": row["HELP Cat"],
-                "keywords": row["HELP Keywords"],
-                } for row in reader if is_valid_row(row, urls, version)
-        ]
-    return rows
+def test_row_variance(rows: CsvInfo, desired_length: int):
+    found_invalid = False
+    prev_row = None
+    for row in rows:
+        if len(row) != desired_length:
+            print(f"{CL_RED}Invalid row length: {row['URL']}{CL_END}")
+            found_invalid = True
+    if found_invalid:
+        exit(1)
 
 def generate_categories(version: int):
     is_valid_version = lambda row: int(row["Include"]) <= version or version == 1
@@ -112,7 +129,6 @@ def generate_categories(version: int):
         else (print(f"{CL_RED}Error for help_cats.csv ({row['Parent']}){CL_END}"), exit()) # Maybe I should just use a for loop...
         for cat_id, row in enumerate(csv_rows, 1)
     ]
-
     return category_strings, category_ids
 
 def get_pre_topic_text(version: int) -> tuple[str, dict[str, int]]:
@@ -159,17 +175,14 @@ def make_table_information(csv_information: CsvInfo) -> tuple[list[str], list[st
     num_rows: int = len(csv_information)
     # Starting at 2 to make room for HELP DATE
     for help_topic_id, row in enumerate(csv_information, 2):
-
         name: str = get_name(row["url"])
-        html = read_html(name)
+        html = read_html(name, row["url"])
         page_name: str = get_page_h1(html, name)
 
         keywords: list[str] = row["keywords"].split(";")
-
         # If keywords remains singular this for loop will be removed
         for keyword in keywords:
             if keyword == "": continue
-
             # if is duplicate: warn and skip keyword.
             if keyword.upper() == page_name.upper():
                 print(f"\n{CL_YELLOW}Duplicate keyword found: {keyword}{CL_END}")

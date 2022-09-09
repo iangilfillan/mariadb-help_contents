@@ -1,5 +1,5 @@
 Name,Parent,Include
-Geographic,0,1
+Contents,0,1
 Polygon Properties,Geographic Features,1
 WKT,Geographic Features,1
 Numeric Functions,Functions,1
@@ -13,17 +13,17 @@ Point Properties,Geographic Features,1
 Encryption Functions,Functions,1
 LineString Properties,Geographic Features,1
 Miscellaneous Functions,Functions,1
-Logical Operators,Functions,1
+Logical Operators,Operators,1
 Functions and Modifiers for Use with GROUP BY,Contents,1
 Information Functions,Functions,1
-Comparison Operators,Functions,1
+Assignment Operators,Operators,1
+Comparison Operators,Operators,1
 Bit Functions,Functions,1
 Table Maintenance,Contents,1
 User-Defined Functions,Contents,1
 Data Types,Contents,1
 Compound Statements,Contents,1
 Geometry Constructors,Geographic Features,1
-Geometry Collection Properties,Geographic,1
 Administration,Contents,1
 Data Manipulation,Contents,1
 Utility,Contents,1
@@ -33,7 +33,6 @@ Date and Time Functions,Functions,1
 WKB,Geographic Features,1
 Procedures,Contents,1
 Geographic Features,Contents,1
-Contents,0,1
 Geometry Properties,Geographic Features,1
 String Functions,Functions,1
 Functions,Contents,1
@@ -44,4 +43,7 @@ Window Functions,Functions,1
 Spider Functions,Functions,1
 Dynamic Column Functions,Functions,1
 Galera Functions,Functions,104
-Temporal Tables,0,1
+Temporal Tables,Contents,1
+GeoJSON,Geographic Features,1
+Operators,Contents,1
+Arithmetic Operators,Operators,1

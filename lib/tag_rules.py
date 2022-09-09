@@ -71,7 +71,6 @@ def format_table(table):
     for row in table:
         str_line = add_row_break(column_widths)
         row_lines, num_lines = get_lines(row, column_widths)
-        #print(row_lines)
         for i in range(num_lines):
             str_line += "|"
             for index, line in enumerate(row_lines):

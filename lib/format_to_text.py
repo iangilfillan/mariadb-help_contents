@@ -3,15 +3,14 @@ LINE_LIMIT = 79
 #imports
 import re
 from bs4 import BeautifulSoup as Soup
-import lxml
 #annoying
 from lib.tag_rules import *
-
+from lib.colors import CL_RED, CL_END
 #functions
 def format_to_text(html: str, name: str) -> str:
     """transforms html into stripped raw text for use in documentation"""
     #clean html
-    html = clean_html(html)
+    html = clean_html(html, name)
     #create soup structure
     soup = Soup(html, features="lxml")
     #modify soup
@@ -26,11 +25,13 @@ def format_to_text(html: str, name: str) -> str:
     
     return text
 
-def clean_html(html: str) -> str:
+def clean_html(html: str, name: str = "") -> str:
     """Cleans up html so beautifulsoup has to do less processing"""
     #assert only one section tag
-    assert html.count("</section>") == 1
-    
+    if '<section id="content" class="limited_width col-md-8 clearfix">' not in html:
+        print(f"\n{CL_RED}Invalid HTML for '{name}{CL_END}'")
+        exit(1)
+
     section = html.index('<section id="content" class="limited_width col-md-8 clearfix">')
     end_section = html.index('</section>')
 
