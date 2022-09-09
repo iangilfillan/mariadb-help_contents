@@ -65,21 +65,23 @@ def write_table_information(table_information: TableInfo, pre_topic_text: str, t
         outfile.write("unlock tables;")
 
 def read_csv_information(version: int) -> CsvInfo:
-    
     with open(f"input{SEP}kb_urls.csv", 'r', encoding="utf-8") as infile:
         reader = csv.DictReader(infile)
         urls: set[str] = set() # Used for is_valid_row
-        test_row_variance(list(reader), len(reader.fieldnames))
-
+        desired_length: int = len(reader.fieldnames)
         rows = [{
                 "url": row["URL"],
                 "category": row["HELP Cat"],
                 "keywords": row["HELP Keywords"],
-                } for row in reader if is_valid_row(row, urls, version)
+                } for row in reader if is_valid_row(row, urls, version, desired_length)
         ]
     return rows
 
-def is_valid_row(row: dict[str, str], urls: set[str], version: int) -> bool:
+def is_valid_row(row: dict[str, str], urls: set[str], version: int, desired_length: int) -> bool:
+    if len(row) != desired_length:
+        print(f"{CL_RED}Invalid row length: {row['URL']}{CL_END}")
+        exit(1)
+
     if row["HELP Include"] == '' or row["HELP Include"] == '0':
         return False
     if version == 1 or row["HELP Include"] == '1':
@@ -94,16 +96,6 @@ def is_valid_row(row: dict[str, str], urls: set[str], version: int) -> bool:
 
     urls.add(url)
     return True
-
-def test_row_variance(rows: CsvInfo, desired_length: int):
-    found_invalid = False
-    prev_row = None
-    for row in rows:
-        if len(row) != desired_length:
-            print(f"{CL_RED}Invalid row length: {row['URL']}{CL_END}")
-            found_invalid = True
-    if found_invalid:
-        exit(1)
 
 def generate_categories(version: int):
     is_valid_version = lambda row: int(row["Include"]) <= version or version == 1
