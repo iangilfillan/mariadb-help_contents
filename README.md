@@ -15,7 +15,7 @@ The script updates the sql file 'fill_help_tables' with the recent information i
 - 'run_tests.py' Runs the tests found in the the tests directory and prints the results
 
 ## Dependencies
-Python 3.10.6 +
+Python 3.10 +
 
 BeautifulSoup4 library
 

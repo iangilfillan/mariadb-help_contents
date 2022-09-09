@@ -1,17 +1,13 @@
 """Version selecting and debug info, interface to run generation script"""
 import time
 import sys, os
+from pathlib import Path
 from lib.generate_help_table import generate_help_table
 from lib.colors import CL_YELLOW, CL_RED, CL_GREEN, CL_BLUE, CL_CYAN, CL_END
 # Preparing system for colored text
 os.system('')
-
-# OS path seperator
-SEP = os.sep
-
-# Paths to output sql file
-SQL_FILENAME: str = "fill_help_tables.sql"
-SQL_FILEPATH: str = f"output{SEP}{SQL_FILENAME}"
+# Path to output sql file
+SQL_FILEPATH: Path = Path("output/fill_help_tables.sql")
 
 # Functions
 def get_version() -> int:
@@ -55,19 +51,16 @@ def get_version() -> int:
 
 def read_new_table() -> str:
     """Reads output SQL file"""
-    table = ""
-    if SQL_FILENAME in os.listdir("output"):
-        with open(SQL_FILEPATH, "r", encoding="utf-8") as sql_file:
-            table = sql_file.read()
-
-    return table
+    if SQL_FILEPATH.exists():
+        return SQL_FILEPATH.read_text(encoding="utf-8")
+    return ""
 
 def print_change(old_file: str, new_file: str):
     """Checks whether SQL file has been modified"""
     if old_file == "":
         print(f"{CL_BLUE}Wrote to {SQL_FILEPATH}{CL_END}")
     elif old_file != new_file:
-        print(f"{CL_BLUE}Updated {SQL_FILENAME}{CL_END}")
+        print(f"{CL_BLUE}Updated {SQL_FILEPATH.name}{CL_END}")
     else:
         print(f"{CL_BLUE}No change was made to {SQL_FILEPATH}{CL_END}")
 

@@ -95,16 +95,13 @@ def add_url(text: str, name: str):
     return text + url
 
 #modify text
-def set_line_limit(text: str, line_limit: int = LINE_LIMIT) -> str:
+def set_line_limit(text: str) -> str:
     """Assures lines do not extend past a certain length"""
     #recreate the text
     lines = []
     for line in text.split("\n"):
         lines += sep_lines(line, LINE_LIMIT)
- 
-    new_text = "\n".join(lines)
-
-    return new_text
+    return '\n'.join(lines)
 
 def remove_extra_newlines(text: str) -> str:
     """Replaces all groups of newlines with a max of 2"""

@@ -1,9 +1,9 @@
-import os
 import csv
 import datetime
 import requests
 
-from html import unescape # Gross hack because I used 'html' as a variable name a lot.
+from html import unescape
+from pathlib import Path
 
 from lib.format_to_text import format_to_text
 from lib.colors import CL_RED, CL_YELLOW, CL_GREEN, CL_BLUE, CL_END
@@ -12,11 +12,7 @@ from lib.colors import CL_RED, CL_YELLOW, CL_GREEN, CL_BLUE, CL_END
 CsvInfo = list[dict[str, str]]
 TableInfo = tuple[list[str], list[str], list[str]]
 
-html_files = set(os.listdir("fetched_html"))
-
 #path seperator
-SEP = os.sep
-
 def get_help_topic_text(help_topic_id, help_category, name, description, example, url) -> str:
     string = "insert into help_topic (help_topic_id,help_category_id,name,description,example,url) values "
     string += f"({help_topic_id},{help_category},'{name}','{description}','{example}','{url}');"
@@ -28,20 +24,17 @@ def get_name(url: str) -> str:
     return url[index+1:]
 
 def read_html(name: str, url: str) -> str:
-    filename = f"{name}.html"
-    filepath = f"fetched_html{SEP}{name}.html"
-    if filename not in html_files:
+    filepath = Path(f"fetched_html/{name}.html")
+    if not filepath.exists():
         print(f"\n{CL_BLUE}requesting {name}{CL_END}")
         req = requests.get(url)
         status = req.status_code
         test_status_codes(status, url)
         html = req.text
-        with open(filepath, "w", encoding="utf-8") as outfile:
-            outfile.write(str(html))
+        filepath.write_text(str(html), encoding="utf-8")
     else:
-        with open(filepath, "r", encoding="utf-8") as infile:
-            html = infile.read()
-
+        html = filepath.read_text(encoding="utf-8")
+    
     return html
 
 def test_status_codes(status_code: int, url: str):
@@ -65,7 +58,7 @@ def write_table_information(table_information: TableInfo, pre_topic_text: str, t
         outfile.write("unlock tables;")
 
 def read_csv_information(version: int) -> CsvInfo:
-    with open(f"input{SEP}kb_urls.csv", 'r', encoding="utf-8") as infile:
+    with open(Path("input/kb_urls.csv"), 'r', encoding="utf-8") as infile:
         reader = csv.DictReader(infile)
         urls: set[str] = set() # Used for is_valid_row
         desired_length: int = len(reader.fieldnames)
@@ -98,11 +91,11 @@ def is_valid_row(row: dict[str, str], urls: set[str], version: int, desired_leng
     return True
 
 def generate_categories(version: int):
-    is_valid_version = lambda row: int(row["Include"]) <= version or version == 1
+    infile = Path("input/help_cats.csv").read_text(encoding="utf-8")
+    unfiltered = csv.DictReader(infile.splitlines())
     
-    infile = open(f"input{SEP}help_cats.csv", 'r', encoding="utf-8")
-    csv_rows = list(filter(is_valid_version, csv.DictReader(infile)))
-    infile.close()
+    is_valid_version = lambda row: int(row["Include"]) <= version or version == 1
+    csv_rows = list(filter(is_valid_version, unfiltered))
     # Give each category an id
     category_ids: dict[str, int] = {
         row["Name"]: cat_id
@@ -124,9 +117,7 @@ def generate_categories(version: int):
     return category_strings, category_ids
 
 def get_pre_topic_text(version: int) -> tuple[str, dict[str, int]]:
-    infile = open(f"input{SEP}starting_sql.sql", 'r', encoding="utf-8")
-    file_sql = infile.read()
-    infile.close()
+    file_sql = Path("input/starting_sql.sql").read_text(encoding="utf-8")
 
     categories, category_info = generate_categories(version)
     pre_topic_text: str = file_sql + "\n" + "".join(categories) + "\n"

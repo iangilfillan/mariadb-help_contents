@@ -1,7 +1,6 @@
 #imports
 from bs4 import BeautifulSoup as Soup
 import re
-import html
 #annoying
 from lib.format_to_text import LINE_LIMIT
 
