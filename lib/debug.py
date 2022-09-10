@@ -1,8 +1,5 @@
 """Contains ANSI escape codes"""
 # Colors
-from os import sep
-
-
 CL_YELLOW = '\u001b[33m'
 CL_RED = '\u001b[31m'
 CL_GREEN = '\u001b[32m'
