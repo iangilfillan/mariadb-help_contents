@@ -35,7 +35,6 @@ def get_help_table_urls():
         index = line.rfind("https://mariadb.com/kb/en")
         if index == -1: continue
         url = line[index:-4]
-        #print(url)
         urls.append(url)
 
     return urls
@@ -60,7 +59,6 @@ def main():
             #else:
                 #issues.append(f"{url} was found multiple times")
     for url in help_table_urls:
-        #if "select/" in url: print(url)
         if url not in csv_urls:
             not_in_csv.append(url + "\n")
 

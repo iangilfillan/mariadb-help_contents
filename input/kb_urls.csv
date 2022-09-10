@@ -1224,7 +1224,7 @@ https://mariadb.com/kb/en/st_linefromtext/,1,WKT,,1,,6,,linefromtext
 https://mariadb.com/kb/en/st_linestringfromtext/,1,WKT,,1,,6,,
 https://mariadb.com/kb/en/st_pointfromtext/,1,WKT,,1,,6,,pointfromtext
 https://mariadb.com/kb/en/st_polyfromtext/,1,WKT,,1,,6,,polyfromtext
-https://mariadb.com/kb/en/st_polygonfromtext/,1,WKT,,1,,6,,
+https://mariadb.com/kb/en/st_polygonfromtext/,1,WKT,,1,,6,,a
 https://mariadb.com/kb/en/json-functions/,0,,,1,JSON Functions,4,Category,
 https://mariadb.com/kb/en/differences-between-json_query-and-json_value/,0,,,1,,5,,
 https://mariadb.com/kb/en/jsonpath-expressions,1,JSON Functions,,1,,5,,

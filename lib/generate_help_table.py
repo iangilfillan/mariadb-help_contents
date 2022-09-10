@@ -6,8 +6,7 @@ from html import unescape
 from pathlib import Path
 
 from lib.format_to_text import format_to_text
-from lib.colors import CL_RED, CL_YELLOW, CL_GREEN, CL_BLUE, CL_END
-
+import lib.debug as debug
 # custom types
 CsvInfo = list[dict[str, str]]
 TableInfo = tuple[list[str], list[str], list[str]]
@@ -26,11 +25,11 @@ def get_name(url: str) -> str:
 def read_html(name: str, url: str) -> str:
     filepath = Path(f"fetched_html/{name}.html")
     if not filepath.exists():
-        print(f"\n{CL_BLUE}requesting {name}{CL_END}")
+        print()
+        debug.info(f"Requesting {name}")
         req = requests.get(url)
-        status = req.status_code
-        test_status_codes(status, url)
         html = req.text
+        test_status_codes(req.status_code, url)
         filepath.write_text(str(html), encoding="utf-8")
     else:
         html = filepath.read_text(encoding="utf-8")
@@ -40,8 +39,7 @@ def read_html(name: str, url: str) -> str:
 def test_status_codes(status_code: int, url: str):
     invalid_codes = [404]
     if status_code in invalid_codes:
-        print(f"{CL_RED}[ERROR] Invalid url {url}{CL_END}")
-        exit(1)
+        debug.error(f"Invalid url {url}")
 
 def write_table_information(table_information: TableInfo, pre_topic_text: str, table_to: str):
     topics, help_keywords, help_relations = table_information
@@ -72,11 +70,10 @@ def read_csv_information(version: int) -> CsvInfo:
 
 def is_valid_row(row: dict[str, str], urls: set[str], version: int, desired_length: int) -> bool:
     if len(row) != desired_length:
-        print(f"{CL_RED}[ERROR] Invalid row length: {row['URL']}{CL_END}")
-        exit(1)
+        debug.error(f"Invalid row length: " + row["URL"])
 
     if row["URL"] != "" and row["HELP Include"] == "":
-        print(f"{CL_YELLOW}[WARNING] No Help Include for {row['URL']}{CL_END}")
+        debug.warn("No Help Include for " + row["URL"])
 
     if row["HELP Include"] in ["", '0']:
         return False
@@ -87,17 +84,21 @@ def is_valid_row(row: dict[str, str], urls: set[str], version: int, desired_leng
     
     url = row["URL"]
     if url in urls:
-        print(f"{CL_YELLOW}[WARNING] Duplicate url: '{url}'{CL_END}")
+        debug.warn(f"Duplicate url: '{url}'")
         return False
 
     urls.add(url)
     return True
 
 def generate_categories(version: int):
+    def is_valid_version(row: dict[str, str]):
+        if not row["Include"].isnumeric():
+            debug.error(f"Include must be a number: {row['Name']}")
+        return int(row["Include"]) <= version or version == 1
+    
     infile = Path("input/help_cats.csv").read_text(encoding="utf-8")
     unfiltered = csv.DictReader(infile.splitlines())
     
-    is_valid_version = lambda row: int(row["Include"]) <= version or version == 1
     csv_rows = list(filter(is_valid_version, unfiltered))
     # Give each category an id
     category_ids: dict[str, int] = {
@@ -114,7 +115,7 @@ def generate_categories(version: int):
     category_strings: list[str] = [
         (text.format(cat_id=cat_id, name=row["Name"], parent=category_ids[row["Parent"]]))
         if row["Parent"] in category_ids or row["Parent"] == '0'
-        else (print(f"{CL_RED}[ERROR] Error for help_cats.csv ({row['Parent']}){CL_END}"), exit()) #TODO error message
+        else debug.error(f"Issue for help_cats.csv ({row['Parent']})")
         for cat_id, row in enumerate(csv_rows, 1)
     ]
     return category_strings, category_ids
@@ -134,15 +135,14 @@ def link_help_categories(csv_information: CsvInfo, category_ids):
             row["category"] = str(category_ids[row["category"]])
         else:
             name = get_name(row["url"])
-            print(f"{CL_YELLOW}[WARNING] {name}: '{row['category']}' was not found in categories{CL_END}")
+            debug.warn(f"\n{name}: '{row['category']} was not found in categories")
             csv_information.remove(row)
 
     csv_information.sort(key=lambda row: int(row["category"]))
 
 def get_page_h1(html: str, name: str):
     if not ("<title>" in html and "</title>" in html):
-        print(f"\n{CL_RED}[ERROR] Did not find title tag in '{name}'")
-        exit()
+        debug.error("Did not find title tag in '{name}'")
 
     index = html.index("<title>")
     end_index = html.index("</title>", index+1)
@@ -171,7 +171,8 @@ def make_table_information(csv_information: CsvInfo) -> tuple[list[str], list[st
             if keyword == "": continue
             # if is duplicate: warn and skip keyword.
             if keyword.upper() == page_name.upper():
-                print(f"\n{CL_YELLOW}[WARNING] Duplicate keyword found: {keyword}{CL_END}")
+                print()
+                debug.warn(f"Duplicate keyword found: {keyword}")
                 continue
 
             if keyword not in unique_keywords:
@@ -191,7 +192,8 @@ def make_table_information(csv_information: CsvInfo) -> tuple[list[str], list[st
         if row_num <= num_rows:
             print(f"\rProgess: {percent}%", end="")
         else:
-            print(f"{CL_GREEN}\rFinished: {percent}%{CL_END}")
+            print()
+            debug.success(f"Finished {percent}%")
 
     keyword_ids: dict[str, int] = {
         keyword: keyword_id for (keyword_id, keyword)

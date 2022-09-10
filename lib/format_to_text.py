@@ -5,7 +5,7 @@ import re
 from bs4 import BeautifulSoup as Soup
 #annoying
 from lib.tag_rules import *
-from lib.colors import CL_RED, CL_END
+import lib.debug as debug
 #functions
 def format_to_text(html: str, name: str) -> str:
     """transforms html into stripped raw text for use in documentation"""
@@ -29,8 +29,7 @@ def clean_html(html: str, name: str = "") -> str:
     """Cleans up html so beautifulsoup has to do less processing"""
     #assert only one section tag
     if '<section id="content" class="limited_width col-md-8 clearfix">' not in html:
-        print(f"\n{CL_RED}[ERROR] Invalid HTML for '{name}{CL_END}'")
-        exit(1)
+        debug.error(f"Invalid HTML for '{name}'")
 
     section = html.index('<section id="content" class="limited_width col-md-8 clearfix">')
     end_section = html.index('</section>')
