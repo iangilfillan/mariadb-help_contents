@@ -8,7 +8,7 @@ from lib.format_to_text import LINE_LIMIT
 def paragraphTag(tag: Soup):
     string = tag.text.strip().replace("\n", " ")
     string = re.sub(" +", " ", string)
-    tag.string = string
+    tag.string = string + "\n"
 
 def headerTag(tag: Soup):
     """Modifies headers to have extra space and decoration"""
@@ -17,6 +17,7 @@ def headerTag(tag: Soup):
     tag.string = "\n" + tag.text + "\n" + "-" * length + "\n"
 
     tag.string = tag.string
+
 def codeTag(tag: Soup):
     """Spaces code blocks to improve readability"""
 

@@ -14,30 +14,30 @@ def get_version() -> int:
     """Reads the version number while giving precise debug info"""
     if len(sys.argv) < 2:
         version = 1
-        print(f"{CL_YELLOW}Warning! No version number given, defaults to 1 (all).{CL_END}")
+        print(f"{CL_YELLOW}[WARNING] No version number given, defaults to 1 (all).{CL_END}")
     elif sys.argv[1][0] == '1' and len(sys.argv[1]) == 1:
         version = int(sys.argv[1])
         print(f"{CL_GREEN}Selected Version: {version}.{CL_END}")
     elif not sys.argv[1].isnumeric():
-        print(f"{CL_RED}Invalid version argument!{CL_END}", end="")
+        print(f"{CL_RED}[ERROR] Invalid version argument!{CL_END}", end="")
         exit()
     elif sys.argv[1] == '0':
-        print(f"{CL_RED}Cannot have 0 as version number!{CL_END}", end="")
+        print(f"{CL_RED}[ERROR] Cannot have 0 as version number!{CL_END}", end="")
         exit()
     elif len(sys.argv[1]) not in [3, 4]:
-        print(f"{CL_RED}Version number must be of length 3 or 4 (eg. 105, 1010)")
+        print(f"{CL_RED}[ERROR] Version number must be of length 3 or 4 (eg. 105, 1010)")
         exit()
     elif sys.argv[1][0] != "1":
-        print(f"{CL_RED}Version must start with '1' (eg. 105, 1010)")
+        print(f"{CL_RED}[ERROR] Version must start with '1' (eg. 105, 1010)")
         exit()
     elif sys.argv[1][1] != "0":
-        print(f"{CL_YELLOW}Warning! Versions above 10.x not accounted for.{CL_END}")
+        print(f"{CL_YELLOW}[WARNING] Versions above 10.x not accounted for.{CL_END}")
         version = version = int(sys.argv[1])
     elif int(sys.argv[1][2:]) <= 3:
-        print(f"{CL_YELLOW}Warning! Versions below 10.4 have no effect.{CL_END}")
+        print(f"{CL_YELLOW}[WARNING] Versions below 10.4 have no effect.{CL_END}")
         version = int(sys.argv[1])
     elif sys.argv[1][2] == '0':
-        print(f"{CL_BLUE}Note! Unnecessary '0' for third digit.{CL_END}")
+        print(f"{CL_BLUE}[INFO] Unnecessary '0' for third digit.{CL_END}")
         version = int(sys.argv[1])
     else:
         version = int(sys.argv[1])
@@ -45,15 +45,12 @@ def get_version() -> int:
     
     # Extra newline for style points
     print()
-    # Give time to read message
-    # time.sleep(0.2)
     return version
 
-def read_new_table() -> str:
+def read_new_table() -> str|None:
     """Reads output SQL file"""
     if SQL_FILEPATH.exists():
         return SQL_FILEPATH.read_text(encoding="utf-8")
-    return ""
 
 def print_change(old_file: str, new_file: str):
     """Checks whether SQL file has been modified"""

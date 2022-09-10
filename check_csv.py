@@ -1,6 +1,6 @@
 import csv
 import sys
-from os import sep as SEP
+from pathlib import Path
 
 SQL_FILENAME = "fill_help_tables.sql"
 
@@ -41,7 +41,7 @@ def get_help_table_urls():
     return urls
 
 def get_csv_urls_and_version():
-    with open(f"input{SEP}kb_urls.csv", "r") as infile:
+    with open(Path("input/kb_urls.csv"), "r") as infile:
         reader = list(csv.DictReader(infile))
     return [(line["URL"], line["HELP Include"]) for line in reader]
 

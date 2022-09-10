@@ -2,23 +2,20 @@
 from bs4 import BeautifulSoup as Soup
 
 #functions
-def test_paragraphTag():
+def test_paragraphTag_():
     from lib.tag_rules import paragraphTag
-    
-    tag: Soup = Soup(
+    tag = Soup(
 """    <p>testing... testing...  
 
 testing... testing...
 testing...
-testing...
-
-</p>
+testing...</p>
 """, features="lxml")
     paragraphTag(tag)
     output = tag.string
+    print(output)
     expected_output = "testing... testing... testing... testing... testing... testing..."
-
-    assert output == expected_output
+    assert output.strip() == expected_output
 
 def test_headerTag():
     from lib.tag_rules import headerTag

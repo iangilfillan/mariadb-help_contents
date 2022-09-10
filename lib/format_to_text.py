@@ -29,7 +29,7 @@ def clean_html(html: str, name: str = "") -> str:
     """Cleans up html so beautifulsoup has to do less processing"""
     #assert only one section tag
     if '<section id="content" class="limited_width col-md-8 clearfix">' not in html:
-        print(f"\n{CL_RED}Invalid HTML for '{name}{CL_END}'")
+        print(f"\n{CL_RED}[ERROR] Invalid HTML for '{name}{CL_END}'")
         exit(1)
 
     section = html.index('<section id="content" class="limited_width col-md-8 clearfix">')
@@ -65,11 +65,9 @@ def modify_tags(soup: Soup):
                      "code": codeTag, "pre": codeTag,
                      "table": tableTag,
                      "li": listTag,}
-
-        tag_keywords = set(tag_rules)
-
+        tag: Soup
         for tag in soup.descendants:
-            if tag.name in tag_keywords:
+            if tag.name in tag_rules:
                 tag_rules[tag.name](tag)
     
 def remove_see_also(soup: Soup):
@@ -105,9 +103,7 @@ def set_line_limit(text: str) -> str:
 
 def remove_extra_newlines(text: str) -> str:
     """Replaces all groups of newlines with a max of 2"""
-    text = re.sub(" *\n *\n[ \n]*", "\n\n", text)
-
-    return text.strip()
+    return re.sub(" *\n *\n[ \n]*", "\n\n", text).strip()
 
 def reduce_indents(text: str) -> str:
     """Halves the indent level of the text"""
