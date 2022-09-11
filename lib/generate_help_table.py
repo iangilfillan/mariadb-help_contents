@@ -179,7 +179,7 @@ def make_table_information(csv_information: CsvInfo, version: int) -> tuple[list
                 unique_keywords.append(keyword)
             topic_to_keyword.append((help_topic_id, keyword))
 
-        description: str = format_to_text(html, name).replace("\n", "\\n")
+        description: str = format_to_text(html, name).replace("\n", "\\n").replace(r"\G", r"\\G")
 
         topics.append(get_help_topic_text(
             help_topic_id, row["category"], page_name,
