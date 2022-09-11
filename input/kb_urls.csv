@@ -76,7 +76,7 @@ https://mariadb.com/kb/en/change-master-to/,1,Transactions,master_ssl_verify_cer
 https://mariadb.com/kb/en/start-replica/,1,Transactions,start replica;start slave,1,,6,,start-slave
 https://mariadb.com/kb/en/stop-replica/,1,Transactions,stop replica;stop slave,1,,6,,stop-slave
 https://mariadb.com/kb/en/reset-replica/,1,Transactions,reset slave;reset replica,1,,6,,reset-slave;reset-slave-connection_name
-https://mariadb.com/kb/en/set-global-sql_slave_skip_counter/,,0,,1,,6,,
+https://mariadb.com/kb/en/set-global-sql_slave_skip_counter/,0,,,1,,6,,
 https://mariadb.com/kb/en/show-relaylog-events/,1,Administration,show,1,,6,,
 https://mariadb.com/kb/en/show-replica-status/,1,Administration,show,1,,6,,show-slave-status
 https://mariadb.com/kb/en/show-binlog-status/,1,Administration,show,1,,6,,show-master-status
@@ -91,7 +91,7 @@ https://mariadb.com/kb/en/install-soname/,1,Plugins,,1,,6,,
 https://mariadb.com/kb/en/uninstall-soname/,1,Plugins,,1,,6,,
 https://mariadb.com/kb/en/mysql_plugin/,0,,,3,mysql_plugin,6,,
 https://mariadb.com/kb/en/set-commands/,0,,,1,SET Commands,5,Category,
-https://mariadb.com/kb/en/set/,1,Administration,set,1,,6,,
+https://mariadb.com/kb/en/set/,1,Administration,,1,,6,,
 https://mariadb.com/kb/en/set-character-set/,1,Administration,,1,,6,,
 https://mariadb.com/kb/en/set-global-sql_slave_skip_counter/,0,,,3,SET GLOBAL SQL_SLAVE_SKIP_COUNTER,6,,
 https://mariadb.com/kb/en/set-names/,1,Administration,,1,,6,,
@@ -989,7 +989,7 @@ https://mariadb.com/kb/en/pseudo-columns/,0,,,1,Pseudo Columns,3,Category,
 https://mariadb.com/kb/en/_rowid/,1,Functions,,1,,4,,
 https://mariadb.com/kb/en/secondary-functions/,0,,,1,Secondary Functions,3,Category,
 https://mariadb.com/kb/en/bit-functions-and-operators/,0,,,1,Bit Functions and Operators,4,Category,
-https://mariadb.com/kb/en/operator-precedence/,1,Bit Functions,,3,Operator Precedence,5,,
+https://mariadb.com/kb/en/operator-precedence/,0,,,3,Operator Precedence,5,,
 https://mariadb.com/kb/en/bitwise_and/,1,Bit Functions,bitwise and,1,,5,,
 https://mariadb.com/kb/en/shift-left/,1,Bit Functions,shift left,1,,5,,
 https://mariadb.com/kb/en/shift-right/,1,Bit Functions,shift right,1,,5,,
@@ -1224,10 +1224,10 @@ https://mariadb.com/kb/en/st_linefromtext/,1,WKT,,1,,6,,linefromtext
 https://mariadb.com/kb/en/st_linestringfromtext/,1,WKT,,1,,6,,
 https://mariadb.com/kb/en/st_pointfromtext/,1,WKT,,1,,6,,pointfromtext
 https://mariadb.com/kb/en/st_polyfromtext/,1,WKT,,1,,6,,polyfromtext
-https://mariadb.com/kb/en/st_polygonfromtext/,1,WKT,,1,,6,,a
+https://mariadb.com/kb/en/st_polygonfromtext/,1,WKT,,1,,6,,
 https://mariadb.com/kb/en/json-functions/,0,,,1,JSON Functions,4,Category,
 https://mariadb.com/kb/en/differences-between-json_query-and-json_value/,0,,,1,,5,,
-https://mariadb.com/kb/en/jsonpath-expressions,1,JSON Functions,,1,,5,,
+https://mariadb.com/kb/en/jsonpath-expressions/,1,JSON Functions,,1,,5,,
 https://mariadb.com/kb/en/json_array/,1,JSON Functions,,1,,5,,
 https://mariadb.com/kb/en/json_arrayagg/ ,0,,,3,JSON_ARRAYAGG,5,,
 https://mariadb.com/kb/en/json_array_append/,1,JSON Functions,,1,,5,,
@@ -2250,7 +2250,7 @@ https://mariadb.com/kb/en/int3/,0,,,1,,4,,
 https://mariadb.com/kb/en/int4/,0,,,1,,4,,
 https://mariadb.com/kb/en/int8/,0,,,1,,4,,
 https://mariadb.com/kb/en/string-data-types/,0,,,1,String Data Types,3,Category,
-https://mariadb.com/kb/en/string-literals/,1,Data Types,,3,String Literals,4,,
+https://mariadb.com/kb/en/string-literals/,0,,,3,String Literals,4,,
 https://mariadb.com/kb/en/binary/,1,Data Types,,1,,4,,
 https://mariadb.com/kb/en/blob/,1,Data Types,,1,,4,,sql_language-data_types-blob
 https://mariadb.com/kb/en/blob-and-text-data-types/,1,Data Types,,1,,4,,string-data-types-blob-data-types;blob-data-type;sql_language-data_types-blob_data_type
@@ -2282,7 +2282,7 @@ https://mariadb.com/kb/en/time/,1,Data Types,,1,,4,,
 https://mariadb.com/kb/en/datetime/,1,Data Types,,1,,4,,
 https://mariadb.com/kb/en/timestamp/,1,Data Types,,1,,4,,
 https://mariadb.com/kb/en/year-data-type/,1,Data Types,,1,,4,,
-https://mariadb.com/kb/en/geometry-types/,1,Data Types,,3,Geometry Types,3,Inconsistent HELP category,geometry
+https://mariadb.com/kb/en/geometry-types/,0,,,3,Geometry Types,3,Inconsistent HELP category,geometry
 https://mariadb.com/kb/en/auto_increment/,1,Data Types,,1,,3,,sql_language-data_types-auto_increment
 https://mariadb.com/kb/en/data-type-storage-requirements/,0,,,3,Data Type Storage Requirements,3,,
 https://mariadb.com/kb/en/auto_increment-faq/,0,,,1,,3,,autoincrement-faq

@@ -13,8 +13,7 @@ SQL_FILEPATH: Path = Path("output/fill_help_tables.sql")
 def get_version() -> int:
     """Reads the version number while giving precise debug info"""
     if len(sys.argv) < 2:
-        version = 1
-        debug.warn("No version number given, defaults to 1 (all)")
+        debug.error("Must give a Version number!")
     elif sys.argv[1][0] == '1' and len(sys.argv[1]) == 1:
         version = int(sys.argv[1])
         debug.success(f"Selected Version: {version}")

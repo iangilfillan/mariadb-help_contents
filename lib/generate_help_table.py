@@ -153,14 +153,14 @@ def get_page_h1(html: str, name: str):
     # Converts html escape sequences like '&amp'; to their text representations: '&'
     return unescape(title)
 
-def make_table_information(csv_information: CsvInfo) -> tuple[list[str], list[str], list[str]]:
+def make_table_information(csv_information: CsvInfo, version: int) -> tuple[list[str], list[str], list[str]]:
     topics: list[str] = []
     topic_to_keyword: list[tuple[int, str]] = []
     unique_keywords : list[str] = []
 
     num_rows: int = len(csv_information)
-    # Starting at 2 to make room for HELP DATE
-    for help_topic_id, row in enumerate(csv_information, 2):
+    # Starting at 3 to make room for HELP DATE AND HELP_VERSION
+    for help_topic_id, row in enumerate(csv_information, 3):
         name: str = get_name(row["url"])
         html = read_html(name, row["url"])
         page_name: str = get_page_h1(html, name)
@@ -189,7 +189,7 @@ def make_table_information(csv_information: CsvInfo) -> tuple[list[str], list[st
         row_num: int = help_topic_id
         percent = int((row_num / num_rows) * 100)
 
-        if row_num <= num_rows:
+        if row_num < num_rows+2: # to for help_date and help_version (TODO fix hack)
             print(f"\rProgess: {percent}%", end="")
         else:
             print()
@@ -208,6 +208,7 @@ def make_table_information(csv_information: CsvInfo) -> tuple[list[str], list[st
         for (topic_id, keyword) in topic_to_keyword
     ]
     topics.insert(0, get_help_date())
+    topics.insert(1, get_help_version(version))
 
     return (topics, help_keywords, help_relations)
 
@@ -217,6 +218,19 @@ def get_help_date() -> str:
     
     today = datetime.date.strftime(datetime.date.today(), "%d %B %Y")
     string += f"{today}.','','');"
+    return string
+
+def get_help_version(version: int) -> str:    
+    today = datetime.date.strftime(datetime.date.today(), "%d %B %Y")
+
+    version = str(version)
+    version_str = version[:2] + '.' + version[2:]
+    print(version_str)
+    text = f"Help Contents generated for MariaDB {version_str} from the MariaDB Knowledge Base on {today}."
+
+    string = "insert into help_topic (help_topic_id,help_category_id,name,description,example,url) "
+    string += f"values (2,9,'HELP_VERSION','{text}','','');"
+
     return string
 
 def insert_help_keyword(keyword_id: int, keyword: str) -> str:
@@ -230,6 +244,6 @@ def generate_help_table(table_to: str, version: int):
     pre_topic_text, category_info = get_pre_topic_text(version)
     csv_information = read_csv_information(version)
     link_help_categories(csv_information, category_info)
-    table_information = make_table_information(csv_information)
+    table_information = make_table_information(csv_information, version)
 
     write_table_information(table_information, pre_topic_text, table_to)

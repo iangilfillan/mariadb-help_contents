@@ -91,7 +91,7 @@ def test_add_url():
     from lib.format_to_text import add_url
 
     output = add_url(text="", name="test")
-    expected_output = "\n\n\n\nURL: mariadb.com/kb/en/test/"
+    expected_output = "\n\nURL: mariadb.com/kb/en/test/"
 
     assert output == expected_output
 

@@ -8,7 +8,7 @@ CL_CYAN = '\u001b[36m'
 
 CL_END = '\33[0m'
 
-
+# Debug Funcs
 def error(text: str):
     print(CL_RED, "[ERROR] ", text, CL_END, sep="")
     exit(1)
