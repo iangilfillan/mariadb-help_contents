@@ -1,7 +1,5 @@
-#imports
 from bs4 import BeautifulSoup as Soup
 
-#functions
 def test_paragraphTag_():
     from lib.tag_rules import paragraphTag
     tag = Soup(

@@ -12,7 +12,7 @@ The script updates the sql file 'fill_help_tables' with the recent information i
 ## Additional scripts
 - 'check_csv.py' creates text files containing urls found in 'fill_help_tables' but not 'kb_urls.csv' and visa versa
 
-- 'run_tests.py' Runs the tests found in the the tests directory and prints the results
+- 'run_tests.py' Runs the tests found in the the tests directory and prints the results (can run pytest with python -m pytest as an alternative)
 
 ## Dependencies
 Python 3.10 +

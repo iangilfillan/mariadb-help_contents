@@ -2,8 +2,7 @@ import csv
 import sys
 from pathlib import Path
 
-SQL_FILENAME = "fill_help_tables.sql"
-
+SQL_FILEPATH = Path("output/fill_help_tables.sql")
 
 def is_correct_version(url: str, version: str, line_num: int) -> bool:
     """Tests if the help table version is greater than or equal to the line version"""
@@ -23,15 +22,12 @@ def is_correct_version(url: str, version: str, line_num: int) -> bool:
     return False
 
 def get_help_table_urls():
-    with open(SQL_FILENAME, "r", encoding="utf-8") as infile:
-        help_table = infile.readlines()
+    help_table = SQL_FILEPATH.read_text(encoding="utf-8").splitlines()
 
     urls = []
     for index, line in enumerate(help_table):
         if not line.endswith("/');\n"): continue
-        #update url
         line = line.replace("/library", "")
-        #find url
         index = line.rfind("https://mariadb.com/kb/en")
         if index == -1: continue
         url = line[index:-4]
@@ -40,36 +36,19 @@ def get_help_table_urls():
     return urls
 
 def get_csv_urls_and_version():
-    with open(Path("input/kb_urls.csv"), "r") as infile:
-        reader = list(csv.DictReader(infile))
+    infile = Path("input/kb_urls.csv").read_text()
+    reader = list(csv.DictReader(infile.splitlines()))
     return [(line["URL"], line["HELP Include"]) for line in reader]
 
 def main():
-    not_in_help = []
-    not_in_csv = []
-
     help_table_urls = get_help_table_urls()
-    csv_urls = []
+    csv_urls = [url for index, (url, version) in enumerate(get_csv_urls_and_version()) if is_correct_version(url, version, index)]
 
-    for index, (url, version) in enumerate(get_csv_urls_and_version()):
-        if is_correct_version(url, version, index):
-            csv_urls.append(url)
-            if url not in help_table_urls:
-                not_in_help.append(url + "\n")
-            #else:
-                #issues.append(f"{url} was found multiple times")
-    for url in help_table_urls:
-        if url not in csv_urls:
-            not_in_csv.append(url + "\n")
+    not_in_help = [url for url in csv_urls if url not in help_table_urls]
+    not_in_csv = [url for url in help_table_urls if url not in csv_urls]
 
-    if len(issues) != 0:
-        print("Issues")
-        [print(issue) for issue in issues]
-    
-    with open("not_in_help.txt", "w", encoding="utf-8") as outfile:
-        outfile.writelines(not_in_help)
-    with open("not_in_csv.txt", "w", encoding="utf-8") as outfile:
-        outfile.writelines(not_in_csv)
+    Path("output/not_in_help.txt").write_text("\n".join(not_in_help))
+    Path("output/not_in_csv.txt").write_text("\n".join(not_in_csv))
 
 if __name__ == "__main__":
     if len(sys.argv) <= 1:

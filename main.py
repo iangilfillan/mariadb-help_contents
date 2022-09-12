@@ -16,7 +16,7 @@ def get_version() -> int:
         debug.error("Must give a Version number!")
     elif sys.argv[1][0] == '1' and len(sys.argv[1]) == 1:
         version = int(sys.argv[1])
-        debug.success(f"Selected Version: {version}")
+        debug.warn(f"Version '1' results in incorrect HELP_VERSION")
     elif not sys.argv[1].isnumeric():
         debug.error("Invalid version argument")
     elif sys.argv[1] == '0':
@@ -27,8 +27,8 @@ def get_version() -> int:
         debug.error("Version must start with '1' (eg: 105, 1010)")
     elif sys.argv[1][1] != "0":
         debug.warn("Versions above 10.x not accounted for")
-    elif int(sys.argv[1][2:]) <= 3:
-        debug.warn("Versions below 10.4 have no effect")
+    elif int(sys.argv[1][2:]) < 3:
+        debug.warn("Versions below 10.3 have no effect")
         version = int(sys.argv[1])
     elif sys.argv[1][2] == '0':
         debug.warn("Unecessary '0' for third digit")
@@ -37,8 +37,6 @@ def get_version() -> int:
         version = int(sys.argv[1])
         debug.success(f"Selected Version: {version}")
     
-    # Extra newline for style points
-    print()
     return version
 
 def read_new_table() -> str|None:
@@ -55,6 +53,14 @@ def print_change(old_file: str, new_file: str):
     else:
         debug.info(f"No change was made to {SQL_FILEPATH}")
 
+def check_max_char_length(sql: str):
+    for index, line in enumerate(sql.splitlines()):
+        if len(line) > 59900:
+            debug.error(f"Line above 60000 chars (ln: {index})")
+        elif len(line) > 55000:
+            debug.warn(f"Line above 55000 chars (ln: {index})")
+            
+
 def main():
     #keep track of generated_table
     old_file: str = read_new_table()
@@ -67,6 +73,7 @@ def main():
     #print change to SQL_FILENAME
     new_file: str = read_new_table()
     print_change(old_file, new_file)
+    check_max_char_length(new_file)
 
 
 if __name__ == "__main__":

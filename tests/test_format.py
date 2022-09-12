@@ -1,5 +1,5 @@
-import os
 import re
+from pathlib import Path
 from bs4 import BeautifulSoup
 
 from lib.format_to_text import format_to_text
@@ -29,15 +29,14 @@ def test_clean_html():
 
 def test_remove_see_also():
     from lib.format_to_text import remove_see_also, clean_html
-    with open(os.path.join("fetched_html", "alter-user.html"), encoding="utf-8") as infile:
-        html_content = infile.read()
+    
+    html_content = Path("fetched_html/alter-user.html").read_text(encoding="utf-8")
     
     html_content = clean_html(html_content)
     soup = BeautifulSoup(html_content, features="html5lib")
     remove_see_also(soup)
     html = str(soup)
-    assert html.find('id: "see-also"') == -1
-
+    assert 'id: "see-also"' not in html
 
 def test_modify_escape_characters():
     from lib.format_to_text import modify_escape_chars
@@ -61,8 +60,17 @@ def test_curly_quotes():
     #check for cases where there are less than four backspaces in a row
     assert output_string == r'\"\"\"\"'
 
+def test_ends_with_url():
+    input_html = """
+<title>test</title>
+<section id="content" class="limited_width col-md-8 clearfix">
+</section>
+    """
+    output_text = format_to_text(input_html, "test")
+    expected_output = "URL: mariadb.com/kb/en/test/"
+    assert output_text == expected_output
+
 def test_format_full():
-    from lib.format_to_text import format_to_text
     input_html = """
 <title>test</title>
 <section id="content" class="limited_width col-md-8 clearfix">
@@ -76,26 +84,29 @@ r"This \' \' should go away.\n\n"\
 r"This \'\\n\' should Become double."\
 r"\n\nURL: mariadb.com/kb/en/test/"
 )
-    print(output_text)
     assert output_text == expected_output
 
-def test_format_to_text():
-    from lib.format_to_text import format_to_text, LINE_LIMIT
+def test_line_limit():
+    from lib.format_to_text import LINE_LIMIT
     """Tests all the requirements from format_to_text"""
-    with open(os.path.join("fetched_html", "alter-user.html"), encoding="utf-8") as infile:
-        html_content = infile.read()
+    html_content = Path("fetched_html/alter-user.html").read_text(encoding="utf-8")
     
     text = format_to_text(html_content, "alter-user")
     #test line limit
-    lines = text.split("\\n")
+    lines = text.split(r"\n")
     for l in lines:
-        l = l.replace("\\'", "'")
+        l = l.replace(r"\'", "'")
         assert len(l) <= LINE_LIMIT
-    #test number of newlines
-    for l in lines:
-        assert l.count("\n\n\n") == 0
-    #
 
+def test_linebreak_num():
+    """Tests all the requirements from format_to_text"""
+    html_content = Path("fetched_html/alter-user.html").read_text(encoding="utf-8")
+    
+    text = format_to_text(html_content, "alter-user")
+    #test line limit
+    lines = text.split(r"\n")
+    for l in lines:
+        assert "\n\n\n" not in l
 
 def test_reduce_indents():
     from lib.format_to_text import reduce_indents

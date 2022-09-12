@@ -131,7 +131,7 @@ def modify_escape_chars(text: str) -> str:
     #escape quotes
     text = text.replace("'", r"\'")
     text = text.replace('"', r'\"')
-
+    #escape semicolons
 
     text = text.replace("\\\\\\n", "\\n")
     text = text.replace("\n", "\\n")
