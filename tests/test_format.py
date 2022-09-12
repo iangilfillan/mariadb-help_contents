@@ -53,7 +53,7 @@ def test_format_to_text():
     
     text = format_to_text(html_content, "alter-user")
     #test line limit
-    lines = text.split("\n")
+    lines = text.split("\\n")
     for l in lines:
         l = l.replace("\\'", "'")
         assert len(l) <= LINE_LIMIT

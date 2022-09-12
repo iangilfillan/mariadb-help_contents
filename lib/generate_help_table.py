@@ -142,7 +142,7 @@ def link_help_categories(csv_information: CsvInfo, category_ids):
 
 def get_page_h1(html: str, name: str):
     if not ("<title>" in html and "</title>" in html):
-        debug.error("Did not find title tag in '{name}'")
+        debug.error(f"Did not find title tag in '{name}'")
 
     index = html.index("<title>")
     end_index = html.index("</title>", index+1)
@@ -159,42 +159,45 @@ def make_table_information(csv_information: CsvInfo, version: int) -> tuple[list
     unique_keywords : list[str] = []
 
     num_rows: int = len(csv_information)
-    # Starting at 3 to make room for HELP DATE AND HELP_VERSION
-    for help_topic_id, row in enumerate(csv_information, 3):
-        name: str = get_name(row["url"])
-        html = read_html(name, row["url"])
-        page_name: str = get_page_h1(html, name)
+    try:
+        # Starting at 3 to make room for HELP DATE AND HELP_VERSION
+        for help_topic_id, row in enumerate(csv_information, 3):
+            name: str = get_name(row["url"])
+            html = read_html(name, row["url"])
+            page_name: str = get_page_h1(html, name)
 
-        keywords: list[str] = row["keywords"].split(";")
-        # If keywords remains singular this for loop will be removed
-        for keyword in keywords:
-            if keyword == "": continue
-            # if is duplicate: warn and skip keyword.
-            if keyword.upper() == page_name.upper():
+            keywords: list[str] = row["keywords"].split(";")
+            # If keywords remains singular this for loop will be removed
+            for keyword in keywords:
+                if keyword == "": continue
+                # if is duplicate: warn and skip keyword.
+                if keyword.upper() == page_name.upper():
+                    print()
+                    debug.warn(f"Duplicate keyword found: {keyword}")
+                    continue
+
+                if keyword not in unique_keywords:
+                    unique_keywords.append(keyword)
+                topic_to_keyword.append((help_topic_id, keyword))
+
+            description: str = format_to_text(html, name)
+
+            topics.append(get_help_topic_text(
+                help_topic_id, row["category"], page_name,
+                description, "", row["url"])
+            )
+
+            row_num: int = help_topic_id
+            percent = int((row_num / num_rows) * 100)
+
+            if row_num < num_rows+2: # to for help_date and help_version (TODO fix hack)
+                print(f"\rProgess: {percent}%", end="")
+            else:
                 print()
-                debug.warn(f"Duplicate keyword found: {keyword}")
-                continue
-
-            if keyword not in unique_keywords:
-                unique_keywords.append(keyword)
-            topic_to_keyword.append((help_topic_id, keyword))
-
-        description: str = format_to_text(html, name).replace("\n", "\\n").replace(r"\G", r"\\G")
-
-        topics.append(get_help_topic_text(
-            help_topic_id, row["category"], page_name,
-            description, "", row["url"])
-        )
-
-        row_num: int = help_topic_id
-        percent = int((row_num / num_rows) * 100)
-
-        if row_num < num_rows+2: # to for help_date and help_version (TODO fix hack)
-            print(f"\rProgess: {percent}%", end="")
-        else:
-            print()
-            debug.success(f"Finished {percent}%")
-
+                debug.success(f"Finished {percent}%")
+    except KeyboardInterrupt:
+        print()
+        debug.error("Keyboard Interrupt")
     keyword_ids: dict[str, int] = {
         keyword: keyword_id for (keyword_id, keyword)
         in enumerate(unique_keywords, 1)
@@ -209,7 +212,7 @@ def make_table_information(csv_information: CsvInfo, version: int) -> tuple[list
     ]
     topics.insert(0, get_help_date())
     topics.insert(1, get_help_version(version))
-
+    
     return (topics, help_keywords, help_relations)
 
 def get_help_date() -> str:
@@ -225,7 +228,6 @@ def get_help_version(version: int) -> str:
 
     version = str(version)
     version_str = version[:2] + '.' + version[2:]
-    print(version_str)
     text = f"Help Contents generated for MariaDB {version_str} from the MariaDB Knowledge Base on {today}."
 
     string = "insert into help_topic (help_topic_id,help_category_id,name,description,example,url) "

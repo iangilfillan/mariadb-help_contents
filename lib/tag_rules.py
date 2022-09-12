@@ -21,7 +21,7 @@ def headerTag(tag: Soup):
 def codeTag(tag: Soup):
     """Spaces code blocks to improve readability"""
 
-    tag.string = "\n\n" + tag.text + "\n"
+    tag.string = "\n\n" + tag.text.replace("\\n", "\\\\n") + "\n"
 
 def listTag(tag: Soup):
     """Marks <li> items with a *"""

@@ -20,7 +20,7 @@ def format_to_text(html: str, name: str) -> str:
     #pull the text
     text = soup.get_text()
     #modify the text
-    text = modify_text(soup.get_text())
+    text = modify_text(text)
     text = add_url(text, name)
     
     return text
@@ -123,8 +123,16 @@ def reduce_indents(text: str) -> str:
 
 def modify_escape_chars(text: str) -> str:
     """escape character nonsense"""
-    text = text.replace("'", r"\'")
-    text = text.replace(r"\\'", r"\'")
-    text = text.replace(r"\\", r"\\\\")
+    text = text.replace("\\", "\\\\") #escape escape characters
 
+    #replace '”' and '“' with '"'
+    text = text.replace("”", r'"')
+    text = text.replace("“", r'"')
+    #escape quotes
+    text = text.replace("'", r"\'")
+    text = text.replace('"', r'\"')
+
+
+    text = text.replace("\\\\\\n", "\\n")
+    text = text.replace("\n", "\\n")
     return text

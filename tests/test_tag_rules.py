@@ -13,7 +13,6 @@ testing...</p>
 """, features="lxml")
     paragraphTag(tag)
     output = tag.string
-    print(output)
     expected_output = "testing... testing... testing... testing... testing... testing..."
     assert output.strip() == expected_output
 
