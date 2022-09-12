@@ -1,10 +1,10 @@
 """Contains ANSI escape codes"""
 # Colors
-CL_YELLOW = '\u001b[33m'
-CL_RED = '\u001b[31m'
-CL_GREEN = '\u001b[32m'
-CL_BLUE = '\u001b[34m'
-CL_CYAN = '\u001b[36m'
+CL_YELLOW = '\u001b[33;1m'
+CL_RED = '\u001b[31;1m'
+CL_GREEN = '\u001b[32;1m'
+CL_MAGENTA = '\u001b[35;1m'
+CL_CYAN = '\u001b[36;1m'
 
 CL_END = '\33[0m'
 
@@ -18,6 +18,9 @@ def warn(text: str):
 
 def info(text: str):
     print(CL_CYAN, "[INFO] ", text, CL_END, sep="")
+
+def time_info(text: str):
+    print(CL_MAGENTA, "[INFO] ", text, CL_END, sep="")
 
 def success(text: str):
     print(CL_GREEN, "[SUCCESS] ", text, CL_END, sep="")

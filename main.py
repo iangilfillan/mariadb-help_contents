@@ -73,4 +73,4 @@ if __name__ == "__main__":
     start = time.perf_counter()
     main()
     taken = time.perf_counter() - start
-    debug.info(f"Took {taken:.2f}s")
+    debug.time_info(f"Took {taken:.2f}s")
