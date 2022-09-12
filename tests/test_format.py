@@ -72,7 +72,10 @@ def test_format_full():
     """
     output_text = format_to_text(input_html, "test")
     expected_output = (
-r"""This \' \' should go away.\n\nThis \'\\n\' should Become double.\n\nURL: mariadb.com/kb/en/test/""")
+r"This \' \' should go away.\n\n"\
+r"This \'\\n\' should Become double."\
+r"\n\nURL: mariadb.com/kb/en/test/"
+)
     print(output_text)
     assert output_text == expected_output
 
