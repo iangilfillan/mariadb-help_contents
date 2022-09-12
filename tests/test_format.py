@@ -2,6 +2,8 @@ import os
 import re
 from bs4 import BeautifulSoup
 
+from lib.format_to_text import format_to_text
+
 def test_clean_html():
     from lib.format_to_text import clean_html
     html_input = (
@@ -44,6 +46,37 @@ def test_modify_escape_characters():
     #check for cases where there are less than four backspaces in a row
     match = re.search(r"[^\\]\\\\[^\\]", output_string)
     assert not match
+
+def test_escaped_G():
+    from lib.format_to_text import modify_escape_chars
+    input_string = r"\G\G\G\G"
+    output_string = modify_escape_chars(input_string)
+    #check for cases where there are less than four backspaces in a row
+    assert output_string == r"\\G\\G\\G\\G"
+
+def test_curly_quotes():
+    from lib.format_to_text import modify_escape_chars
+    input_string = "“”“”"
+    output_string = modify_escape_chars(input_string)
+    #check for cases where there are less than four backspaces in a row
+    assert output_string == r'\"\"\"\"'
+
+def test_format_full():
+    from lib.format_to_text import format_to_text
+    input_html = """
+<title>test</title>
+<section id="content" class="limited_width col-md-8 clearfix">
+<p>This '\n' should go away</p>
+<pre>This '\\n' should Become double</pre>
+</section>
+    """
+    output_text = format_to_text(input_html, "test")
+    expected_output = (
+r"""This \' \' should go away\n\nThis \'\\n\' should Become double
+
+URL: mariadb.com/kb/en/test/""")
+    print(output_text)
+    assert output_text == expected_output
 
 def test_format_to_text():
     from lib.format_to_text import format_to_text, LINE_LIMIT
