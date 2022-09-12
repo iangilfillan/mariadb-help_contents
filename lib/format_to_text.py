@@ -20,8 +20,8 @@ def format_to_text(html: str, name: str) -> str:
     #pull the text
     text = soup.get_text()
     #modify the text
-    text = modify_text(text)
     text = add_url(text, name)
+    text = modify_text(text)
     
     return text
 
