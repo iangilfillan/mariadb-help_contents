@@ -17,9 +17,6 @@ def warn(text: str):
     print(CL_YELLOW, "[WARNING] ", text, CL_END, sep="")
 
 def info(text: str):
-    print(CL_BLUE, "[INFO] ", text, CL_END, sep="")
-
-def time_info(text: str):
     print(CL_CYAN, "[INFO] ", text, CL_END, sep="")
 
 def success(text: str):
