@@ -66,15 +66,13 @@ def test_format_full():
     input_html = """
 <title>test</title>
 <section id="content" class="limited_width col-md-8 clearfix">
-<p>This '\n' should go away</p>
-<pre>This '\\n' should Become double</pre>
+<p>This '\n' should go away.</p>
+<pre>This '\\n' should Become double.</pre>
 </section>
     """
     output_text = format_to_text(input_html, "test")
     expected_output = (
-r"""This \' \' should go away\n\nThis \'\\n\' should Become double
-
-URL: mariadb.com/kb/en/test/""")
+r"""This \' \' should go away.\n\nThis \'\\n\' should Become double.\n\nURL: mariadb.com/kb/en/test/""")
     print(output_text)
     assert output_text == expected_output
 
