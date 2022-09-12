@@ -255,12 +255,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2010-05-21 19:21">12 years, 1 month ago</span></dd>
+<span class="datetime" title="2010-05-21 19:21">12 years, 3 months ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2020-03-04 09:09">2 years, 3 months ago</span></dd>
+<span class="datetime" title="2022-09-07 14:08">4 days, 21 hours ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -440,7 +440,7 @@
 <h2 class="anchored_heading" id="description">Description</h2>
 <p>Returns the bitwise OR of all bits in <code>expr</code>. The calculation is performed with 64-bit (<a href="/kb/en/bigint/">BIGINT</a>) precision. It is an <a href="/kb/en/aggregate-functions/">aggregate function</a>, and so can be used with the <a href="/kb/en/group-by/">GROUP BY</a> clause.</p>
 <p>If no rows match, <code>BIT_OR</code> will return a value with all bits set to <code>0</code>. NULL values have no effect on the result unless all results are NULL, which is treated as no match.</p>
-<p>From <a href="/kb/en/mariadb-1020-release-notes/">MariaDB 10.2.0</a>, <code>BIT_OR</code> can be used as a <a href="/kb/en/window-functions/">window function</a> with the addition of the <em>over_clause</em>.</p>
+<p><code>BIT_OR</code> can be used as a <a href="/kb/en/window-functions/">window function</a> with the addition of the <em>over_clause</em>.</p>
 <h2 class="anchored_heading" id="examples">Examples</h2>
 <pre class="fixed"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">vals</span> <span class="p">(</span><span class="n">x</span> <span class="nb">INT</span><span class="p">);</span>
 

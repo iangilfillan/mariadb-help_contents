@@ -12,10 +12,41 @@ CsvInfo = list[dict[str, str]]
 TableInfo = tuple[list[str], list[str], list[str]]
 
 #path seperator
-def get_help_topic_text(help_topic_id, help_category, name, description, example, url) -> str:
+def get_help_topic_text(help_topic_id, help_category, name, description: str, example, url) -> str:
+
+    unaltered = description
+    
+    high = 15000
+    low = 14000
+    parts = []
+    while len(description) >= high:
+        index = description.find("\\n", min(low, len(description)-low))
+        if index == -1:
+            debug.warn(f"Could not fine newline for help_topic concat {name}")
+            index = low
+        parts.append(description[:index])
+        description = description[index:]
+    parts.append(description)
+    description = parts.pop(0)
+
     string = "insert into help_topic (help_topic_id,help_category_id,name,description,example,url) values "
     string += f"({help_topic_id},{help_category},'{name}','{description}','{example}','{url}');"
+
+    rejoin = description
+    for text in parts:
+        if len(text) >= high:
+            print()
+            debug.warn(f"help_topic concat has length: {len(text)}")
+        string += add_update_help_topic(text, help_topic_id)
+        rejoin += text
+    
+    if rejoin != unaltered:
+        print()
+        debug.error(f"Did not seperate description correctly for {name}")
     return string
+
+def add_update_help_topic(text: str, help_topic_id: int) -> str:
+    return f"\nupdate help_topic set description = CONCAT(description, '{text}') WHERE help_topic_id = {help_topic_id};"
 
 def get_name(url: str) -> str:
     url = url.removesuffix("/")

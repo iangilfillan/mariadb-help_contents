@@ -251,12 +251,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2010-08-11 14:40">11 years, 10 months ago</span></dd>
+<span class="datetime" title="2010-08-11 14:40">12 years, 1 month ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2021-06-18 08:09">1 year ago</span></dd>
+<span class="datetime" title="2022-09-12 11:14">20 minutes ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -344,16 +344,6 @@
                             >MariaDB starting with 10.3</label>
                 </li>
             
-                <li class="mariadb_from_10_1_1">
-                    <label><input type="checkbox" data-product-class="mariadb_from_10_1_1"
-                            >MariaDB starting with 10.1.1</label>
-                </li>
-            
-                <li class="mariadb_from_10_2_3">
-                    <label><input type="checkbox" data-product-class="mariadb_from_10_2_3"
-                            >MariaDB starting with 10.2.3</label>
-                </li>
-            
                 <li class="mariadb_from_10_6_2">
                     <label><input type="checkbox" data-product-class="mariadb_from_10_6_2"
                             >MariaDB starting with 10.6.2</label>
@@ -362,16 +352,6 @@
                 <li class="mariadb_from_10_3">
                     <label><input type="checkbox" data-product-class="mariadb_from_10_3"
                             >MariaDB starting with 10.3</label>
-                </li>
-            
-                <li class="mariadb_from_10_1_1">
-                    <label><input type="checkbox" data-product-class="mariadb_from_10_1_1"
-                            >MariaDB starting with 10.1.1</label>
-                </li>
-            
-                <li class="mariadb_from_10_2_3">
-                    <label><input type="checkbox" data-product-class="mariadb_from_10_2_3"
-                            >MariaDB starting with 10.2.3</label>
                 </li>
             
                 <li class="mariadb_from_10_6_2">
@@ -577,11 +557,11 @@ with <code><a href="/kb/en/deallocate-drop-prepared-statement/">DEALLOCATE PREPA
 </li><li><a href="/kb/en/update/">UPDATE</a>
 </li></ul>
 <p>Synonyms are not listed here, but can be used. For example, DESC can be used instead of DESCRIBE.</p>
-<div class="mariadb_from_10_1_1 mariadb from_10_1_1 product"><h5 class="product_title">MariaDB starting with <a href="/kb/en/mariadb-1011-release-notes/">10.1.1</a></h5><p><a href="/kb/en/using-compound-statements-outside-of-stored-programs/">Compound statements</a> can be prepared too.</p>
-</div><p>Note that if a statement can be run in a stored routine, it will work even if it is called by a prepared statement. For example, <a href="/kb/en/signal/">SIGNAL</a> can't be directly prepared. However, it is allowed in <a href="/kb/en/stored-routines/">stored routines</a>. If the x() procedure contains SIGNAL, you can still prepare and execute the 'CALL x();' prepared statement.</p>
-<div class="mariadb_from_10_2_3 mariadb from_10_2_3 product"><h5 class="product_title">MariaDB starting with <a href="/kb/en/mariadb-1023-release-notes/">10.2.3</a></h5><p>PREPARE now supports most kinds of expressions as well, for example:</p>
+<p><a href="/kb/en/using-compound-statements-outside-of-stored-programs/">Compound statements</a> can be prepared too.</p>
+<p>Note that if a statement can be run in a stored routine, it will work even if it is called by a prepared statement. For example, <a href="/kb/en/signal/">SIGNAL</a> can't be directly prepared. However, it is allowed in <a href="/kb/en/stored-routines/">stored routines</a>. If the x() procedure contains SIGNAL, you can still prepare and execute the 'CALL x();' prepared statement.</p>
+<p>PREPARE supports most kinds of expressions as well, for example:</p>
 <pre class="fixed">PREPARE stmt FROM CONCAT('SELECT * FROM ', table_name);
-</pre></div><div class="mariadb_from_10_6_2 mariadb from_10_6_2 product"><h5 class="product_title">MariaDB starting with <a href="/kb/en/mariadb-1062-release-notes/">10.6.2</a></h5><p>All statements can be prepared, except <a href="/kb/en/prepare-statement/">PREPARE</a>, <a href="/kb/en/execute-statement/">EXECUTE</a>, and <a href="/kb/en/deallocate-drop-prepare/">DEALLOCATE / DROP PREPARE</a>.</p>
+</pre><div class="mariadb_from_10_6_2 mariadb from_10_6_2 product"><h5 class="product_title">MariaDB starting with <a href="/kb/en/mariadb-1062-release-notes/">10.6.2</a></h5><p>All statements can be prepared, except <a href="/kb/en/prepare-statement/">PREPARE</a>, <a href="/kb/en/execute-statement/">EXECUTE</a>, and <a href="/kb/en/deallocate-drop-prepare/">DEALLOCATE / DROP PREPARE</a>.</p>
 </div><p>When PREPARE is used with a statement which is not supported, the following error is produced:</p>
 <pre class="fixed">ERROR 1295 (HY000): This command is not supported in the prepared statement protocol yet
 </pre><h2 class="anchored_heading" id="example">Example</h2>

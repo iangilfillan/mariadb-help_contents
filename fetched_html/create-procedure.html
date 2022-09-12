@@ -247,12 +247,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2010-04-02 19:12">12 years, 2 months ago</span></dd>
+<span class="datetime" title="2010-04-02 19:12">12 years, 5 months ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2022-04-18 21:56">2 months, 1 week ago</span></dd>
+<span class="datetime" title="2022-08-21 22:00">3 weeks ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -444,7 +444,7 @@
 <pre class="fixed">CREATE
     [OR REPLACE]
     [DEFINER = { user | CURRENT_USER | role | CURRENT_ROLE }]
-    PROCEDURE sp_name ([proc_parameter[,...]])
+    PROCEDURE [IF NOT EXISTS] sp_name ([proc_parameter[,...]])
     [characteristic ...] routine_body
 
 proc_parameter:
@@ -469,6 +469,11 @@ routine_body:
     <li class=""><a href="#syntax" title="Syntax">Syntax</a></li>
 
     <li class=""><a href="#description" title="Description">Description</a>    <ol class="toc">
+
+        <li class=""><a href="#things-to-be-aware-of-with-create-or-replace" title="Things to be Aware of With CREATE OR REPLACE">Things to be Aware of With CREATE OR REPLACE</a>    </ol>
+</li>
+
+    <li class=""><a href="#create-procedure-if-not-exists" title="CREATE PROCEDURE IF NOT EXISTS">CREATE PROCEDURE IF NOT EXISTS</a>    <ol class="toc">
 
         <li class=""><a href="#inoutinout" title="IN/OUT/INOUT">IN/OUT/INOUT</a></li>
 
@@ -509,7 +514,7 @@ automatically grants the <code>ALTER ROUTINE</code> and <code>EXECUTE</code> pri
 routine creator. See also <a href="/kb/en/stored-routine-privileges/">Stored Routine Privileges</a>.</p>
 <p>The <code>DEFINER</code> and SQL SECURITY clauses specify the security context to
 be used when checking access privileges at routine execution time, as
-described later. Requires the <a href="/kb/en/grant/#super">SUPER</a> privilege, or, from <a href="/kb/en/mariadb-1052-release-notes/">MariaDB 10.5.2</a>, the <a href="/kb/en/grant/#set-user">SET USER</a> privilege.</p>
+described <a href="/kb/en/stored-routine-privileges/">here</a>. Requires the <a href="/kb/en/grant/#super">SUPER</a> privilege, or, from <a href="/kb/en/mariadb-1052-release-notes/">MariaDB 10.5.2</a>, the <a href="/kb/en/grant/#set-user">SET USER</a> privilege.</p>
 <p>If the routine name is the same as the name of a built-in SQL
 function, you must use a space between the name and the following
 parenthesis when defining the routine, or a syntax error occurs. This
@@ -525,6 +530,11 @@ used. Parameter names are not case sensitive.</p>
 <p>Each parameter can be declared to use any valid data type, except that
 the COLLATE attribute cannot be used.</p>
 <p>For valid identifiers to use as procedure names, see <a href="/kb/en/identifier-names/">Identifier Names</a>.</p>
+<h3 class="anchored_heading" id="things-to-be-aware-of-with-create-or-replace">Things to be Aware of With CREATE OR REPLACE</h3>
+<ul start="1"><li>One can't use <code class="highlight fixed" style="white-space:pre-wrap">OR REPLACE</code> together with <code class="highlight fixed" style="white-space:pre-wrap">IF EXISTS</code>.
+</li></ul>
+<h2 class="anchored_heading" id="create-procedure-if-not-exists">CREATE PROCEDURE IF NOT EXISTS</h2>
+<p>If the <code>IF NOT EXISTS</code> clause is used, then the procedure will only be created if a procedure with the same name does not already exist. If the procedure already exists, then a warning will be triggered by default.</p>
 <h3 class="anchored_heading" id="inoutinout">IN/OUT/INOUT</h3>
 <p>Each parameter is an <code>IN</code> parameter by default. To specify otherwise for
 a parameter, use the keyword <code>OUT</code> or <code>INOUT</code> before the parameter name.</p>

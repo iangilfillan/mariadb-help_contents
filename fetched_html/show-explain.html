@@ -255,12 +255,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2012-05-16 21:25">10 years, 1 month ago</span></dd>
+<span class="datetime" title="2012-05-16 21:25">10 years, 3 months ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2021-04-24 22:08">1 year, 2 months ago</span></dd>
+<span class="datetime" title="2022-09-01 19:47">1 week, 3 days ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -329,6 +329,30 @@
 </div>
 
     
+
+
+
+    
+    
+
+<div class="well well-small box"><div><h5>Product Versions</h5></div><div>
+
+        <ul id="product_chooser">
+            
+                <li class="mariadb_from_10_9">
+                    <label><input type="checkbox" data-product-class="mariadb_from_10_9"
+                            >MariaDB starting with 10.9</label>
+                </li>
+            
+                <li class="mariadb_from_10_9">
+                    <label><input type="checkbox" data-product-class="mariadb_from_10_9"
+                            >MariaDB starting with 10.9</label>
+                </li>
+            
+        </ul>
+    
+</div>
+</div>
 
 
 
@@ -449,6 +473,7 @@
 </div>
 <h2 class="anchored_heading" id="syntax">Syntax</h2>
 <pre class="fixed"><span class="k">SHOW</span> <span class="k">EXPLAIN</span> <span class="k">FOR</span> <span class="o">&lt;</span><span class="n">thread_id</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="k">EXPLAIN</span> <span class="k">FOR</span> <span class="k">CONNECTION</span> <span class="o">&lt;</span><span class="n">thread_id</span><span class="o">&gt;</span><span class="p">;</span>
 </pre><h2 class="anchored_heading" id="description">Description</h2>
 <p>The <code>SHOW EXPLAIN</code> command allows one to get an <a href="/kb/en/explain/">EXPLAIN</a> (that is, a
 description of a query plan) of a query running in a certain thread.</p>
@@ -470,7 +495,8 @@ target thread is running (this shows what the <code>EXPLAIN</code> is for):</p>
 <span class="o">|</span> <span class="n">Note</span>  <span class="o">|</span> <span class="mi">1003</span> <span class="o">|</span> <span class="k">select</span> <span class="k">sum</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">from</span> <span class="n">tbl</span> <span class="o">|</span>
 <span class="o">+</span><span class="c1">-------+------+------------------------+</span>
 <span class="mi">1</span> <span class="k">row</span> <span class="k">in</span> <span class="k">set</span> <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">00</span> <span class="n">sec</span><span class="p">)</span>
-</pre><h3 class="anchored_heading" id="possible-errors">Possible Errors</h3>
+</pre><div class="mariadb_from_10_9 mariadb from_10_9 product"><h5 class="product_title">MariaDB starting with <a href="/kb/en/what-is-mariadb-109/">10.9</a></h5><p>The <code>EXPLAIN FOR CONNECTION</code> syntax was added for MySQL compatibility.</p>
+</div><h3 class="anchored_heading" id="possible-errors">Possible Errors</h3>
 <p>The output can be only produced if the target thread is <em>currently</em> running a
 query, which has a ready query plan. If this is not the case, the output will
 be:</p>
@@ -505,7 +531,8 @@ output is closer to reality than <code>EXPLAIN</code>'s output.</p>
 <p>Running <code>SHOW EXPLAIN</code> requires the same permissions as
 running <code>SHOW PROCESSLIST</code> would.</p>
 <h2 class="anchored_heading" id="see-also">See Also</h2>
-<ul start="1"><li><a href="/kb/en/explain-analyze/">EXPLAIN ANALYZE</a>, which will perform a query and outputs enhanced <code>EXPLAIN</code> results.
+<ul start="1"><li><a href="/kb/en/explain/">EXPLAIN</a>
+</li><li><a href="/kb/en/explain-analyze/">EXPLAIN ANALYZE</a>, which will perform a query and outputs enhanced <code>EXPLAIN</code> results.
 </li><li>It is also possible to <a href="/kb/en/explain-in-the-slow-query-log/">save EXPLAIN into the slow query log</a>.</li></ul>
 
     </div>

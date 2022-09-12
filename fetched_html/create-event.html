@@ -255,12 +255,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2010-04-02 18:40">12 years, 2 months ago</span></dd>
+<span class="datetime" title="2010-04-02 18:40">12 years, 5 months ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2022-05-01 21:45">1 month, 3 weeks ago</span></dd>
+<span class="datetime" title="2022-08-19 21:51">3 weeks, 2 days ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -535,7 +535,7 @@ schema is assumed.</p>
 <p>Events are <code>ENABLE</code>d by default. If you want to stop MariaDB from executing
 an event, you may specify <code>DISABLE</code>. When it is ready to be activated, you
 may enable it using <code><a href="/kb/en/alter-event/">ALTER EVENT</a></code>. Another option is
-<code>DISABLE ON SLAVE</code>, which indicates that an event was created on a master and has been replicated to the slave, which is prevented from executing the event. If <code>DISABLE ON SLAVE</code> is specifically set, the event will not be executed.</p>
+<code>DISABLE ON SLAVE</code>, which indicates that an event was created on a master and has been replicated to the slave, which is prevented from executing the event. If <code>DISABLE ON SLAVE</code> is specifically set, the event will be disabled everywhere. It will not be executed on the mater or the slaves.</p>
 <h4 class="anchored_heading" id="comment">COMMENT</h4>
 <p>The <code>COMMENT</code> clause may be used to set a comment for the event. Maximum
 length for comments is 64 characters. The comment is a string, so it must be

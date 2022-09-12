@@ -255,12 +255,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2010-08-23 16:39">11 years, 10 months ago</span></dd>
+<span class="datetime" title="2010-08-23 16:39">12 years ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2021-04-24 21:07">1 year, 2 months ago</span></dd>
+<span class="datetime" title="2022-07-11 13:34">2 months ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -464,7 +464,10 @@
 
     <li class=""><a href="#syntax" title="Syntax">Syntax</a></li>
 
-    <li class=""><a href="#description" title="Description">Description</a></li>
+    <li class=""><a href="#description" title="Description">Description</a>    <ol class="toc">
+
+        <li class=""><a href="#index-order" title="Index Order">Index Order</a>    </ol>
+</li>
 
     <li class=""><a href="#examples" title="Examples">Examples</a></li>
 
@@ -481,7 +484,18 @@ column names according to the value of the <a href="/kb/en/server-system-variabl
 <p>Note that <code>SHOW CREATE TABLE</code> is not meant to provide metadata about a table. It provides information about how the table was declared, but the real table structure could differ a bit. For example, if an index has been declared as <code>HASH</code>, the <code>CREATE TABLE</code> statement returned by <code>SHOW CREATE TABLE</code> will declare that index as <code>HASH</code>; however, it is possible that the index is in fact a <code>BTREE</code>, because the storage engine does not support <code>HASH</code>.</p>
 <div class="mariadb_from_10_2_1 mariadb from_10_2_1 product"><h5 class="product_title">MariaDB starting with <a href="/kb/en/mariadb-1021-release-notes/">10.2.1</a></h5><p><a href="/kb/en/mariadb-1021-release-notes/">MariaDB 10.2.1</a> permits <a href="/kb/en/text/">TEXT</a> and <a href="/kb/en/blob/">BLOB</a> data types to be assigned a <a href="/kb/en/create-table/#default">DEFAULT</a> value. As a result, from <a href="/kb/en/mariadb-1021-release-notes/">MariaDB 10.2.1</a>, <code>SHOW CREATE TABLE</code> will append a <code>DEFAULT NULL</code> to nullable TEXT or BLOB fields if no specific default is provided. </p>
 </div><div class="mariadb_from_10_2_2 mariadb from_10_2_2 product"><h5 class="product_title">MariaDB starting with <a href="/kb/en/mariadb-1022-release-notes/">10.2.2</a></h5><p>From <a href="/kb/en/mariadb-1022-release-notes/">MariaDB 10.2.2</a>, numbers are no longer quoted in the <code>DEFAULT</code> clause in <code>SHOW CREATE</code> statement. Previously, MariaDB quoted numbers. </p>
-</div><h2 class="anchored_heading" id="examples">Examples</h2>
+</div><h3 class="anchored_heading" id="index-order">Index Order</h3>
+<p>Indexes are sorted and displayed in the following order, which may differ from the order of the CREATE TABLE statement.</p>
+<ul start="1"><li>PRIMARY KEY
+</li><li>UNIQUE keys where all column are NOT NULL
+</li><li>UNIQUE keys that don't contain partial segments
+</li><li>Other UNIQUE keys
+</li><li>LONG UNIQUE keys
+</li><li>Normal keys
+</li><li>Fulltext keys
+</li></ul>
+<p>See sql/sql_table.cc for details.</p>
+<h2 class="anchored_heading" id="examples">Examples</h2>
 <pre class="fixed">SHOW CREATE TABLE t\G
 *************************** 1. row ***************************
        Table: t

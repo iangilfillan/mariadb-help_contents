@@ -255,12 +255,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2017-08-30 16:24">4 years, 9 months ago</span></dd>
+<span class="datetime" title="2017-08-30 16:24">5 years ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2018-10-16 10:32">3 years, 8 months ago</span></dd>
+<span class="datetime" title="2022-08-10 12:50">1 month ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -404,7 +404,7 @@
 </li>
 </div>
 <h2 class="anchored_heading" id="default-values">Default Values</h2>
-<p>If the <code><a href="/kb/en/sql-mode/">SQL_MODE</a></code> contains <code>STRICT_TRANS_TABLES</code> and you are <a href="/kb/en/insert/">inserting</a> into a transactional table (like InnoDB), or if the SQL_MODE contains <code>STRICT_ALL_TABLES</code>, all <code>NOT NULL</code> columns which does not have a <code>DEFAULT</code> value (and is not <a href="/kb/en/auto_increment/">AUTO_INCREMENT</a>) must be explicitly referenced in <code>INSERT</code> statements. If not, an error like this is produced:</p>
+<p>If the <code><a href="/kb/en/sql-mode/">SQL_MODE</a></code> contains <code>STRICT_TRANS_TABLES</code> and you are <a href="/kb/en/insert/">inserting</a> into a transactional table (like InnoDB), or if the SQL_MODE contains <code>STRICT_ALL_TABLES</code>, all <code>NOT NULL</code> columns which do not have a <code>DEFAULT</code> value (and are not <a href="/kb/en/auto_increment/">AUTO_INCREMENT</a>) must be explicitly referenced in <code>INSERT</code> statements. If not, an error like this is produced:</p>
 <pre class="fixed">ERROR 1364 (HY000): Field 'col' doesn't have a default value
 </pre><p>In all other cases, if a <code>NOT NULL</code> column without a <code>DEFAULT</code> value is not referenced, an empty value will be inserted (for example, 0 for <code>INTEGER</code> columns and '' for <code>CHAR</code> columns). See <a href="/kb/en/null-values-in-mariadb/#inserting">NULL Values in MariaDB:Inserting</a> for examples.</p>
 <p>If a <code>NOT NULL</code> column having a <code>DEFAULT</code> value is not referenced, <code>NULL</code> will be inserted.</p>

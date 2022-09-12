@@ -255,12 +255,12 @@
         <dt>Created</dt>
         <dd>
 
-<span class="datetime" title="2010-08-23 18:07">11 years, 10 months ago</span></dd>
+<span class="datetime" title="2010-08-23 18:07">12 years ago</span></dd>
 
         <dt>Modified</dt>
         <dd>
 
-<span class="datetime" title="2022-03-07 13:23">3 months, 2 weeks ago</span></dd>
+<span class="datetime" title="2022-07-28 09:39">1 month, 2 weeks ago</span></dd>
 
         <dt>Type</dt>
         <dd>article</dd>
@@ -440,7 +440,7 @@ match. The <code class="highlight fixed" style="white-space:pre-wrap">WHERE</cod
 <tr><td>Index_length</td><td>Length of the index file.</td></tr>
 <tr><td>Data_free</td><td>Bytes allocated but unused. For InnoDB tables in a shared tablespace, the free space of the shared tablespace with small safety margin. An estimate in the case of partitioned tables - see the <code><a href="/kb/en/information-schema-partitions-table/">PARTITIONS</a></code> table.</td></tr>
 <tr><td>Auto_increment</td><td>Next <code><a href="/kb/en/auto_increment/">AUTO_INCREMENT</a></code> value.</td></tr>
-<tr><td>Create_time</td><td>Time the table was created.</td></tr>
+<tr><td>Create_time</td><td>Time the table was created. Some engines just return the ctime information from the file system layer here, in that case the value is not necessarily the table creation time but rather the time the file system metadata for it had last changed.</td></tr>
 <tr><td>Update_time</td><td>Time the table was last updated. On Windows, the timestamp is not updated on update, so MyISAM values will be inaccurate. In <a href="/kb/en/innodb/">InnoDB</a>, if shared tablespaces are used, will be <code>NULL</code>, while buffering can also delay the update, so the value will differ from the actual time of the last <code>UPDATE</code>, <code>INSERT</code> or <code>DELETE</code>.</td></tr>
 <tr><td>Check_time</td><td>Time the table was last checked. Not kept by all storage engines, in which case will be <code>NULL</code>.</td></tr>
 <tr><td>Collation</td><td><a href="/kb/en/data-types-character-sets-and-collations/">Character set and collation</a>.</td></tr>
