@@ -13,19 +13,19 @@ TableInfo = tuple[list[str], list[str], list[str]]
 
 #path seperator
 def get_help_topic_text(help_topic_id, help_category, name, description: str, example, url) -> str:
-
     unaltered = description
-    
-    high = 15000
-    low = 14000
+
+    high = 14000
+    low = 13000
     parts = []
     while len(description) >= high:
-        index = description.find("\\n", min(low, len(description)-low))
+        index = description.find("\\n", max(low, len(description)-low))
         if index == -1:
             debug.warn(f"Could not fine newline for help_topic concat {name}")
             index = low
         parts.append(description[:index])
         description = description[index:]
+    
     parts.append(description)
     description = parts.pop(0)
 
