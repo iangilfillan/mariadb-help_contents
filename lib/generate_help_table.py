@@ -84,7 +84,7 @@ def write_table_information(table_information: TableInfo, pre_topic_text: str, t
         outfile.write(string_topics)
         outfile.write(string_help_keywords)
         outfile.write(string_help_relations)
-        outfile.write("unlock tables;")
+        outfile.write("unlock tables;\n")
 
 def read_csv_information(version: int) -> CsvInfo:
     with open(Path("input/kb_urls.csv"), 'r', encoding="utf-8") as infile:
