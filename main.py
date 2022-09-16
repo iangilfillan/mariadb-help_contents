@@ -15,8 +15,8 @@ def get_version() -> int:
     if len(sys.argv) < 2:
         debug.error("Must give a Version number!")
     elif sys.argv[1][0] == '1' and len(sys.argv[1]) == 1:
-        version = int(sys.argv[1])
         debug.warn(f"Version '1' results in incorrect HELP_VERSION")
+        version = int(sys.argv[1])
     elif not sys.argv[1].isnumeric():
         debug.error("Invalid version argument")
     elif sys.argv[1] == '0':
@@ -25,19 +25,31 @@ def get_version() -> int:
         debug.error("Version number must of length 3 or 4 (eg: 105, 1010)")
     elif sys.argv[1][0] != "1":
         debug.error("Version must start with '1' (eg: 105, 1010)")
+    elif sys.argv[1][2] == '0':
+        debug.error("Invalid '0' for third digit")
     elif sys.argv[1][1] != "0":
         debug.warn("Versions above 10.x not accounted for")
+        version = int(sys.argv[1])
     elif int(sys.argv[1][2:]) < 3:
         debug.warn("Versions below 10.3 have no effect")
         version = int(sys.argv[1])
-    elif sys.argv[1][2] == '0':
-        debug.warn("Unecessary '0' for third digit")
-        version = int(sys.argv[1])
     else:
         version = int(sys.argv[1])
-        debug.success(f"Selected Version: {version}")
     
     return version
+
+def get_concat_size() -> int:
+    default = 15000
+    min_concat = 1000
+    if len(sys.argv) < 3:
+        return default
+    
+    if not sys.argv[2].isnumeric():
+        debug.error("Invalid Concat Size")
+    if int(sys.argv[2]) < min_concat:
+        debug.error(f"Concat Size Too Small (min={min_concat})")
+
+    return int(sys.argv[2])
 
 def read_new_table() -> str|None:
     """Reads output SQL file"""
@@ -53,13 +65,20 @@ def print_change(old_file: str, new_file: str):
     else:
         debug.info(f"No change was made to {SQL_FILEPATH}")
 
-def check_max_char_length(sql: str):
-    for index, line in enumerate(sql.splitlines()):
-        if len(line) > 59900:
-            debug.error(f"Line above 60000 chars (ln: {index})")
-        elif len(line) > 55000:
-            debug.warn(f"Line above 55000 chars (ln: {index})")
-            
+def check_max_char_length(sql: str, concat_size: int):
+    max_line_length = 0
+    for index, line in enumerate(sql.splitlines(), 1):
+        # max line length
+        if len(line) > concat_size:
+            debug.warn(f"Line {index} above {concat_size}: ({len(line)})")
+        max_line_length = max(max_line_length, len(line))
+        # even number of single quotes
+        if line.replace("\\'", "").count("'") % 2 != 0:
+            debug.warn(f"Line {index} uneven number of single quotes")
+        #
+        
+    debug.info(f"Number of Lines: {index}")
+    debug.info(f"Max Line Length: {max_line_length}")
 
 def main():
     #keep track of generated_table
@@ -67,13 +86,17 @@ def main():
     
     #retrive version
     version: int = get_version()
+    concat_size: int = get_concat_size()
+    
+    debug.success(f"Selected Version: {version}")
+    debug.success(f"Selected Concat Size: {concat_size}")
     #generate new help_table
-    generate_help_table(SQL_FILEPATH, version)
+    generate_help_table(SQL_FILEPATH, version, concat_size-400) #makes room for line info around description
     
     #print change to SQL_FILENAME
     new_file: str = read_new_table()
     print_change(old_file, new_file)
-    check_max_char_length(new_file)
+    check_max_char_length(new_file, concat_size)
 
 
 if __name__ == "__main__":

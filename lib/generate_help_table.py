@@ -12,17 +12,14 @@ CsvInfo = list[dict[str, str]]
 TableInfo = tuple[list[str], list[str], list[str]]
 
 #path seperator
-def get_help_topic_text(help_topic_id, help_category, name, description: str, example, url) -> str:
+def get_help_topic_text(help_topic_id, help_category, name, description: str, example, url, concat_size: int = 15000) -> str:
     unaltered = description
 
-    high = 14000
-    low = 13000
     parts = []
-    while len(description) >= high:
-        index = description.find("\\n", max(low, len(description)-low))
+    while len(description) >= concat_size:
+        index = description.rfind("\\n", 0, concat_size)
         if index == -1:
-            debug.warn(f"Could not fine newline for help_topic concat {name}")
-            index = low
+            debug.error(f"Could not fine newline for help_topic concat {name}")
         parts.append(description[:index])
         description = description[index:]
     
@@ -34,7 +31,7 @@ def get_help_topic_text(help_topic_id, help_category, name, description: str, ex
 
     rejoin = description
     for text in parts:
-        if len(text) >= high:
+        if len(text) >= concat_size:
             print()
             debug.warn(f"help_topic concat has length: {len(text)}")
         string += add_update_help_topic(text, help_topic_id)
@@ -184,7 +181,7 @@ def get_page_h1(html: str, name: str):
     # Converts html escape sequences like '&amp'; to their text representations: '&'
     return unescape(title)
 
-def make_table_information(csv_information: CsvInfo, version: int) -> tuple[list[str], list[str], list[str]]:
+def make_table_information(csv_information: CsvInfo, version: int, concat_size: int) -> tuple[list[str], list[str], list[str]]:
     topics: list[str] = []
     topic_to_keyword: list[tuple[int, str]] = []
     unique_keywords : list[str] = []
@@ -215,7 +212,7 @@ def make_table_information(csv_information: CsvInfo, version: int) -> tuple[list
 
             topics.append(get_help_topic_text(
                 help_topic_id, row["category"], page_name,
-                description, "", row["url"])
+                description, "", row["url"], concat_size)
             )
 
             row_num: int = help_topic_id
@@ -229,6 +226,7 @@ def make_table_information(csv_information: CsvInfo, version: int) -> tuple[list
     except KeyboardInterrupt:
         print()
         debug.error("Keyboard Interrupt")
+    
     keyword_ids: dict[str, int] = {
         keyword: keyword_id for (keyword_id, keyword)
         in enumerate(unique_keywords, 1)
@@ -273,10 +271,10 @@ def insert_help_relations(topic_id: int, keyword_id: int) -> str:
     return f"insert into help_relation values ({topic_id}, {keyword_id});"
 
 #main import function
-def generate_help_table(table_to: str, version: int):
+def generate_help_table(table_to: str, version: int, concat_size: int):
     pre_topic_text, category_info = get_pre_topic_text(version)
     csv_information = read_csv_information(version)
     link_help_categories(csv_information, category_info)
-    table_information = make_table_information(csv_information, version)
+    table_information = make_table_information(csv_information, version, concat_size)
 
     write_table_information(table_information, pre_topic_text, table_to)
