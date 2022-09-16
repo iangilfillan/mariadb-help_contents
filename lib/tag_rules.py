@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup as Soup
 import re
 #annoying
 from lib.format_to_text import LINE_LIMIT
-
+import lib.debug as debug
 #functions
 def paragraphTag(tag: Soup):
     string = tag.text.strip().replace("\n", " ")
@@ -82,6 +82,11 @@ def format_table(table):
                 str_line += " |"
             str_line += "\n"
         output += str_line
+        #test
+        space_left = LINE_LIMIT-len(str_line.replace("\\'", "'").splitlines()[0])
+        if space_left < 0:
+            print()
+            debug.warn("Table was formatted incorrectly")
     output += add_row_break(column_widths)
     return output
 
@@ -91,7 +96,7 @@ def get_column_widths(table: list) -> list:
     lengths: list = [len(column) for column in row]
 
     sum_lengths: int = sum(lengths)
-    total_width: int = LINE_LIMIT - (3*len(lengths))
+    total_width: int = LINE_LIMIT - (3*len(lengths)) - 1
     #total width times the ratio of length / the sum of lengths
     column_widths = [int(total_width * (l / sum_lengths)) for l in lengths]
 
