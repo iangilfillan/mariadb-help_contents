@@ -67,7 +67,7 @@ def test_ends_with_url():
 </section>
     """
     output_text = format_to_text(input_html, "test")
-    expected_output = "URL: mariadb.com/kb/en/test/"
+    expected_output = "URL: https://mariadb.com/kb/en/test/"
     assert output_text == expected_output
 
 def test_format_full():
@@ -82,7 +82,7 @@ def test_format_full():
     expected_output = (
 r"This \' \' should go away.\n\n"\
 r"This \'\\n\' should Become double."\
-r"\n\nURL: mariadb.com/kb/en/test/"
+r"\n\nURL: https://mariadb.com/kb/en/test/"
 )
     assert output_text == expected_output
 
@@ -136,7 +136,7 @@ def test_add_url():
     from lib.format_to_text import add_url
 
     output = add_url(text="", name="test")
-    expected_output = "\n\nURL: mariadb.com/kb/en/test/"
+    expected_output = "\n\nURL: https://mariadb.com/kb/en/test/"
 
     assert output == expected_output
 
