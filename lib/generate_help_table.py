@@ -32,13 +32,11 @@ def get_help_topic_text(help_topic_id, help_category, name, description: str, ex
     rejoin = description
     for text in parts:
         if len(text) >= concat_size:
-            print()
             debug.warn(f"help_topic concat has length: {len(text)}")
         string += add_update_help_topic(text, help_topic_id)
         rejoin += text
     
     if rejoin != unaltered:
-        print()
         debug.error(f"Did not seperate description correctly for {name}")
     return string
 
@@ -53,7 +51,6 @@ def get_name(url: str) -> str:
 def read_html(name: str, url: str) -> str:
     filepath = Path(f"fetched_html/{name}.html")
     if not filepath.exists():
-        print()
         debug.info(f"Requesting {name}")
         req = requests.get(url)
         html = req.text
@@ -200,7 +197,6 @@ def make_table_information(csv_information: CsvInfo, version: int, concat_size: 
                 if keyword == "": continue
                 # if is duplicate: warn and skip keyword.
                 if keyword.upper() == page_name.upper():
-                    print()
                     debug.warn(f"Duplicate keyword found: {keyword}")
                     continue
 
@@ -221,10 +217,8 @@ def make_table_information(csv_information: CsvInfo, version: int, concat_size: 
             if row_num < num_rows+2: # to for help_date and help_version (TODO fix hack)
                 print(f"\rProgess: {percent}%", end="")
             else:
-                print()
                 debug.success(f"Finished {percent}%")
     except KeyboardInterrupt:
-        print()
         debug.error("Keyboard Interrupt")
     
     keyword_ids: dict[str, int] = {

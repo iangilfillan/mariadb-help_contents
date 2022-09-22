@@ -84,7 +84,6 @@ def format_table(table):
         #test
         space_left = LINE_LIMIT-len(str_line.replace("\\'", "'").splitlines()[0])
         if space_left < 0:
-            print()
             debug.warn("Table was formatted incorrectly")
     output += add_row_break(column_widths)
     return output
