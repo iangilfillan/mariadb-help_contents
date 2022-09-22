@@ -87,9 +87,7 @@ def modify_text(text: str) -> str:
     return text
 
 def add_url(text: str, name: str):
-    text += "\n" * 2 + "URL: "#add URL
-    url = "mariadb.com/kb/en/" + name + "/"
-    return text + url
+    return text + f"\n\nURL: https://mariadb.com/kb/en/{name}/"
 
 #modify text
 def set_line_limit(text: str) -> str:

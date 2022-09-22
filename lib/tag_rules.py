@@ -12,7 +12,6 @@ def paragraphTag(tag: Soup):
 
 def headerTag(tag: Soup):
     """Modifies headers to have extra space and decoration"""
-
     length = len(tag.text)
     tag.string = "\n" + tag.text + "\n" + "-" * length + "\n"
 
