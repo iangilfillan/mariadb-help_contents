@@ -82,8 +82,8 @@ insert into help_category (help_category_id,name,parent_category_id,url) values 
 insert into help_category (help_category_id,name,parent_category_id,url) values (47,'Operators',1,'');
 insert into help_category (help_category_id,name,parent_category_id,url) values (48,'Arithmetic Operators',47,'');
 
-insert into help_topic (help_topic_id,help_category_id,name,description,example,url) values (1,9,'HELP_DATE','Help Contents generated from the MariaDB Knowledge Base on 22 September 2022.','','');
-insert into help_topic (help_topic_id,help_category_id,name,description,example,url) values (2,9,'HELP_VERSION','Help Contents generated for MariaDB 10.11 from the MariaDB Knowledge Base on 22 September 2022.','','');
+insert into help_topic (help_topic_id,help_category_id,name,description,example,url) values (1,9,'HELP_DATE','Help Contents generated from the MariaDB Knowledge Base on 19 January 2023.','','');
+insert into help_topic (help_topic_id,help_category_id,name,description,example,url) values (2,9,'HELP_VERSION','Help Contents generated for MariaDB 10.11 from the MariaDB Knowledge Base on 19 January 2023.','','');
 insert into help_topic (help_topic_id,help_category_id,name,description,example,url) values (3,2,'AREA','A synonym for ST_AREA.\n\nURL: https://mariadb.com/kb/en/polygon-properties-area/','','https://mariadb.com/kb/en/polygon-properties-area/');
 insert into help_topic (help_topic_id,help_category_id,name,description,example,url) values (4,2,'CENTROID','A synonym for ST_CENTROID.\n\nURL: https://mariadb.com/kb/en/centroid/','','https://mariadb.com/kb/en/centroid/');
 insert into help_topic (help_topic_id,help_category_id,name,description,example,url) values (5,2,'ExteriorRing','A synonym for ST_ExteriorRing.\n\nURL: https://mariadb.com/kb/en/polygon-properties-exteriorring/','','https://mariadb.com/kb/en/polygon-properties-exteriorring/');

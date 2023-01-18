@@ -14,8 +14,7 @@ def headerTag(tag: Soup):
     """Modifies headers to have extra space and decoration"""
     length = len(tag.text)
     tag.string = "\n" + tag.text + "\n" + "-" * length + "\n"
-
-    tag.string = tag.string
+    #tag.string = tag.string
 
 def codeTag(tag: Soup):
     """Spaces code blocks to improve readability"""
@@ -100,13 +99,13 @@ def get_column_widths(table: list) -> list:
 
     return column_widths
 
-def add_row_break(column_widths: str) -> str:
+def add_row_break(column_widths: list) -> str:
     """Breaks up rows with dashes and pluses"""
     #+-----+-----+-----+
     row_break = "+" + "".join(["-" * (width + 2) + "+" for width in column_widths])
     return row_break + "\n"
 
-def get_lines(row: list, column_widths: list) -> tuple((list, int)):
+def get_lines(row: list, column_widths: list) -> tuple[(list, int)]:
     """returns the rows of lines and the number of lines for the column"""
     rows = []
     num_lines = 0

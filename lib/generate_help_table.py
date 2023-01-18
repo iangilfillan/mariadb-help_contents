@@ -5,8 +5,10 @@ import requests
 from html import unescape
 from pathlib import Path
 
-from lib.format_to_text import format_to_text
+from .format_to_text import format_to_text
 import lib.debug as debug
+from .version import Version
+
 # custom types
 CsvInfo = list[dict[str, str]]
 TableInfo = tuple[list[str], list[str], list[str]]
@@ -66,7 +68,7 @@ def test_status_codes(status_code: int, url: str):
     if status_code in invalid_codes:
         debug.error(f"Invalid url {url}")
 
-def write_table_information(table_information: TableInfo, pre_topic_text: str, table_to: str):
+def write_table_information(table_information: TableInfo, pre_topic_text: str, table_to: str|Path):
     topics, help_keywords, help_relations = table_information
 
     string_topics: str = "\n".join(topics) + "\n"
@@ -80,11 +82,11 @@ def write_table_information(table_information: TableInfo, pre_topic_text: str, t
         outfile.write(string_help_relations)
         outfile.write("unlock tables;\n")
 
-def read_csv_information(version: int) -> CsvInfo:
+def read_csv_information(version: Version) -> CsvInfo:
     with open(Path("input/kb_urls.csv"), 'r', encoding="utf-8") as infile:
         reader = csv.DictReader(infile)
         urls: set[str] = set() # Used for is_valid_row
-        desired_length: int = len(reader.fieldnames)
+        desired_length: int = len(reader.fieldnames) #type: ignore - TODO
         rows = [{
                 "url": row["URL"],
                 "category": row["HELP Cat"],
@@ -93,7 +95,7 @@ def read_csv_information(version: int) -> CsvInfo:
         ]
     return rows
 
-def is_valid_row(row: dict[str, str], urls: set[str], version: int, desired_length: int) -> bool:
+def is_valid_row(row: dict[str, str], urls: set[str], version: Version, desired_length: int) -> bool:
     if len(row) != desired_length:
         debug.error(f"Invalid row length: " + row["URL"])
 
@@ -102,9 +104,9 @@ def is_valid_row(row: dict[str, str], urls: set[str], version: int, desired_leng
 
     if row["HELP Include"] in ["", '0']:
         return False
-    if version == 1 or row["HELP Include"] == '1':
+    if version.is_max() or row["HELP Include"] == '1':
         pass
-    elif (int(row["HELP Include"]) > version):
+    elif (Version.from_str(row["HELP Include"])) > version:
         return False
     
     url = row["URL"]
@@ -115,11 +117,11 @@ def is_valid_row(row: dict[str, str], urls: set[str], version: int, desired_leng
     urls.add(url)
     return True
 
-def generate_categories(version: int):
+def generate_categories(version: Version):
     def is_valid_version(row: dict[str, str]):
         if not row["Include"].isnumeric():
             debug.error(f"Include must be a number: {row['Name']}")
-        return int(row["Include"]) <= version or version == 1
+        return row["Include"] == "1" or Version.from_str(row["Include"]) <= version
     
     infile = Path("input/help_cats.csv").read_text(encoding="utf-8")
     unfiltered = csv.DictReader(infile.splitlines())
@@ -145,7 +147,7 @@ def generate_categories(version: int):
     ]
     return category_strings, category_ids
 
-def get_pre_topic_text(version: int) -> tuple[str, dict[str, int]]:
+def get_pre_topic_text(version: Version) -> tuple[str, dict[str, int]]:
     file_sql = Path("input/starting_sql.sql").read_text(encoding="utf-8")
 
     categories, category_info = generate_categories(version)
@@ -178,7 +180,7 @@ def get_page_h1(html: str, name: str):
     # Converts html escape sequences like '&amp'; to their text representations: '&'
     return unescape(title)
 
-def make_table_information(csv_information: CsvInfo, version: int, concat_size: int) -> tuple[list[str], list[str], list[str]]:
+def make_table_information(csv_information: CsvInfo, version: Version, concat_size: int) -> tuple[list[str], list[str], list[str]]:
     topics: list[str] = []
     topic_to_keyword: list[tuple[int, str]] = []
     unique_keywords : list[str] = []
@@ -246,11 +248,10 @@ def get_help_date() -> str:
     string += f"{today}.','','');"
     return string
 
-def get_help_version(version: int) -> str:    
+def get_help_version(version: Version) -> str:    
     today = datetime.date.strftime(datetime.date.today(), "%d %B %Y")
 
-    version = str(version)
-    version_str = version[:2] + '.' + version[2:]
+    version_str = repr(version)
     text = f"Help Contents generated for MariaDB {version_str} from the MariaDB Knowledge Base on {today}."
 
     string = "insert into help_topic (help_topic_id,help_category_id,name,description,example,url) "
@@ -265,7 +266,7 @@ def insert_help_relations(topic_id: int, keyword_id: int) -> str:
     return f"insert into help_relation values ({topic_id}, {keyword_id});"
 
 #main import function
-def generate_help_table(table_to: str, version: int, concat_size: int):
+def generate_help_table(table_to: str|Path, version: Version, concat_size: int):
     pre_topic_text, category_info = get_pre_topic_text(version)
     csv_information = read_csv_information(version)
     link_help_categories(csv_information, category_info)
