@@ -37,19 +37,6 @@ def read_versions(args: list[str]) -> list[Version]:
         versions.append(version)
     return versions
 
-def get_concat_size() -> int:
-    default = 15000
-    min_concat = 1000
-    if len(sys.argv) < 3:
-        return default
-    
-    if not sys.argv[2].isnumeric():
-        debug.error("Invalid Concat Size")
-    if int(sys.argv[2]) < min_concat:
-        debug.error(f"Concat Size Too Small (min={min_concat})")
-
-    return int(sys.argv[2])
-
 def check_max_char_length(sql: str, concat_size: int):
     max_line_length = 0
     index = 0
