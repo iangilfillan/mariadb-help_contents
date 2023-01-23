@@ -104,7 +104,7 @@ def is_valid_row(row: dict[str, str], urls: set[str], version: Version, desired_
 
     if row["HELP Include"] in ["", '0']:
         return False
-    if version.is_max() or row["HELP Include"] == '1':
+    if version.is_max or row["HELP Include"] == '1':
         pass
     elif (Version.from_str(row["HELP Include"])) > version:
         return False

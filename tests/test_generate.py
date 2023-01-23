@@ -22,7 +22,7 @@ def test_get_name():
         assert outputed_name == expected_name
 
 
-def test_insert_help_keyword() -> str:
+def test_insert_help_keyword():
     from lib.generate_help_table import insert_help_keyword
     
     expected_output = "insert into help_keyword values (12, 'keyword');"
@@ -30,7 +30,7 @@ def test_insert_help_keyword() -> str:
     
     assert expected_output == output 
 
-def test_insert_help_relations() -> str:
+def test_insert_help_relations():
     from lib.generate_help_table import insert_help_relations
 
     expected_output = "insert into help_relation values (1, 2);"
