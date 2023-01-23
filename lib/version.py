@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Self
 
 @dataclass(slots=True)
 class Version:
@@ -19,14 +18,14 @@ class Version:
     def is_max(self):
         return self._is_max
     
-    def __eq__(self, other: Self):
+    def __eq__(self, other):
         if self.is_max and other.is_max:
             return True
         if self.is_max != other.is_max:
             return False
         return (self.major, self.minor) == (other.major, other.minor)
     
-    def __gt__(self, other: Self):
+    def __gt__(self, other):
         if self.is_max and other.is_max:
             return False
         if self.is_max and not other.is_max:
@@ -35,12 +34,12 @@ class Version:
             return False
         return (self.major, self.minor) > (other.major, other.minor)
     
-    def __lt__(self, other: Self):
+    def __lt__(self, other):
         return not self >= other
 
-    def __ge__(self, other: Self):
+    def __ge__(self, other):
         return self > other or self == other
-    def __le__(self, other: Self):
+    def __le__(self, other):
         return self < other or self == other 
 
     def __repr__(self) -> str:
