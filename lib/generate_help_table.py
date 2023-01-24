@@ -98,16 +98,16 @@ def read_csv_information(version: Version) -> CsvInfo:
 def is_valid_row(row: dict[str, str], urls: set[str], version: Version, desired_length: int) -> bool:
     if len(row) != desired_length:
         debug.error(f"Invalid row length: " + row["URL"])
-
-    if row["URL"] != "" and row["HELP Include"] == "":
+    if not row["URL"]:
+        return False
+    if not row["HELP Include"]:
         debug.warn("No Help Include for " + row["URL"])
 
     if row["HELP Include"] in ["", '0']:
         return False
-    if version.is_max or row["HELP Include"] == '1':
-        pass
-    elif (Version.from_str(row["HELP Include"])) > version:
-        return False
+    if row["HELP Include"] != '1':
+        if (Version.from_str(row["HELP Include"])) > version:
+            return False
     
     url = row["URL"]
     if url in urls:

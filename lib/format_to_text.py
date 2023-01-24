@@ -53,7 +53,7 @@ def clean_soup(soup: Soup):
 
     #remove main header
     tag = soup.find("h1")
-    if tag is not None: tag.decompose()
+    if tag is not None: tag.decompose() # type: ignore
 
 def modify_tags(soup: Soup):
         """Removes information from a BeautifulSoup object"""
@@ -65,7 +65,7 @@ def modify_tags(soup: Soup):
                      "table": tableTag,
                      "li": listTag,}
         tag: Soup
-        for tag in soup.descendants:
+        for tag in soup.descendants: # type: ignore
             if tag.name in tag_rules:
                 tag_rules[tag.name](tag)
     
@@ -75,8 +75,8 @@ def remove_see_also(soup: Soup):
         see_also = soup.find(f"h{n}", {"id": "see-also", "class": "anchored_heading"})
         if see_also is not None:
             ns = see_also.find_next_sibling()
-            if ns is not None: ns.decompose()
-            see_also.decompose()
+            if ns is not None: ns.decompose() # type: ignore
+            see_also.decompose() # type: ignore
 
 def modify_text(text: str) -> str:
     """Removes and modifies text"""
@@ -95,7 +95,7 @@ def set_line_limit(text: str) -> str:
     #recreate the text
     lines = []
     for line in text.split("\n"):
-        lines += sep_lines(line, LINE_LIMIT)
+        lines += sep_lines(line, LINE_LIMIT) # type: ignore
     return '\n'.join(lines)
 
 def remove_extra_newlines(text: str) -> str:
@@ -111,7 +111,7 @@ def reduce_indents(text: str) -> str:
         #if the line has an indent
         if line.startswith("  "):
             #get the size of the indent
-            spaces = re.match(" +", line)[0]
+            spaces = re.match(" +", line)[0] # type: ignore
             #add spaces equal to half the indent to the stripped line
             line = (" " * (len(spaces) // 2)) + line.strip() 
         nlines.append(line)

@@ -16,14 +16,12 @@ DEFAULT_CONCAT_SIZE = 15000
 def read_args() -> tuple[list[Version], int]:
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--length", "-l", type=int)
-    parser.add_argument("--versions", "--version", "-v", nargs="+")
-
+    parser.add_argument("--length", "-l", type=int, default=DEFAULT_CONCAT_SIZE)
+    parser.add_argument("--versions", "--version", "-v", nargs="+", required=True)
     args = parser.parse_args()
-    assert args.versions is not None
+    
     versions = read_versions(args.versions)
-    concat_size = args.length if args.length is not None else DEFAULT_CONCAT_SIZE
-    return versions, concat_size
+    return versions, args.length
 
 # Functions
 def read_versions(args: list[str]) -> list[Version]:
@@ -54,20 +52,17 @@ def check_max_char_length(sql: str, concat_size: int):
     debug.info(f"Max Line Length: {max_line_length}")
 
 def main():
-    #keep track of generated_table
-    #retrive version
     versions, concat_size = read_args()
-    debug.success(f"Selected Versions: {versions}\n")
+    debug.success(f"Selected Versions: {versions}")
 
+    Path("output").mkdir(exist_ok=True)
     for version in versions:
+        print()
         debug.success(f"Generating Version: {version}")
-        output_dir = Path(f"output-{version.major}{version.minor}")
-        output_dir.mkdir(exist_ok=True)
-        output_filepath = output_dir / SQL_FILENAME
+        output_filepath = Path("output") / f"fill_help_tables-{version.major}{version.minor}.sql"
         generate_help_table(output_filepath, version, concat_size-400) #makes room for line info around description
         new_file = output_filepath.read_text(encoding="utf-8")
         check_max_char_length(new_file, concat_size)
-        print("\n")
 
 
 if __name__ == "__main__":
