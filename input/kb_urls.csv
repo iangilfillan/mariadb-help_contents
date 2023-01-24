@@ -1,4 +1,6 @@
 URL,HELP Include,HELP Cat,HELP Keywords,Include,Header,Depth,Notes,Duplicate slugs
+,,,,,,,,
+,,,,,,,,
 https://mariadb.com/kb/en/using-mariadb-server/,0,,,1,,1,,
 https://mariadb.com/kb/en/sql-statements-structure/,0,,,1,SQL Statements and Structure,2,Category,
 https://mariadb.com/kb/en/sql-statements/,0,,,1,SQL Statements,3,Category,
@@ -6,7 +8,7 @@ https://mariadb.com/kb/en/account-management-sql-commands/,0,,,1,,4,Category,
 https://mariadb.com/kb/en/create-user/,1,Account Management,,1,,5,,
 https://mariadb.com/kb/en/alter-user/,1,Account Management,,1,,5,,
 https://mariadb.com/kb/en/drop-user/,1,Account Management,drop,1,,5,,
-https://mariadb.com/kb/en/grant/,1,Account Management,,1,,5,,
+https://mariadb.com/kb/en/grant/,1,Account Management,super;usage;binlog admin;binlog monitor;binlog replay;connection admin;federated admin;grant option;read_only admin;replica monitor;replication replica,1,,5,,
 https://mariadb.com/kb/en/rename-user/,1,Account Management,,1,,5,,
 https://mariadb.com/kb/en/revoke/,1,Account Management,,1,,5,,
 https://mariadb.com/kb/en/set-password/,1,Account Management,,1,,5,,
@@ -64,7 +66,7 @@ https://mariadb.com/kb/en/show-explain/,1,Administration,,1,,6,,
 https://mariadb.com/kb/en/using-buffer-update-algorithm/,0,,,1,,6,,
 https://mariadb.com/kb/en/backup-commands/,0,,,1,BACKUP Commands,5,Category,
 https://mariadb.com/kb/en/backup-stage/,104,Administration,,1,,6,,
-https://mariadb.com/kb/en/backup-lock/,104,Administration,,1,,6,,
+https://mariadb.com/kb/en/backup-lock/,104,Administration,locks;locking,1,,6,,
 https://mariadb.com/kb/en/mariabackup-and-backup-stage-commands/,0,,,3,Mariabackup and BACKUP STAGE Commands,6,,
 https://mariadb.com/kb/en/storage-snapshots-and-backup-stage-commands/,0,,,1,,6,,
 https://mariadb.com/kb/en/flush-commands/,0,,,1,FLUSH Commands,5,Category,
@@ -72,16 +74,16 @@ https://mariadb.com/kb/en/flush/,1,Administration,,1,,6,,
 https://mariadb.com/kb/en/flush-query-cache/,1,Administration,,1,,6,,
 https://mariadb.com/kb/en/flush-tables-for-export/,1,Administration,,1,,6,,
 https://mariadb.com/kb/en/replication-commands/,0,,,1,Replication Commands,5,Category,
-https://mariadb.com/kb/en/change-master-to/,1,Transactions,master_ssl_verify_cert,1,,6,,
-https://mariadb.com/kb/en/start-replica/,1,Transactions,start replica;start slave,1,,6,,start-slave
-https://mariadb.com/kb/en/stop-replica/,1,Transactions,stop replica;stop slave,1,,6,,stop-slave
-https://mariadb.com/kb/en/reset-replica/,1,Transactions,reset slave;reset replica,1,,6,,reset-slave;reset-slave-connection_name
+https://mariadb.com/kb/en/change-master-to/,1,Replication,master_ssl_verify_cert,1,,6,,
+https://mariadb.com/kb/en/start-replica/,1,Replication,start replica;start slave,1,,6,,start-slave
+https://mariadb.com/kb/en/stop-replica/,1,Replication,stop replica;stop slave,1,,6,,stop-slave
+https://mariadb.com/kb/en/reset-replica/,1,Replication,reset slave;reset replica,1,,6,,reset-slave;reset-slave-connection_name
 https://mariadb.com/kb/en/set-global-sql_slave_skip_counter/,0,,,1,,6,,
 https://mariadb.com/kb/en/show-relaylog-events/,1,Administration,show,1,,6,,
 https://mariadb.com/kb/en/show-replica-status/,1,Administration,show,1,,6,,show-slave-status
 https://mariadb.com/kb/en/show-binlog-status/,1,Administration,show,1,,6,,show-master-status
 https://mariadb.com/kb/en/show-replica-hosts/,1,Administration,show,1,,6,,show-slave-hosts
-https://mariadb.com/kb/en/reset-master/,1,Transactions,,1,,6,,
+https://mariadb.com/kb/en/reset-master/,1,Replication,,1,,6,,
 https://mariadb.com/kb/en/plugin-sql-statements/,0,,,1,Plugin SQL Statements,5,Category,
 https://mariadb.com/kb/en/show-plugins/,1,Administration,show,1,,6,,
 https://mariadb.com/kb/en/show-plugins-soname/,1,Administration,show,1,,6,,
@@ -447,16 +449,16 @@ https://mariadb.com/kb/en/version_minor/,0,,,1,,8,,
 https://mariadb.com/kb/en/version_patch/,0,,,1,,8,,
 https://mariadb.com/kb/en/sys-schema-stored-procedures/,0,,,1,,7,,
 https://mariadb.com/kb/en/create_synonym_db/,0,,,1,,8,,
-,,,,,,,,
+https://mariadb.com/kb/en/optimizer_switch-helper-functions/,0,,,1,,8,,
 https://mariadb.com/kb/en/statement_performance_analyzer/,0,,,1,,8,,
 https://mariadb.com/kb/en/table_exists/,0,,,1,,8,,
 https://mariadb.com/kb/en/mariadb_schema/,0,,,1,,6,,
 https://mariadb.com/kb/en/writing-logs-into-tables/,0,,,1,,6,,
 https://mariadb.com/kb/en/binlog/,1,Administration,,1,,5,,
-https://mariadb.com/kb/en/purge-binary-logs/,1,Transactions,,1,,5,,
+https://mariadb.com/kb/en/purge-binary-logs/,1,Administration,,1,,5,,
 https://mariadb.com/kb/en/cache-index/,1,Administration,,1,,5,,
 https://mariadb.com/kb/en/describe/,1,Utility,,1,,5,,describe-command
-https://mariadb.com/kb/en/execute-statement/,1,Transactions,,1,,5,,
+https://mariadb.com/kb/en/execute-statement/,1,Prepared Statements,,1,,5,,
 https://mariadb.com/kb/en/help-command/,1,Administration,,1,,5,,
 https://mariadb.com/kb/en/kill/,1,Administration,kill connection;kill query,1,,5,,data-manipulation-kill-connection-query;sql-commands-kill-connection-query;kill-connection-query
 https://mariadb.com/kb/en/load-index/,1,Administration,,1,,5,,
@@ -557,14 +559,14 @@ https://mariadb.com/kb/en/limit/,1,Data Manipulation,,1,,6,,
 https://mariadb.com/kb/en/order-by/,1,Data Manipulation,,1,,6,,
 https://mariadb.com/kb/en/group-by/,1,Data Manipulation,,1,,6,,
 https://mariadb.com/kb/en/common-table-expressions/,0,,,1,Common Table Expressions,6,Category,
-https://mariadb.com/kb/en/with/,1,Data Manipulation,,1,,7,,
-https://mariadb.com/kb/en/non-recursive-common-table-expressions-overview/,1,Data Manipulation,,1,,7,,common-table-expressions-overview
-https://mariadb.com/kb/en/recursive-common-table-expressions-overview/,1,Data Manipulation,,1,,7,,
+https://mariadb.com/kb/en/with/,1,Data Manipulation,cte,1,,7,,
+https://mariadb.com/kb/en/non-recursive-common-table-expressions-overview/,1,Data Manipulation,cte,1,,7,,common-table-expressions-overview
+https://mariadb.com/kb/en/recursive-common-table-expressions-overview/,1,Data Manipulation,cte,1,,7,,
 https://mariadb.com/kb/en/select-with-rollup/,1,Data Manipulation,,1,,6,,
 https://mariadb.com/kb/en/select-into-outfile/,1,Data Manipulation,,1,,6,,
 https://mariadb.com/kb/en/select-into-dumpfile/,1,Data Manipulation,,1,,6,,
 https://mariadb.com/kb/en/for-update/,1,Data Manipulation,,1,,6,,
-https://mariadb.com/kb/en/lock-in-share-mode/,1,Data Manipulation,,1,,6,,
+https://mariadb.com/kb/en/lock-in-share-mode/,1,Data Manipulation,locks;locking,1,,6,,
 https://mariadb.com/kb/en/optimizer-hints/,1,Data Manipulation,,1,,6,,
 https://mariadb.com/kb/en/procedure/,1,Data Manipulation,,1,,6,,
 https://mariadb.com/kb/en/handler/,0,,,3,HANDLER,6,Category,
@@ -595,11 +597,11 @@ https://mariadb.com/kb/en/replacereturning/,105,Data Manipulation,,1,REPLACE RET
 https://mariadb.com/kb/en/truncate-table/,0,,,3,TRUNCATE TABLE,6,,
 https://mariadb.com/kb/en/update/,0,,,3,UPDATE,6,,
 https://mariadb.com/kb/en/prepared-statements/,0,,,1,Prepared Statements,4,Category,
-https://mariadb.com/kb/en/prepare-statement/,1,Transactions,,1,,5,,
+https://mariadb.com/kb/en/prepare-statement/,1,Prepared Statements,,1,,5,,
 https://mariadb.com/kb/en/out-parameters-in-prepare/,0,,,1,,5,,
 https://mariadb.com/kb/en/execute-statement/,0,,,3,EXECUTE STATEMENT,5,,
-https://mariadb.com/kb/en/deallocate-drop-prepare/,1,Transactions,drop prepare;deallocate prepare,1,,5,,
-https://mariadb.com/kb/en/execute-immediate/,1,Transactions,,1,,5,,
+https://mariadb.com/kb/en/deallocate-drop-prepare/,1,Prepared Statements,drop prepare;deallocate prepare,1,,5,,
+https://mariadb.com/kb/en/execute-immediate/,1,Prepared Statements,,1,,5,,
 https://mariadb.com/kb/en/programmatic-compound-statements/,0,,,1,Programmatic & Compound Statements,4,Category,
 https://mariadb.com/kb/en/using-compound-statements-outside-of-stored-programs/,1,Compound Statements,,1,,5,,
 https://mariadb.com/kb/en/begin-end/,1,Compound Statements,,1,,5,,
@@ -637,12 +639,12 @@ https://mariadb.com/kb/en/start-transaction/,1,Transactions,work,1,,5,,
 https://mariadb.com/kb/en/commit/,1,Transactions,,1,,5,,
 https://mariadb.com/kb/en/rollback/,1,Transactions,,1,,5,,
 https://mariadb.com/kb/en/set-transaction/,0,,,3,SET TRANSACTION,5,,
-https://mariadb.com/kb/en/lock-tables/,1,Transactions,,1,,5,,lock-tables-and-unlock-tables;transactions-lock;unlock-tables;lock
+https://mariadb.com/kb/en/lock-tables/,1,Transactions,locks;locking,1,,5,,lock-tables-and-unlock-tables;transactions-lock;unlock-tables;lock
 https://mariadb.com/kb/en/savepoint/,1,Transactions,,1,,5,,
-https://mariadb.com/kb/en/metadata-locking/,1,Transactions,,1,,5,,
+https://mariadb.com/kb/en/metadata-locking/,1,Transactions,locks;locking,1,,5,,
 https://mariadb.com/kb/en/sql-statements-that-cause-an-implicit-commit/,0,,,1,,5,,
 https://mariadb.com/kb/en/transaction-timeouts/,1,Transactions,,1,,5,,
-https://mariadb.com/kb/en/transactions-unlock-tables/,1,Transactions,,1,,5,,
+https://mariadb.com/kb/en/transactions-unlock-tables/,1,Transactions,locks;locking,1,,5,,
 https://mariadb.com/kb/en/wait-and-nowait/,1,Transactions,,1,,5,,
 https://mariadb.com/kb/en/xa-transactions/,1,Transactions,,1,,5,,
 https://mariadb.com/kb/en/help-command/,0,,,3,HELP Command,4,,
@@ -705,13 +707,13 @@ https://mariadb.com/kb/en/load_file/,0,,,3,LOAD_FILE,4,,
 https://mariadb.com/kb/en/cassandra/,0,,,0,,,,
 https://mariadb.com/kb/en/operators/,0,,,1,,3,,
 https://mariadb.com/kb/en/arithmetic-operators/,0,,,1,,4,,
-https://mariadb.com/kb/en/addition-operator/,1,Arithmetic Operators,,1,,5,,
+https://mariadb.com/kb/en/addition-operator/,1,Arithmetic Operators,+;addition operator,1,,5,,
 https://mariadb.com/kb/en/div/,0,,,3,DIV,5,,
-https://mariadb.com/kb/en/division-operator/,1,Arithmetic Operators,,1,,5,,
+https://mariadb.com/kb/en/division-operator/,1,Arithmetic Operators,/;division operator,1,,5,,
 https://mariadb.com/kb/en/mod/,0,,,3,MOD,5,,
-https://mariadb.com/kb/en/modulo-operator/,1,Arithmetic Operators,,1,,5,,
-https://mariadb.com/kb/en/multiplication-operator/,1,Arithmetic Operators,,1,,5,,
-https://mariadb.com/kb/en/subtraction-operator-/,1,Arithmetic Operators,,1,,5,,
+https://mariadb.com/kb/en/modulo-operator/,1,Arithmetic Operators,%;modulo operator,1,,5,,
+https://mariadb.com/kb/en/multiplication-operator/,1,Arithmetic Operators,*;multiplication operator,1,,5,,
+https://mariadb.com/kb/en/subtraction-operator-/,1,Arithmetic Operators,-;subtraction operator,1,,5,,
 https://mariadb.com/kb/en/assignment-operators/,0,,,1,,4,,
 https://mariadb.com/kb/en/assignment-operator/,1,Assignment Operators,:=;assignment operator,1,,5,,
 https://mariadb.com/kb/en/assignment-operators-assignment-operator/,1,Assignment Operators,assignment operator;=,1,,5,,
@@ -1040,22 +1042,22 @@ https://mariadb.com/kb/en/system_user/,1,Information Functions,,1,,5,,
 https://mariadb.com/kb/en/user/,1,Information Functions,,1,,5,,
 https://mariadb.com/kb/en/version/,1,Information Functions,,1,,5,,
 https://mariadb.com/kb/en/miscellaneous-functions/,0,,,1,Miscellaneous Functions,4,Category,
-https://mariadb.com/kb/en/get_lock/,1,Miscellaneous Functions,,1,,5,,
+https://mariadb.com/kb/en/get_lock/,1,Miscellaneous Functions,locks;locking,1,,5,,
 https://mariadb.com/kb/en/inet6_aton/,1,Miscellaneous Functions,,1,,5,,
 https://mariadb.com/kb/en/inet6_ntoa/,1,Miscellaneous Functions,,1,,5,,
 https://mariadb.com/kb/en/inet_aton/,1,Miscellaneous Functions,,1,,5,,
 https://mariadb.com/kb/en/inet_ntoa/,1,Miscellaneous Functions,,1,,5,,
-https://mariadb.com/kb/en/is_free_lock/,1,Miscellaneous Functions,,1,,5,,
+https://mariadb.com/kb/en/is_free_lock/,1,Miscellaneous Functions,locks;locking,1,,5,,
 https://mariadb.com/kb/en/is_ipv4/,1,Miscellaneous Functions,,1,,5,,
 https://mariadb.com/kb/en/is_ipv4_compat/,1,Miscellaneous Functions,,1,,5,,
 https://mariadb.com/kb/en/is_ipv4_mapped/,1,Miscellaneous Functions,,1,,5,,
 https://mariadb.com/kb/en/is_ipv6/,1,Miscellaneous Functions,,1,,5,,
-https://mariadb.com/kb/en/is_used_lock/,1,Miscellaneous Functions,,1,,5,,
+https://mariadb.com/kb/en/is_used_lock/,1,Miscellaneous Functions,locks;locking,1,,5,,
 https://mariadb.com/kb/en/master_gtid_wait/,1,Miscellaneous Functions,,1,,5,,
 https://mariadb.com/kb/en/master_pos_wait/,1,Miscellaneous Functions,,1,,5,,
 https://mariadb.com/kb/en/name_const/,1,Miscellaneous Functions,,1,,5,,
-https://mariadb.com/kb/en/release_all_locks/,105,Miscellaneous Functions,,1,,5,,
-https://mariadb.com/kb/en/release_lock/,1,Miscellaneous Functions,,1,,5,,
+https://mariadb.com/kb/en/release_all_locks/,105,Miscellaneous Functions,locks;locking,1,,5,,
+https://mariadb.com/kb/en/release_lock/,1,Miscellaneous Functions,locks;locking,1,,5,,
 https://mariadb.com/kb/en/sleep/,1,Miscellaneous Functions,,1,,5,,
 https://mariadb.com/kb/en/sys_guid/,106,Miscellaneous Functions,,1,,5,,
 https://mariadb.com/kb/en/uuid/,1,Miscellaneous Functions,,1,,5,,
@@ -1530,15 +1532,13 @@ https://mariadb.com/kb/en/mariadb-package-repository-setup-and-usage/,0,,,1,,4,,
 https://mariadb.com/kb/en/upgrading/,0,,,1,Upgrading MariaDB,3,Category,
 https://mariadb.com/kb/en/upgrading-between-major-mariadb-versions/,0,,,1,,4,,
 https://mariadb.com/kb/en/upgrading-between-minor-versions-on-linux/,0,,,1,,4,,
+https://mariadb.com/kb/en/upgrading-from-mariadb-10-6-to-mariadb-10-11/,0,,,1,,4,,
+https://mariadb.com/kb/en/upgrading-from-mariadb-10-7-to-mariadb-10-8/,0,,,1,,4,,
 https://mariadb.com/kb/en/upgrading-from-mariadb-106-to-mariadb-107/,0,,,1,,4,,
 https://mariadb.com/kb/en/upgrading-from-mariadb-105-to-mariadb-106/,0,,,1,,4,,
 https://mariadb.com/kb/en/upgrading-from-mariadb-104-to-mariadb-105/,0,,,1,,4,,
 https://mariadb.com/kb/en/upgrading-from-mariadb-103-to-mariadb-104/,0,,,1,,4,,
 https://mariadb.com/kb/en/upgrading-from-mariadb-102-to-mariadb-103/,0,,,1,,4,,
-https://mariadb.com/kb/en/upgrading-from-mariadb-101-to-mariadb-102/,0,,,1,,4,,
-https://mariadb.com/kb/en/upgrading-from-mariadb-100-to-mariadb-101/,0,,,0,,,,
-https://mariadb.com/kb/en/upgrading-from-mariadb-55-to-mariadb-100/,0,,,0,,,,
-https://mariadb.com/kb/en/upgrading-from-mariadb-53-to-mariadb-55/,0,,,0,,,,
 https://mariadb.com/kb/en/upgrading-mariadb-on-windows/,0,,,1,,4,,
 https://mariadb.com/kb/en/upgrading-galera-cluster/,0,,,1,,4,Category,mariadb-galera-cluster;galera
 https://mariadb.com/kb/en/upgrading-between-minor-versions-with-galera-cluster/,0,,,1,,5,,
@@ -1552,7 +1552,12 @@ https://mariadb.com/kb/en/upgrading-from-mysql-to-mariadb/,0,,,1,,5,,
 https://mariadb.com/kb/en/moving-from-mysql-to-mariadb-in-debian-9/,0,,,1,,5,,
 https://mariadb.com/kb/en/screencast-for-upgrading-mysql-to-mariadb/,0,,,1,,5,,
 https://mariadb.com/kb/en/upgrading-from-mysql-57-to-mariadb-102/,0,,,0,,,,
-https://mariadb.com/kb/en/upgrading-to-mariadb-from-mysql-50-or-older/,0,,,0,,,,upgrading-to-mariadb-from-mysql-50-or-older-version;upgrading-to-mariadb-from-mysql
+https://mariadb.com/kb/en/upgrading-to-mariadb-from-mysql-50-or-older/,0,,,0,,5,,upgrading-to-mariadb-from-mysql-50-or-older-version;upgrading-to-mariadb-from-mysql
+https://mariadb.com/kb/en/upgrading-to-unmaintained-mariadb-releases/,0,,,0,,0,,
+https://mariadb.com/kb/en/upgrading-from-mariadb-101-to-mariadb-102/,0,,,0,,0,,
+https://mariadb.com/kb/en/upgrading-from-mariadb-100-to-mariadb-101/,0,,,0,,,,
+https://mariadb.com/kb/en/upgrading-from-mariadb-55-to-mariadb-100/,0,,,0,,,,
+https://mariadb.com/kb/en/upgrading-from-mariadb-53-to-mariadb-55/,0,,,0,,,,
 https://mariadb.com/kb/en/downgrading-between-major-versions-of-mariadb/,0,,,1,,3,,
 https://mariadb.com/kb/en/compiling-mariadb-from-source/,0,,,3,Compiling MariaDB From Source,3,,
 https://mariadb.com/kb/en/starting-and-stopping-mariadb/,0,,,1,Starting and Stopping MariaDB,3,Category,
@@ -1711,7 +1716,7 @@ https://mariadb.com/kb/en/user-account-management/,0,,,1,,3,Category,
 https://mariadb.com/kb/en/account-management-sql-commands/,0,,,3,Account Management SQL Commands,4,,
 https://mariadb.com/kb/en/data-in-transit-encryption/,0,,,3,Data-in-Transit Encryption,4,,secure-connections;ssl-connections
 https://mariadb.com/kb/en/roles/,0,,,1,,4,Category,
-https://mariadb.com/kb/en/roles_overview/,1,Account Management,,1,,5,,roles-overview
+https://mariadb.com/kb/en/roles_overview/,1,Account Management,roles,1,,5,,roles-overview
 https://mariadb.com/kb/en/create-role/,0,,,3,CREATE ROLE,5,,
 https://mariadb.com/kb/en/drop-role/,0,,,3,DROP ROLE,5,,
 https://mariadb.com/kb/en/current_role/,0,,,3,CURRENT_ROLE,5,,
@@ -1723,7 +1728,7 @@ https://mariadb.com/kb/en/mysqlroles_mapping-table/,0,,,3,mysqlroles_mapping Tab
 https://mariadb.com/kb/en/information-schema-applicable_roles-table/,0,,,3,Information Schema APPLICABLE_ROLES Table,5,,
 https://mariadb.com/kb/en/information-schema-enabled_roles-table/,0,,,3,Information Schema ENABLED_ROLES Table,5,,
 https://mariadb.com/kb/en/securich/,0,,,0,,,,
-https://mariadb.com/kb/en/account-locking/,1,Account Management,,1,,4,,
+https://mariadb.com/kb/en/account-locking/,1,Account Management,locks;locking,1,,4,,
 https://mariadb.com/kb/en/authentication-from-mariadb-104/,1,Account Management,,1,,4,,
 https://mariadb.com/kb/en/user-password-expiry/,1,Account Management,,1,,4,,
 https://mariadb.com/kb/en/backing-up-and-restoring-databases/,0,,,1,,2,Category,backing-up-and-restoring;backing-up
@@ -1781,6 +1786,7 @@ https://mariadb.com/kb/en/partitioning-types-overview/,0,,,1,,4,,
 https://mariadb.com/kb/en/list-partitioning-type/,0,,,1,,4,,list-partitioning
 https://mariadb.com/kb/en/range-partitioning-type/,0,,,1,,4,,
 https://mariadb.com/kb/en/hash-partitioning-type/,0,,,1,,4,,
+https://mariadb.com/kb/en/key-partitioning-type/,0,,,1,,4,,
 https://mariadb.com/kb/en/range-columns-and-list-columns-partitioning-types/,0,,,1,,4,,
 https://mariadb.com/kb/en/partition-pruning-and-selection/,0,,,1,,3,,
 https://mariadb.com/kb/en/partition-maintenance/,0,,,1,,3,,
@@ -2049,6 +2055,10 @@ https://mariadb.com/kb/en/ip-range-table-performance/,0,,,1,,4,,
 https://mariadb.com/kb/en/mariadb-memory-allocation/,0,,,1,,3,,
 https://mariadb.com/kb/en/system-variables/,0,,,1,,3,Category,
 https://mariadb.com/kb/en/system-and-status-variables-added-by-major-release/,0,,,1,,4,Category,
+https://mariadb.com/kb/en/system-variables-added-in-mariadb-10-11/,0,,,1,,5,,
+https://mariadb.com/kb/en/system-variables-added-in-mariadb-10-10/,0,,,1,,5,,system-variables-added-in-mariadb-1010
+https://mariadb.com/kb/en/system-variables-added-in-mariadb-10-9/,0,,,1,,5,,
+https://mariadb.com/kb/en/system-variables-added-in-mariadb-10-8/,0,,,1,,5,,
 https://mariadb.com/kb/en/system-variables-added-in-mariadb-109/,0,,,1,,5,,
 https://mariadb.com/kb/en/system-variables-added-in-mariadb-106/,0,,,1,,5,,
 https://mariadb.com/kb/en/status-variables-added-in-mariadb-106/,0,,,1,,5,,
@@ -2058,8 +2068,9 @@ https://mariadb.com/kb/en/system-variables-added-in-mariadb-104/,0,,,1,,5,,
 https://mariadb.com/kb/en/status-variables-added-in-mariadb-104/,0,,,1,,5,,
 https://mariadb.com/kb/en/system-variables-added-in-mariadb-103/,0,,,1,,5,,
 https://mariadb.com/kb/en/status-variables-added-in-mariadb-103/,0,,,1,,5,,
-https://mariadb.com/kb/en/system-variables-added-in-mariadb-102/,0,,,1,,5,,
-https://mariadb.com/kb/en/status-variables-added-in-mariadb-102/,0,,,1,,5,,
+https://mariadb.com/kb/en/system-and-status-variables-added-by-major-unmaintained-release/,0,,,0,,,,
+https://mariadb.com/kb/en/system-variables-added-in-mariadb-102/,0,,,0,,,,
+https://mariadb.com/kb/en/status-variables-added-in-mariadb-102/,0,,,0,,,,
 https://mariadb.com/kb/en/system-variables-added-in-mariadb-101/,0,,,0,,,,
 https://mariadb.com/kb/en/system-variables-added-in-mariadb-100/,0,,,0,,,,
 https://mariadb.com/kb/en/system-variables-added-in-mariadb-100/,0,,,0,,,,
@@ -2352,6 +2363,7 @@ https://mariadb.com/kb/en/innodb-data-scrubbing/,0,,,1,,4,,xtradb-innodb-data-sc
 https://mariadb.com/kb/en/innodb-lock-modes/,0,,,1,,4,,xtradbinnodb-lock-modes
 https://mariadb.com/kb/en/xtradb-innodb-monitors/,0,,,1,,4,,innodb-monitors;xtradbinnodb-monitors
 https://mariadb.com/kb/en/innodb-encryption-overview/,0,,,1,,4,,innodb-xtradb-encryption-overview;encrypting-data-for-innodb-xtradb
+https://mariadb.com/kb/en/innodb-unmaintained/,0,,,0,,,,
 https://mariadb.com/kb/en/about-xtradb/,0,,,0,,,,
 https://mariadb.com/kb/en/using-innodb-instead-of-xtradb/,0,,,0,,,,
 https://mariadb.com/kb/en/mariadb-columnstore/,0,,,1,MariaDB ColumnStore,3,"NOTE: This is a category, but the content is required too",
@@ -2634,7 +2646,7 @@ https://mariadb.com/kb/en/restoring-data-from-dump-files/,0,,,1,,3,,
 https://mariadb.com/kb/en/basic-sql-statements/,0,,,1,,3,,
 https://mariadb.com/kb/en/connecting-to-mariadb/,0,,,1,,3,,
 https://mariadb.com/kb/en/external-tutorials/,0,,,1,,3,,
-https://mariadb.com/kb/en/useful-mariadb-queries/,0,,,1,,3,,common-mariadb-queries
+https://mariadb.com/kb/en/useful-mariadb-queries/,1,Data Manipulation,queries;query,1,,3,,common-mariadb-queries
 https://mariadb.com/kb/en/basic-mariadb-articles/,0,,,1,,2,,
 https://mariadb.com/kb/en/basic-sql-debugging/,0,,,1,,3,,
 https://mariadb.com/kb/en/configuring-mariadb-for-remote-client-access/,0,,,1,,3,,
@@ -2684,10 +2696,11 @@ https://mariadb.com/kb/en/development-articles/,0,,,1,,3,,
 https://mariadb.com/kb/en/general-development-information/,0,,,0,,4,,
 https://mariadb.com/kb/en/development-plans/,0,,,0,,,,
 https://mariadb.com/kb/en/mariadb-roadmap/,0,,,0,,,,
+https://mariadb.com/kb/en/plans-for-mariadb-11-0/,0,,,0,,,,
 https://mariadb.com/kb/en/plans-for-mariadb-1011/,0,,,0,,,,
-https://mariadb.com/kb/en/plans-for-mariadb-1010/,0,,,0,,,,
-https://mariadb.com/kb/en/plans-for-mariadb-109/,0,,,0,,,,
 https://mariadb.com/kb/en/old-plans/,0,,,0,,,,
+https://mariadb.com/kb/en/plans-for-mariadb-10-10/,0,,,0,,,,plans-for-mariadb-1010
+https://mariadb.com/kb/en/plans-for-mariadb-10-9/,0,,,0,,,,plans-for-mariadb-109
 https://mariadb.com/kb/en/plans-for-mariadb-108/,0,,,0,,,,
 https://mariadb.com/kb/en/plans-for-mariadb-107/,0,,,0,,,,
 https://mariadb.com/kb/en/plans-for-mariadb-106/,0,,,0,,,,
@@ -2709,10 +2722,13 @@ https://mariadb.com/kb/en/storage-engine-summit-2010/,0,,,0,,,,
 ,,,,,,,,
 https://mariadb.com/kb/en/mariadb-internals-documentation/,0,,,1,,4,,
 ,,,,,,,,
+,,,,,,,,
+https://mariadb.com/kb/en/mariadb-internals-documentation-query-optimizer/,,,,,,,,
 https://mariadb.com/kb/en/mariadb-internals-documentation-optimizer-trace/,0,,,1,,5,,
 https://mariadb.com/kb/en/optimizer-trace-overview/,0,,,1,,6,,optimizer-trace
 https://mariadb.com/kb/en/optimizer-trace-guide/,0,,,1,,6,,
 https://mariadb.com/kb/en/basic-optimizer-trace-example/,0,,,1,,6,,
+https://mariadb.com/kb/en/optimizer-trace-for-developers/,0,,,1,,6,,
 https://mariadb.com/kb/en/optimizer-trace-resources/,0,,,0,,,,
 ,,,,,,,,
 https://mariadb.com/kb/en/using-mariadb-with-your-programs-api/,0,,,1,,5,,
@@ -2744,13 +2760,19 @@ https://mariadb.com/kb/en/explain-formatjson-in-mysql/,0,,,1,,4,,
 ,,,,,,,,
 https://mariadb.com/kb/en/mariadb-server-release-dates/,0,,,1,,1,,
 https://mariadb.com/kb/en/release-notes/,0,,,1,,2,,
+https://mariadb.com/kb/en/mariadb-server-11-0/,0,,,1,,4,,
+https://mariadb.com/kb/en/changes-improvements-in-mariadb-11-0/,0,,,1,,4,,changes-and-improvements-in-mariadb-11-0;what-is-mariadb-110;what-is-mariadb-11-0
+https://mariadb.com/kb/en/release-notes-mariadb-11-0-series/,0,,,1,,4,,
+https://mariadb.com/kb/en/mariadb-11-0-0-release-notes/,0,,,1,,5,,mdb-11-0-0-rn
 https://mariadb.com/kb/en/mariadb-server-10-11/,0,,,1,,3,,
-https://mariadb.com/kb/en/changes-improvements-in-mariadb-1011/,0,,,1,,4,,what-is-mariadb-1011;changes-and-improvements-in-mariadb-1011
+https://mariadb.com/kb/en/changes-improvements-in-mariadb-1011/,0,,,1,,4,,what-is-mariadb-10-11;changes-and-improvements-in-mariadb-10-11;what-is-mariadb-1011;changes-and-improvements-in-mariadb-1011
 https://mariadb.com/kb/en/release-notes-mariadb-1011-series/,0,,,1,,4,,
-https://mariadb.com/kb/en/release-notes-mariadb-1011-series-mariadb-10110-release-notes/,0,,,1,,5,,
+https://mariadb.com/kb/en/mariadb-10-11-1-release-notes/,0,,,1,,5,,mdb-10-11-1-rn
+https://mariadb.com/kb/en/mariadb-10-11-0-release-notes/,0,,,1,,5,,mdb-10-11-0-rn
 https://mariadb.com/kb/en/mariadb-server-10-10/,0,,,1,,3,,
 https://mariadb.com/kb/en/changes-improvements-in-mariadb-1010/,0,,,1,,4,,what-is-mariadb-1010;changes-and-improvements-in-mariadb-1010
 https://mariadb.com/kb/en/release-notes-mariadb-1010-series/,0,,,1,,4,,
+https://mariadb.com/kb/en/mariadb-10-10-2-release-notes/,0,,,1,,5,,mdb-10-10-2-rn;mdb-10102-rn;mariadb-10102-release-notes
 https://mariadb.com/kb/en/mariadb-10101-release-notes/,0,,,1,,5,,mdb-10101-rn
 https://mariadb.com/kb/en/mariadb-10100-release-notes/,0,,,1,,5,,mdb-10100-rn
 https://mariadb.com/kb/en/changelogs-mariadb-1010-series/,0,,,0,,4,,
@@ -2758,21 +2780,29 @@ https://mariadb.com/kb/en/mariadb-10101-changelog/,0,,,0,,5,,
 https://mariadb.com/kb/en/mariadb-server-109/,0,,,1,,3,,
 https://mariadb.com/kb/en/changes-improvements-in-mariadb-109/,0,,,1,,4,,what-is-mariadb-109;changes-and-improvements-in-mariadb-109
 https://mariadb.com/kb/en/release-notes-mariadb-109-series/,0,,,1,,4,,
+https://mariadb.com/kb/en/mariadb-10-9-4-release-notes/,0,,,1,,5,,mariadb-1094-release-notes;mdb-10-9-4-rn;mdb-1094-rn
+https://mariadb.com/kb/en/mariadb-1093-release-notes/,0,,,1,,5,,mdb-1093-rn
 https://mariadb.com/kb/en/mariadb-1092-release-notes/,0,,,1,,5,,mdb-1092-rn
 https://mariadb.com/kb/en/mariadb-1091-release-notes/,0,,,1,,5,,mdb-1091-rn
 https://mariadb.com/kb/en/mariadb-1090-release-notes/,0,,,1,,5,,mdb-1090-rn
 https://mariadb.com/kb/en/changelogs-mariadb-109-series/,0,,,0,,4,,
+https://mariadb.com/kb/en/mariadb-10-9-4-changelog/,0,,,0,,5,,
+https://mariadb.com/kb/en/mariadb-1093-changelog/,0,,,0,,5,,
 https://mariadb.com/kb/en/mariadb-1092-changelog/,0,,,0,,5,,
 https://mariadb.com/kb/en/mariadb-1091-changelog/,0,,,0,,5,,
 https://mariadb.com/kb/en/mariadb-server-108/,0,,,1,,3,,
 https://mariadb.com/kb/en/changes-improvements-in-mariadb-108/,0,,,1,,4,,what-is-mariadb-108;changes-and-improvements-in-mariadb-108
 https://mariadb.com/kb/en/release-notes-mariadb-108-series/,0,,,1,,4,,
+https://mariadb.com/kb/en/mariadb-10-8-6-release-notes/,0,,,1,,5,,mariadb-1086-release-notes;mdb-10-8-6-rn;mdb-1086-rn
+https://mariadb.com/kb/en/mariadb-1085-release-notes/,0,,,1,,5,,mdb-1085-rn
 https://mariadb.com/kb/en/mariadb-1084-release-notes/,0,,,1,,5,,mdb-1084-rn
 https://mariadb.com/kb/en/mariadb-1083-release-notes/,0,,,1,,5,,mdb-1083-rn
 https://mariadb.com/kb/en/mariadb-1082-release-notes/,0,,,1,,5,,mdb-1082-rn
 https://mariadb.com/kb/en/mariadb-1081-release-notes/,0,,,1,,5,,mdb-1081-rn
 https://mariadb.com/kb/en/mariadb-1080-release-notes/,0,,,1,,5,,mdb-1080-rn
 https://mariadb.com/kb/en/changelogs-mariadb-108-series/,0,,,0,,,,
+https://mariadb.com/kb/en/mariadb-10-8-6-changelog/,0,,,0,,,,
+https://mariadb.com/kb/en/mariadb-1085-changelog/,0,,,0,,,,
 https://mariadb.com/kb/en/mariadb-1084-changelog/,0,,,0,,,,
 https://mariadb.com/kb/en/mariadb-1083-changelog/,0,,,0,,,,
 https://mariadb.com/kb/en/mariadb-1082-changelog/,0,,,0,,,,
@@ -2780,6 +2810,8 @@ https://mariadb.com/kb/en/mariadb-1081-changelog/,0,,,0,,,,
 https://mariadb.com/kb/en/mariadb-server-107/,0,,,1,,3,,
 https://mariadb.com/kb/en/changes-improvements-in-mariadb-107/,0,,,1,,4,,what-is-mariadb-107;changes-and-improvements-in-mariadb-107
 https://mariadb.com/kb/en/release-notes-mariadb-107-series/,0,,,1,,4,,
+https://mariadb.com/kb/en/mariadb-10-7-7-release-notes/,0,,,1,,5,,mariadb-1077-release-notes;mdb-10-7-7-rn;mdb-1077-rn
+https://mariadb.com/kb/en/mariadb-1076-release-notes/,0,,,1,,5,,mdb-1076-rn
 https://mariadb.com/kb/en/mariadb-1075-release-notes/,0,,,1,,5,,mdb-1075-rn
 https://mariadb.com/kb/en/mariadb-1074-release-notes/,0,,,1,,5,,mdb-1074-rn
 https://mariadb.com/kb/en/mariadb-1073-release-notes/,0,,,1,,5,,mdb-1073-rn
@@ -2787,6 +2819,8 @@ https://mariadb.com/kb/en/mariadb-1072-release-notes/,0,,,1,,5,,mdb-1072-rn
 https://mariadb.com/kb/en/mariadb-1071-release-notes/,0,,,1,,5,,mdb-1071-rn
 https://mariadb.com/kb/en/mariadb-1070-release-notes/,0,,,1,,5,,mdb-1070-rn
 https://mariadb.com/kb/en/changelogs-mariadb-107-series/,0,,,0,,,,
+https://mariadb.com/kb/en/mariadb-10-7-7-changelog/,0,,,0,,,,
+https://mariadb.com/kb/en/mariadb-1076-changelog/,0,,,0,,,,
 https://mariadb.com/kb/en/mariadb-1075-changelog/,0,,,0,,,,
 https://mariadb.com/kb/en/mariadb-1074-changelog/,0,,,0,,,,
 https://mariadb.com/kb/en/mariadb-1073-changelog/,0,,,0,,,,
@@ -2795,6 +2829,8 @@ https://mariadb.com/kb/en/mariadb-1071-changelog/,0,,,0,,,,
 https://mariadb.com/kb/en/mariadb-server-106/,0,,,1,,3,,
 https://mariadb.com/kb/en/changes-improvements-in-mariadb-106/,0,,,1,,4,,what-is-mariadb-106;changes-and-improvements-in-mariadb-106
 https://mariadb.com/kb/en/release-notes-mariadb-106-series/,0,,,1,,4,,
+https://mariadb.com/kb/en/mariadb-10-6-11-release-notes/,0,,,1,,5,,mariadb-10611-release-notes;mdb-10-6-11-rn;mdb-10611-rn
+https://mariadb.com/kb/en/mariadb-10610-release-notes/,0,,,1,,5,,mdb-10610-rn
 https://mariadb.com/kb/en/mariadb-1069-release-notes/,0,,,1,,5,,mdb-1069-rn
 https://mariadb.com/kb/en/mariadb-1068-release-notes/,0,,,1,,5,,mdb-1068-rn
 https://mariadb.com/kb/en/mariadb-1067-release-notes/,0,,,1,,5,,mdb-1067-rn
@@ -2806,6 +2842,8 @@ https://mariadb.com/kb/en/mariadb-1062-release-notes/,0,,,1,,5,,mdb-1062-rn
 https://mariadb.com/kb/en/mariadb-1061-release-notes/,0,,,1,,5,,mdb-1061-rn
 https://mariadb.com/kb/en/mariadb-1060-release-notes/,0,,,1,,5,,mdb-1060-rn
 https://mariadb.com/kb/en/changelogs-mariadb-106-series/,0,,,0,,,,
+https://mariadb.com/kb/en/mariadb-10-6-11-changelog/,0,,,0,,,,
+https://mariadb.com/kb/en/mariadb-10610-changelog/,0,,,0,,,,
 https://mariadb.com/kb/en/mariadb-1069-changelog/,0,,,0,,,,
 https://mariadb.com/kb/en/mariadb-1068-changelog/,0,,,0,,,,
 https://mariadb.com/kb/en/mariadb-1067-changelog/,0,,,0,,,,
@@ -2819,6 +2857,7 @@ https://mariadb.com/kb/en/mariadb-1060-changelog/,0,,,0,,,,
 https://mariadb.com/kb/en/mariadb-server-105/,0,,,1,,3,,
 https://mariadb.com/kb/en/changes-improvements-in-mariadb-105/,0,,,1,,4,,what-is-mariadb-105;changes-and-improvements-in-mariadb-105
 https://mariadb.com/kb/en/release-notes-mariadb-105-series/,0,,,1,,4,,
+https://mariadb.com/kb/en/mariadb-10-5-18-release-notes/,0,,,1,,5,,mdb-10-5-18-rn;mdb-10518-rn;mariadb-10518-release-notes
 https://mariadb.com/kb/en/mariadb-10517-release-notes/,0,,,1,,5,,mdb-10517-rn
 https://mariadb.com/kb/en/mariadb-10516-release-notes/,0,,,1,,5,,mdb-10516-rn
 https://mariadb.com/kb/en/mariadb-10515-release-notes/,0,,,1,,5,,mdb-10515-rn
@@ -2838,6 +2877,7 @@ https://mariadb.com/kb/en/mariadb-1052-release-notes/,0,,,1,,5,,mdb-10502-rn
 https://mariadb.com/kb/en/mariadb-1051-release-notes/,0,,,1,,5,,mdb-10501-rn
 https://mariadb.com/kb/en/mariadb-1050-release-notes/,0,,,1,,5,,mdb-10500-rn
 https://mariadb.com/kb/en/changelogs-mariadb-105-series/,0,,,0,,,,
+https://mariadb.com/kb/en/mariadb-10-5-18-changelog/,0,,,0,,,,
 https://mariadb.com/kb/en/mariadb-10517-changelog/,0,,,0,,,,
 https://mariadb.com/kb/en/mariadb-10516-changelog/,0,,,0,,,,
 https://mariadb.com/kb/en/mariadb-10515-changelog/,0,,,0,,,,
@@ -2859,6 +2899,7 @@ https://mariadb.com/kb/en/mariadb-1050-changelog/,0,,,0,,,,
 https://mariadb.com/kb/en/mariadb-server-104/,0,,,1,,3,,
 https://mariadb.com/kb/en/changes-improvements-in-mariadb-104/,0,,,1,,4,,what-is-mariadb-104;changes-and-improvements-in-mariadb-104
 https://mariadb.com/kb/en/release-notes-mariadb-104-series/,0,,,1,,4,,
+https://mariadb.com/kb/en/mariadb-10-4-27-release-notes/,0,,,1,,5,,mdb-10-4-27-rn;mdb-10427-rn;mariadb-10427-release-notes
 https://mariadb.com/kb/en/mariadb-10426-release-notes/,0,,,1,,5,,mdb-10426-rn
 https://mariadb.com/kb/en/mariadb-10425-release-notes/,0,,,1,,5,,mdb-10425-rn
 https://mariadb.com/kb/en/mariadb-10424-release-notes/,0,,,1,,5,,mdb-10424-rn
@@ -2887,6 +2928,7 @@ https://mariadb.com/kb/en/mariadb-1042-release-notes/,0,,,1,,5,,mdb-1042-rn
 https://mariadb.com/kb/en/mariadb-1041-release-notes/,0,,,1,,5,,mdb-1041-rn
 https://mariadb.com/kb/en/mariadb-1040-release-notes/,0,,,1,,5,,mdb-1040-rn
 https://mariadb.com/kb/en/changelogs-mariadb-104-series/,0,,,0,,,,
+https://mariadb.com/kb/en/mariadb-10-4-27-changelog/,0,,,0,,,,
 https://mariadb.com/kb/en/mariadb-10426-changelog/,0,,,0,,,,
 https://mariadb.com/kb/en/mariadb-10425-changelog/,0,,,0,,,,
 https://mariadb.com/kb/en/mariadb-10424-changelog/,0,,,0,,,,
@@ -2917,6 +2959,7 @@ https://mariadb.com/kb/en/mariadb-1040-changelog/,0,,,0,,,,
 https://mariadb.com/kb/en/mariadb-server-103/,0,,,1,,3,,
 https://mariadb.com/kb/en/changes-improvements-in-mariadb-103/,0,,,1,,4,,what-is-mariadb-103
 https://mariadb.com/kb/en/release-notes-mariadb-103-series/,0,,,1,,4,,
+https://mariadb.com/kb/en/mariadb-10-3-37-release-notes/,0,,,1,,5,,mdb-10-3-37-rn;mdb-10337-rn;mariadb-10337-release-notes
 https://mariadb.com/kb/en/mariadb-10336-release-notes/,0,,,1,,5,,mdb-10336-rn
 https://mariadb.com/kb/en/mariadb-10335-release-notes/,0,,,1,,5,,mdb-10335-rn
 https://mariadb.com/kb/en/mariadb-10334-release-notes/,0,,,1,,5,,mdb-10334-rn
@@ -2955,6 +2998,7 @@ https://mariadb.com/kb/en/mariadb-1032-release-notes/,0,,,1,,5,,mdb-1032-rn
 https://mariadb.com/kb/en/mariadb-1031-release-notes/,0,,,1,,5,,mdb-1031-rn
 https://mariadb.com/kb/en/mariadb-1030-release-notes/,0,,,1,,5,,mdb-1030-rn
 https://mariadb.com/kb/en/changelogs-mariadb-103-series/,0,,,0,,,,
+https://mariadb.com/kb/en/mariadb-10-3-37-changelog/,0,,,0,,,,
 https://mariadb.com/kb/en/mariadb-10336-changelog/,0,,,0,,,,
 https://mariadb.com/kb/en/mariadb-10335-changelog/,0,,,0,,,,
 https://mariadb.com/kb/en/mariadb-10334-changelog/,0,,,0,,,,
